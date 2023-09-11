@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.bottomNav.background = null
 
         val config = AppBarConfiguration(
             topLevelDestinationIds = setOf(

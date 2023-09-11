@@ -12,8 +12,14 @@
     <style name="tv_description">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textColor">?colorOnSecondary</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="btn">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="backgroundTint">@color/transparent</item>
     </style>
 
 

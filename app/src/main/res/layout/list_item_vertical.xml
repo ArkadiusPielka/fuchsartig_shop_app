@@ -26,9 +26,7 @@
 
         <ImageButton
             android:id="@+id/btn_like"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:backgroundTint="@color/transparent"
+            style="@style/btn"
             app:srcCompat="@drawable/ic_heart_border"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
