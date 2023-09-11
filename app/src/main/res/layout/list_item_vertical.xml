@@ -35,27 +35,21 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Explosionsbox Alice im Wunderland"
+            style="@style/tv_title"
+            android:text="test"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_product"
             app:layout_constraintEnd_toStartOf="@id/btn_like"/>
 
         <TextView
             android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/tv_description"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:singleLine="true"
             android:text="Eine Explosionsbox zum Thema Alice im Wunderland mit vielen liebevoll gestalteten Details."
-            android:textColor="@color/primary_color"
-            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_price"
             app:layout_constraintStart_toEndOf="@id/img_product"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,12 +57,10 @@
 
         <TextView
             android:id="@+id/tv_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/tv_title"
             android:text="10,95"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/img_euro"
             app:layout_constraintEnd_toStartOf="@id/img_euro"
             app:layout_constraintTop_toTopOf="@+id/img_euro" />
