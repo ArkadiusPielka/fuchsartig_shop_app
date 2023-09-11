@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:title="@string/home"
+        android:iconTint="@color/primary_color"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/navigation_product"
+        android:title="@string/prokuct"
+        android:iconTint="@color/primary_color"
+        android:icon="@drawable/ic_bag"/>
+
+    <item
+        android:id="@+id/navigation_favorite"
+        android:title="@string/favorite"
+        android:iconTint="@color/red"
+        android:icon="@drawable/ic_heart_border"/>
+
+    <item
+        android:id="@+id/navigation_shopping"
+        android:title="@string/shopping"
+        android:iconTint="@color/primary_color"
+        android:icon="@drawable/ic_shopping_cart_empty"/>
+</menu>
