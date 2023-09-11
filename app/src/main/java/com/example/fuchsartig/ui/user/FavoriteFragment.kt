@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.fuchsartig.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class FavoriteFragment : Fragment() {
@@ -24,5 +25,11 @@ class FavoriteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        val libraryMenuItem = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+            .menu.findItem(R.id.navigation_favorite)
+        libraryMenuItem.setIcon(R.drawable.ic_heart_border)
+    }
 }
