@@ -31,5 +31,7 @@ class LinearAdapter(private val dataSet: List<Product>) : RecyclerView.Adapter<L
         binding.tvPrice.text = product.price
         binding.tvDescription.text = product.descript
         binding.tvTitle.text = product.title
+
+
     }
 }

@@ -19,7 +19,7 @@
             android:id="@+id/img_product"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@drawable/produkt_1" />
@@ -27,7 +27,7 @@
         <ImageButton
             android:id="@+id/btn_like"
             style="@style/btn"
-            app:srcCompat="@drawable/ic_heart_border"
+            tools:srcCompat="@drawable/ic_heart_border"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

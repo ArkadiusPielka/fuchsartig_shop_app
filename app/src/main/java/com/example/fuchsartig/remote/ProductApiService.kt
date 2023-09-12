@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
 
-const val BASE_URL = "https://retoolapi.dev/uQes19/fuchsartig/"
+const val BASE_URL = "https://retoolapi.dev/jDO0Lv/fuchsartig/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 
 interface ProductApiService {
 
-    @GET("uQes19/fuchsartig")
+    @GET("jDO0Lv/fuchsartig")
     suspend fun getProduct(): List<Product>
 
 }

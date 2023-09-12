@@ -13,7 +13,7 @@ class Repository(private val api: ProductApi) {
 
     suspend fun getProducts() {
         try {
-            _product.postValue(api.retrofitService.getProduct().toMutableList())
+            _product.postValue(api.retrofitService.getProduct())
         } catch (e: Exception){
 
         }
