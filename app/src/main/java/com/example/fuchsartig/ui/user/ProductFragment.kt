@@ -50,19 +50,19 @@ class ProductFragment : Fragment() {
         sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
                 ApiLayoutStatus.LINEAR -> {
-                    binding.btnSortVertical.setBackgroundColor(
+                    binding.cvSortVertical.setCardBackgroundColor(
                         ContextCompat.getColor(requireContext(), R.color.primary_color)
                     )
-                    binding.btnSortHorizontal.setBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.transparent)
+                    binding.cvSortHorizontal.setCardBackgroundColor(
+                        ContextCompat.getColor(requireContext(), R.color.white)
                     )
                 }
 
                 ApiLayoutStatus.GRID -> {
-                    binding.btnSortVertical.setBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.transparent)
+                    binding.cvSortVertical.setCardBackgroundColor(
+                        ContextCompat.getColor(requireContext(), R.color.white)
                     )
-                    binding.btnSortHorizontal.setBackgroundColor(
+                    binding.cvSortHorizontal.setCardBackgroundColor(
                         ContextCompat.getColor(requireContext(), R.color.primary_color)
                     )
                 }
@@ -84,7 +84,7 @@ class ProductFragment : Fragment() {
 
     private fun setupButtons() {
 
-        binding.btnSortVertical.setOnClickListener {
+        binding.cvSortVertical.setOnClickListener {
             sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
             sharedViewModel.products.value?.let { products ->
                 binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
@@ -92,7 +92,7 @@ class ProductFragment : Fragment() {
             }
         }
 
-        binding.btnSortHorizontal.setOnClickListener {
+        binding.cvSortHorizontal.setOnClickListener {
             sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.GRID)
             sharedViewModel.products.value?.let { products ->
                 binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
