@@ -8,4 +8,10 @@
     <string name="favorite">Favoriten</string>
     <string name="shopping">Einkaufswagen</string>
     <string name="settings">Einstellungen</string>
+
+    <string name="btn_login">Einloggen</string>
+    <string name="btn_signup">Registrieren</string>
+    <string name="btn_visitor">Als Gast starten</string>
+
+
 </resources>

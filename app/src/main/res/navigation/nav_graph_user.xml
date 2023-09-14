@@ -56,4 +56,14 @@
         android:name="com.example.fuchsartig.ui.user.StartFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_start" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.fuchsartig.ui.user.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/singupFragment"
+        android:name="com.example.fuchsartig.ui.user.SingupFragment"
+        android:label="fragment_singup"
+        tools:layout="@layout/fragment_signup" />
 </navigation>
