@@ -5,7 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <ImageView
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/hintergrund_oben"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
+    <ImageView
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/hintergrund_unten"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
@@ -30,6 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu_user" />
+
 
 
 

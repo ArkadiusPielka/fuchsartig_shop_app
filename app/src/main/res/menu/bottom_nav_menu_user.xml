@@ -20,4 +20,9 @@
         android:id="@+id/navigation_shopping"
         android:title="@string/shopping"
         android:icon="@drawable/ic_shopping_cart_empty"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"/>
 </menu>
