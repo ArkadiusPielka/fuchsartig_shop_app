@@ -29,8 +29,6 @@ class StartFragment : Fragment() {
 
         val switchView = binding.switchCompat
 
-
-
         // Beim Start wird das LoginFragment angezeigt
         val fragmentManager: FragmentManager = childFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
@@ -55,7 +53,6 @@ class StartFragment : Fragment() {
             transaction.commit()
 
         }
-
         return binding.root
     }
 

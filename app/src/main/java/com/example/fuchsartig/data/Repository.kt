@@ -1,5 +1,6 @@
 package com.example.fuchsartig.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fuchsartig.data.model.Product
@@ -15,7 +16,7 @@ class Repository(private val api: ProductApi) {
         try {
             _product.postValue(api.retrofitService.getProduct())
         } catch (e: Exception){
-
+        Log.e("data", "noload $e")
         }
     }
 }
