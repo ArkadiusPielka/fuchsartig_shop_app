@@ -10,6 +10,7 @@
        android:id="@+id/search"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       android:visibility="gone"
        android:backgroundTint="@color/primary_color"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginVertical="8dp"
         android:background="@color/transparent"
         app:layout_constraintTop_toBottomOf="@id/search"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +37,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_weight="1"
+            android:layout_gravity="center"
             tools:backgroundTint="@color/primary_color"
             app:cardElevation="3dp"
             app:cardCornerRadius="16dp"
@@ -46,7 +49,7 @@
             android:layout_height="32dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/transparent"
-            app:srcCompat="@drawable/sort_vertical" />
+            app:srcCompat="@drawable/baseline_drag_handle_24" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -61,6 +64,7 @@
             android:layout_height="32dp"
             android:layout_weight="1"
             app:cardElevation="3dp"
+            android:layout_gravity="center"
             app:cardCornerRadius="16dp"
             app:strokeColor="@color/primary_color"
             app:strokeWidth="2dp">
@@ -72,7 +76,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:backgroundTint="@color/transparent"
-            app:srcCompat="@drawable/sort_horizontal_2"
+            app:srcCompat="@drawable/baseline_grid_view_24"
             app:tint="@color/grey" />
 
 
@@ -81,6 +85,14 @@
             android:layout_width="48dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_search_24" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

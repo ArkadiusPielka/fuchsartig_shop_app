@@ -20,7 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val products = repository.product
 
-    private val _layout = MutableLiveData<ApiLayoutStatus>()
+    private val _layout = MutableLiveData<ApiLayoutStatus>(ApiLayoutStatus.LINEAR)
     val layout: LiveData<ApiLayoutStatus>
         get() = _layout
 
@@ -35,7 +35,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loadProduct() {
         viewModelScope.launch {
-            _layout.value = ApiLayoutStatus.LINEAR
             try {
                 repository.getProducts()
             } catch (e: Exception) {

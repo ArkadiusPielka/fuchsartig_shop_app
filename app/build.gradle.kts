@@ -72,5 +72,6 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
 
-
+//    implementation("com.github.sparrow007:CarouselRecyclerview:1.0.0")
+//    implementation("com.github.bumptech.glide:glide:4.12.0")
 }

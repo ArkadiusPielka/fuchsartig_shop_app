@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.databinding.ListItemGridBinding
 
@@ -29,5 +30,15 @@ class GridAdapter(private val dataSet: List<Product>) : RecyclerView.Adapter<Gri
 
         binding.imgProduct.load(imgUri)
         binding.tvTitle.text = product.title
+
+        binding.btnLike.setOnClickListener {
+            if (!product.is_liked ) {
+                product.is_liked = true
+                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
+            } else {
+                product.is_liked = false
+                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+            }
+        }
     }
 }

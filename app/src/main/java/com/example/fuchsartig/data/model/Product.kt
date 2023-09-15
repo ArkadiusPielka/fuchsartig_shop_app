@@ -14,5 +14,5 @@ data class Product(
     val user_rating: String?,
     val Testemonials: String?
 ) {
-    val is_liked: Boolean = false
+    var is_liked: Boolean = false
 }

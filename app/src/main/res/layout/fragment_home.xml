@@ -43,16 +43,17 @@
         app:layout_constraintTop_toBottomOf="@id/text_home"
        />
 
-    <androidx.constraintlayout.helper.widget.Carousel
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/img_bracket"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+<!--    <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/img_bracket"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:stateListAnimator="@layout/list_item_home"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
 
 
 
-    </androidx.constraintlayout.helper.widget.Carousel>
+<!--    </com.jackandphantom.carouselrecyclerview.CarouselRecyclerview>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

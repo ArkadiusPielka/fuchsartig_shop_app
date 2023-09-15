@@ -22,7 +22,6 @@ class StartFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

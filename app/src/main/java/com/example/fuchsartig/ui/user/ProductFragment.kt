@@ -42,65 +42,72 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupButtons()
         addObserver()
     }
 
     private fun addObserver() {
 
-        sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
-            when (status) {
-                ApiLayoutStatus.LINEAR -> {
-                    binding.cvSortVertical.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.primary_color)
-                    )
-                    binding.cvSortHorizontal.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.white)
-                    )
+        sharedViewModel.products.observe(viewLifecycleOwner, Observer { products ->
+
+            sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
+
+                when (status) {
+
+                    ApiLayoutStatus.LINEAR -> {
+
+                        binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
+                        binding.rvProduct.adapter = LinearAdapter(products)
+
+                        binding.cvSortVertical.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.primary_color)
+                        )
+                        binding.cvSortHorizontal.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.white)
+                        )
+                    }
+
+                    ApiLayoutStatus.GRID -> {
+
+                        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+                        binding.rvProduct.adapter = GridAdapter(products)
+
+                        binding.cvSortVertical.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.white)
+                        )
+                        binding.cvSortHorizontal.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.primary_color)
+                        )
+                    }
                 }
-
-                ApiLayoutStatus.GRID -> {
-                    binding.cvSortVertical.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.white)
-                    )
-                    binding.cvSortHorizontal.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.primary_color)
-                    )
-                }
-            }
-        })
-
-        sharedViewModel.products.observe(viewLifecycleOwner, Observer {
-
-            val linearLayoutManager = if (sharedViewModel.layout.value == ApiLayoutStatus.LINEAR) {
-                LinearLayoutManager(requireContext())
-            } else {
-                GridLayoutManager(requireContext(), 2)
-            }
-            binding.rvProduct.layoutManager = linearLayoutManager
-            binding.rvProduct.adapter = LinearAdapter(it)
-
+            })
         })
     }
 
     private fun setupButtons() {
-        val slideLeft = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left)
+
         val slideRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_right)
+
         binding.cvSortVertical.setOnClickListener {
+
             sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
-            sharedViewModel.products.value?.let { products ->
-                binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
-                binding.rvProduct.adapter = LinearAdapter(products)
-                binding.rvProduct.startAnimation(slideRight)
-            }
+            binding.rvProduct.startAnimation(slideRight)
+
         }
 
         binding.cvSortHorizontal.setOnClickListener {
+
             sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.GRID)
-            sharedViewModel.products.value?.let { products ->
-                binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-                binding.rvProduct.adapter = GridAdapter(products)
-                binding.rvProduct.startAnimation(slideRight)
+            binding.rvProduct.startAnimation(slideRight)
+
+        }
+
+        binding.btnSearch.setOnClickListener {
+            if (binding.search.visibility == View.GONE) {
+                binding.search.visibility = View.VISIBLE
+            } else {
+                binding.search.visibility = View.GONE
             }
         }
     }
