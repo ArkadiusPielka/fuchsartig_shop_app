@@ -1,10 +1,11 @@
 package com.example.fuchsartig.ui.user
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -21,6 +22,7 @@ class StartFragment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,12 +43,13 @@ class StartFragment : Fragment() {
 
             val transaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-            transaction.setCustomAnimations(
-                R.anim.flip_enter,
-                R.anim.flip_exit,
-                R.anim.flip_pop_enter,
-                R.anim.flip_pop_exit
-            )
+                transaction.setCustomAnimations(
+                    R.anim.slide_right,
+                    R.anim.slide_left
+                )
+
+
+
 
             transaction.replace(R.id.cv_fragment_start, fragment)
             transaction.addToBackStack(null)

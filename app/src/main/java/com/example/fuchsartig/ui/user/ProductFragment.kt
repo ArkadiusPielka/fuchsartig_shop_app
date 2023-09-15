@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -83,12 +84,14 @@ class ProductFragment : Fragment() {
     }
 
     private fun setupButtons() {
-
+        val slideLeft = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left)
+        val slideRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_right)
         binding.cvSortVertical.setOnClickListener {
             sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
             sharedViewModel.products.value?.let { products ->
                 binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
                 binding.rvProduct.adapter = LinearAdapter(products)
+                binding.rvProduct.startAnimation(slideRight)
             }
         }
 
@@ -97,6 +100,7 @@ class ProductFragment : Fragment() {
             sharedViewModel.products.value?.let { products ->
                 binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
                 binding.rvProduct.adapter = GridAdapter(products)
+                binding.rvProduct.startAnimation(slideRight)
             }
         }
     }
