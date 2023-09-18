@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> {
                     binding.bottomNav.visibility = View.VISIBLE
-                    supportActionBar?.show()
+                    supportActionBar?.hide()
                 }
             }
         }

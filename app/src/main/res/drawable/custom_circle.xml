@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:shape="oval">
 
-    <!-- Füllfarbe für den gefüllten Punkt -->
     <solid android:color="@color/stroke_color_circle" />
 
-    <!-- Randfarbe und -breite für den leeren Punkt -->
     <stroke
         android:width="2dp"
         android:color="@color/stroke_color_circle" />

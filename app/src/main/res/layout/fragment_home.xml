@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.user.HomeFragment">
 
-
     <ImageView
         android:id="@+id/img_fuchs_mit_text"
         android:layout_width="200dp"
@@ -42,7 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_home" />
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager2"
         android:layout_marginTop="8dp"
@@ -63,6 +61,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:ci_drawable="@drawable/custom_circle"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,10 +47,8 @@ class DetailFragment : Fragment() {
     fun addObserver() {
         sharedViewModel.currentProduct.observe(viewLifecycleOwner, Observer {product ->
 
-
-
-
             binding.tvTitle.text = product.title
+            binding.tvDescription.text = product.descript
 
 
         })
