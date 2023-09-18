@@ -6,6 +6,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
     app:strokeWidth="2dp"
+    android:id="@+id/cw_products"
     app:strokeColor="@color/primary_color"
     app:cardElevation="3dp">
 

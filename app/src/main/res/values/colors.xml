@@ -6,4 +6,5 @@
     <color name="red">#F44336</color>
     <color name="transparent">#00F44336</color>
     <color name="grey">#747575</color>
+    <color name="stroke_color_circle">#A18287</color>
 </resources>

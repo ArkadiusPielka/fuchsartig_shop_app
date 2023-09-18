@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.navigation_detail -> binding.bottomNav.visibility = View.GONE
+                R.id.navigation_detail -> {
+                    binding.bottomNav.visibility = View.GONE
+                    supportActionBar?.show()
+                }
                 R.id.navigation_login -> {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.hide()
@@ -58,4 +61,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 }

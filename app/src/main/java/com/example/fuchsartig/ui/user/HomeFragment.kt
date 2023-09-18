@@ -5,11 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.fuchsartig.R
+import com.example.fuchsartig.adapter.ViewPageAdapter
+import com.example.fuchsartig.databinding.FragmentHomeBinding
+import com.example.fuchsartig.databinding.FragmentProductBinding
+import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
 
 class HomeFragment : Fragment() {
 
+    private lateinit var binding: FragmentHomeBinding
+
+    private val sharedViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +32,26 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        addObserver()
+
+    }
+
+    fun addObserver(){
+        sharedViewModel.products.observe(viewLifecycleOwner, Observer {
+            binding.viewPager2.adapter = sharedViewModel.products.value?.let { ViewPageAdapter(it,sharedViewModel) }
+            binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+            val indicator = binding.indicator
+            indicator.setViewPager(binding.viewPager2)
+
+
+        })
+    }
 }

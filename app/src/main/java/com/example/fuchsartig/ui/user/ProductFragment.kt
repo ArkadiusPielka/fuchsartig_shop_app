@@ -58,7 +58,7 @@ class ProductFragment : Fragment() {
                     ApiLayoutStatus.LINEAR -> {
 
                         binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
-                        binding.rvProduct.adapter = LinearAdapter(products)
+                        binding.rvProduct.adapter = LinearAdapter(products,sharedViewModel)
 
                         binding.cvSortVertical.setCardBackgroundColor(
                             ContextCompat.getColor(requireContext(), R.color.primary_color)
@@ -71,7 +71,7 @@ class ProductFragment : Fragment() {
                     ApiLayoutStatus.GRID -> {
 
                         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-                        binding.rvProduct.adapter = GridAdapter(products)
+                        binding.rvProduct.adapter = GridAdapter(products,sharedViewModel)
 
                         binding.cvSortVertical.setCardBackgroundColor(
                             ContextCompat.getColor(requireContext(), R.color.white)

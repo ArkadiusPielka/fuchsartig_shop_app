@@ -28,6 +28,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentProduct: LiveData<Product>
         get() = _currentProduct
 
+    private val _currentImages = MutableLiveData<MutableList<String>>(mutableListOf())
+    val currentImages: LiveData<MutableList<String>>
+        get() = _currentImages
 
     init {
         loadProduct()
@@ -45,5 +48,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setApiLayoutStatus(layoutStatus: ApiLayoutStatus) {
         _layout.value = layoutStatus
+    }
+
+    fun currentProduct(input: Product) {
+        _currentProduct.postValue(input)
+    }
+
+    fun currentImages(input: Product) {
+
+        _currentImages.value?.clear()
+
+        val imageUrls = listOf(input.img1, input.img2, input.img3)
+
+        for (imageUrl in imageUrls) {
+            if (!imageUrl.isNullOrEmpty()) {
+                _currentImages.value?.add(imageUrl)
+            }
+        }
+        _currentImages.value = _currentImages.value
     }
 }
