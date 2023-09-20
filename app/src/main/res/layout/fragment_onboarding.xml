@@ -42,6 +42,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <ImageButton
+                android:id="@+id/btn_done"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_done"
+                android:clickable="false"
+                android:visibility="invisible"
+                android:backgroundTint="@color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_drop_down"
+                app:tint="@color/green" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/input_personal_data"
                 android:layout_width="match_parent"

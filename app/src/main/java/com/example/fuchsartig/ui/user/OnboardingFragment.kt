@@ -27,9 +27,17 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+//        if (binding.inputFirstName.text?.isNotEmpty() ?:  && binding.inputLastName.text.isNotEmpty()){
+//
+//        }
         binding.btnDropDown.setOnClickListener {
-            binding.inputPersonalData.visibility = View.VISIBLE
+            if (binding.inputPersonalData.visibility == View.GONE) {
+                binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
+                binding.inputPersonalData.visibility = View.VISIBLE
+            } else {
+                binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
+                binding.inputPersonalData.visibility = View.GONE
+            }
         }
     }
 }
