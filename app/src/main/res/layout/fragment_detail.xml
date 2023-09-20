@@ -25,7 +25,7 @@
             style="@style/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_margin="8dp"
             android:gravity="center"
             android:text="@string/test"
             android:textSize="20sp"
@@ -34,30 +34,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager2"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:foregroundGravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-        <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/indicator"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:backgroundTint="@color/black"
-            app:ci_drawable="@drawable/custom_circle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_pager2" />
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:isScrollContainer="true"
             android:orientation="vertical"
             android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -66,11 +46,80 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/indicator">
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:foregroundGravity="center"
+                    app:layout_constraintBottom_toTopOf="@id/indicator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <me.relex.circleindicator.CircleIndicator3
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/black"
+                    app:ci_drawable="@drawable/custom_circle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_pager2" />
+
+                <ImageButton
+                    android:id="@+id/btn_like"
+                    style="@style/btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/indicator"
+                    app:srcCompat="@drawable/ic_heart_border" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/tv_title"
+                    android:layout_marginEnd="8dp"
+                    android:text="Anzahl:"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_like"
+                    app:layout_constraintEnd_toStartOf="@+id/spinner"
+                    app:layout_constraintTop_toTopOf="@+id/btn_like" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_like"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/btn_like" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    style="@style/tv_title"
+                    android:layout_marginEnd="8dp"
+                    android:text="10,95"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_euro"
+                    app:layout_constraintEnd_toStartOf="@id/img_euro"
+                    app:layout_constraintTop_toTopOf="@+id/img_euro" />
+
+                <ImageView
+                    android:id="@+id/img_euro"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_like"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/btn_like"
+                    app:srcCompat="@drawable/baseline_euro_24" />
 
                 <TextView
                     android:id="@+id/tv_home"
@@ -82,7 +131,7 @@
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/btn_like" />
 
                 <TextView
                     android:id="@+id/tv_description"
@@ -102,13 +151,11 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:text="Jetzt Kaufen"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_description"
                     app:layout_constraintVertical_bias="1.0" />
-
 
                 <Button
                     android:id="@+id/btn_in_cart"
@@ -120,15 +167,6 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_buy_now" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/produkt_1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_in_cart" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

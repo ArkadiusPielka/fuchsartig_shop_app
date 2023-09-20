@@ -20,7 +20,7 @@
     <ImageView
         android:id="@+id/img_title"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/title"
         app:layout_constraintBottom_toTopOf="@id/cl"

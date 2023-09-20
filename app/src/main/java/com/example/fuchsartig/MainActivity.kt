@@ -23,21 +23,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNav.background = null
 
-        val config = AppBarConfiguration(
-            topLevelDestinationIds = setOf(
-                R.id.navigation_home,
-                R.id.navigation_product,
-                R.id.navigation_favorite,
-                R.id.navigation_shopping
-            )
-        )
 
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHost.navController
         binding.bottomNav.setupWithNavController(navController)
 
-        setupActionBarWithNavController(navController, config)
+        setupActionBarWithNavController(navController)
         binding.bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -48,10 +40,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_login -> {
                     binding.bottomNav.visibility = View.GONE
-                    supportActionBar?.hide()
-                }
-                R.id.navigation_home -> {
-                    binding.bottomNav.visibility = View.VISIBLE
                     supportActionBar?.hide()
                 }
                 else -> {

@@ -1,11 +1,9 @@
 package com.example.fuchsartig.ui.user
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -25,34 +23,31 @@ class StartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentStartBinding.inflate(inflater, container, false)
 
         val switchView = binding.switchCompat
 
         // Beim Start wird das LoginFragment angezeigt
         val fragmentManager: FragmentManager = childFragmentManager
-        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.cv_fragment_start, LoginFragment())
-        transaction.commit()
+        val showStartFragment: FragmentTransaction = fragmentManager.beginTransaction()
+        showStartFragment.replace(R.id.cv_fragment_start, LoginFragment())
+        showStartFragment.commit()
 
         switchView.setOnCheckedChangeListener { _, isChecked ->
             val fragment = if (isChecked) SingupFragment() else LoginFragment()
 
 
-            val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+            val showFragment: FragmentTransaction = fragmentManager.beginTransaction()
 
-                transaction.setCustomAnimations(
-                    R.anim.slide_right,
-                    R.anim.slide_left
-                )
+            showFragment.setCustomAnimations(
+                R.anim.slide_right,
+                R.anim.slide_left
+            )
 
-
-
-
-            transaction.replace(R.id.cv_fragment_start, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            showFragment.replace(R.id.cv_fragment_start, fragment)
+            showFragment.addToBackStack(null)
+            showFragment.commit()
 
         }
         return binding.root
@@ -67,8 +62,5 @@ class StartFragment : Fragment() {
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+
 }

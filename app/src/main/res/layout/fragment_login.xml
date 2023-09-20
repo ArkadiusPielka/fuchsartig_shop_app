@@ -11,6 +11,19 @@
     app:strokeColor="@color/primary_color"
     tools:context=".ui.user.LoginFragment">
 
+    <LinearLayout
+        android:id="@+id/ll_google_facebool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_facebook"/>
+
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

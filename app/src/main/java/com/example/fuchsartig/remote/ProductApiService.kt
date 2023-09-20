@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 
 interface ProductApiService {
 
-    @GET("/l6C3Rn/fuchsartig")
+    @GET("/LvSX4X/fuchsartig")
     suspend fun getProduct(): List<Product>
 
 }

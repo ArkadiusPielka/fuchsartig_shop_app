@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/navigation_detail"
         android:name="com.example.fuchsartig.ui.user.DetailFragment"
-        android:label="fragment_detail"
+        android:label="@string/details"
         tools:layout="@layout/fragment_detail" />
     <fragment
         android:id="@+id/navigation_settings"
@@ -66,4 +66,9 @@
         android:name="com.example.fuchsartig.ui.user.SingupFragment"
         android:label="fragment_singup"
         tools:layout="@layout/fragment_signup" />
+    <fragment
+        android:id="@+id/navigation_onboarding"
+        android:name="com.example.fuchsartig.ui.user.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" />
 </navigation>

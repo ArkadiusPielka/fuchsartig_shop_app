@@ -35,6 +35,7 @@ class LinearAdapter(
         val binding = holder.binding
         val imgUri = product.img1.toUri().buildUpon().scheme("https").build()
 
+
         binding.imgProduct.load(imgUri)
         binding.tvPrice.text = product.price
         binding.tvDescription.text = product.descript

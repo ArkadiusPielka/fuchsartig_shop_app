@@ -1,22 +1,17 @@
 package com.example.fuchsartig.ui.user
 
-import android.graphics.Typeface
-import android.graphics.fonts.Font
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.fuchsartig.R
 import com.example.fuchsartig.adapter.ViewPageAdapter
 import com.example.fuchsartig.databinding.FragmentHomeBinding
-import com.example.fuchsartig.databinding.FragmentProductBinding
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
 

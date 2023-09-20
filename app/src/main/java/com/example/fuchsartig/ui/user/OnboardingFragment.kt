@@ -5,16 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.example.fuchsartig.R
-import com.example.fuchsartig.databinding.FragmentDetailBinding
-import com.example.fuchsartig.databinding.FragmentLoginBinding
-import com.example.fuchsartig.ui.ViewModels.MainViewModel
+import com.example.fuchsartig.databinding.FragmentOnboardingBinding
 
+class OnboardingFragment : Fragment() {
 
-class LoginFragment : Fragment() {
-
-    private lateinit var binding: FragmentLoginBinding
+    private lateinit var binding: FragmentOnboardingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +21,15 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(inflater,container,false)
+        binding = FragmentOnboardingBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
 
+        binding.btnDropDown.setOnClickListener {
+            binding.inputPersonalData.visibility = View.VISIBLE
+        }
+    }
 }
