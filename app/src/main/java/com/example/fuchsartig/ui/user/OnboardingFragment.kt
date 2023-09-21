@@ -53,5 +53,15 @@ class OnboardingFragment : Fragment() {
                 binding.inputPersonalData.visibility = View.GONE
             }
         }
+
+        binding.btnDropDownPayment.setOnClickListener {
+            if (binding.inputPayment.visibility == View.GONE) {
+                binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_up)
+                binding.inputPayment.visibility = View.VISIBLE
+            } else {
+                binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_down)
+                binding.inputPayment.visibility = View.GONE
+            }
+        }
     }
 }
