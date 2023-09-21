@@ -27,9 +27,23 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        if (binding.inputFirstName.text?.isNotEmpty() ?:  && binding.inputLastName.text.isNotEmpty()){
-//
-//        }
+
+        val firstName = binding.inputFirstName.text.toString().trim()
+        val lastName = binding.inputLastName.text.toString().trim()
+
+        binding.btnSavePersonalData.setOnClickListener {
+            if (firstName != "" && lastName != ""){
+                binding.inputFirstName.setText("")
+                binding.inputLastName.setText("")
+                binding.btnDone.visibility = View.VISIBLE
+            } else {
+                binding.btnDone.visibility = View.INVISIBLE
+            }
+            binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
+            binding.inputPersonalData.visibility = View.GONE
+        }
+
+
         binding.btnDropDown.setOnClickListener {
             if (binding.inputPersonalData.visibility == View.GONE) {
                 binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
