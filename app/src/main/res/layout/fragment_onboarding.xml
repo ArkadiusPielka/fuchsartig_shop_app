@@ -356,7 +356,7 @@
 
                         </RadioGroup>
 
-                        <androidx.recyclerview.widget.RecyclerView
+                        <androidx.fragment.app.FragmentContainerView
                             android:id="@+id/cv_fragment_payment"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"

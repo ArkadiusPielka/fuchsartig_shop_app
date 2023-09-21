@@ -9,38 +9,22 @@
         android:id="@+id/navigation_home"
         android:name="com.example.fuchsartig.ui.user.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_detailFragment"
-            app:destination="@id/navigation_detail" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_product"
         android:name="com.example.fuchsartig.ui.user.ProductFragment"
         android:label="@string/prokuct"
-        tools:layout="@layout/fragment_product" >
-        <action
-            android:id="@+id/action_navigation_product_to_detailFragment"
-            app:destination="@id/navigation_detail" />
-    </fragment>
+        tools:layout="@layout/fragment_product" />
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.example.fuchsartig.ui.user.FavoriteFragment"
         android:label="@string/favorite"
-        tools:layout="@layout/fragment_favorite" >
-        <action
-            android:id="@+id/action_navigation_favorite_to_detailFragment"
-            app:destination="@id/navigation_detail" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/navigation_shopping"
         android:name="com.example.fuchsartig.ui.user.ShoppingVentureFragment"
         android:label="@string/shopping"
-        tools:layout="@layout/fragment_shopping_venture" >
-        <action
-            android:id="@+id/action_navigation_shopping_to_detailFragment"
-            app:destination="@id/navigation_detail" />
-    </fragment>
+        tools:layout="@layout/fragment_shopping_venture" />
     <fragment
         android:id="@+id/navigation_detail"
         android:name="com.example.fuchsartig.ui.user.DetailFragment"
@@ -71,4 +55,9 @@
         android:name="com.example.fuchsartig.ui.user.OnboardingFragment"
         android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding" />
+    <fragment
+        android:id="@+id/masterCardFragment"
+        android:name="com.example.fuchsartig.ui.user.MasterCardFragment"
+        android:label="fragment_master_card"
+        tools:layout="@layout/fragment_master_card" />
 </navigation>

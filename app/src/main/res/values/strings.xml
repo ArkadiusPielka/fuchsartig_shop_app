@@ -21,12 +21,21 @@
     <string name="country">Land</string>
 
     <string name="payment">Zahlungsart</string>
+    <string name="card_owner">Name auf der Karte</string>
+    <string name="card_number">Kartennummer</string>
+    <string name="card_check_number">Kartenprüfnummer (CVV)</string>
+    <string name="card_owner_copy">Name des Kontoinhabers verwenden</string>
+<!--    <string name="payment">Zahlungsart</string>-->
+<!--    <string name="payment">Zahlungsart</string>-->
+<!--    <string name="payment">Zahlungsart</string>-->
+<!--    <string name="payment">Zahlungsart</string>-->
 
 
     <string name="btn_login">Einloggen</string>
     <string name="btn_signup">Registrieren</string>
     <string name="btn_visitor">Als Gast starten</string>
     <string name="btn_save">Übernehmen</string>
+    <string name="btn_save_card">Karte hinzufügen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
