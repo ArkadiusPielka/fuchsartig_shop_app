@@ -26,30 +26,8 @@ class StartFragment : Fragment() {
     ): View {
         binding = FragmentStartBinding.inflate(inflater, container, false)
 
-        val switchView = binding.switchCompat
+        showFragment()
 
-        // Beim Start wird das LoginFragment angezeigt
-        val fragmentManager: FragmentManager = childFragmentManager
-        val showStartFragment: FragmentTransaction = fragmentManager.beginTransaction()
-        showStartFragment.replace(R.id.cv_fragment_start, LoginFragment())
-        showStartFragment.commit()
-
-        switchView.setOnCheckedChangeListener { _, isChecked ->
-            val fragment = if (isChecked) SingupFragment() else LoginFragment()
-
-
-            val showFragment: FragmentTransaction = fragmentManager.beginTransaction()
-
-            showFragment.setCustomAnimations(
-                R.anim.slide_right,
-                R.anim.slide_left
-            )
-
-            showFragment.replace(R.id.cv_fragment_start, fragment)
-            showFragment.addToBackStack(null)
-            showFragment.commit()
-
-        }
         return binding.root
     }
 
@@ -62,5 +40,30 @@ class StartFragment : Fragment() {
         }
     }
 
+private fun showFragment(){
+    val switchView = binding.switchCompat
 
+    // Beim Start wird das LoginFragment angezeigt
+    val fragmentManager: FragmentManager = childFragmentManager
+    val showStartFragment: FragmentTransaction = fragmentManager.beginTransaction()
+    showStartFragment.replace(R.id.cv_fragment_start, LoginFragment())
+    showStartFragment.commit()
+
+    switchView.setOnCheckedChangeListener { _, isChecked ->
+        val fragment = if (isChecked) SingupFragment() else LoginFragment()
+
+
+        val showFragment: FragmentTransaction = fragmentManager.beginTransaction()
+
+        showFragment.setCustomAnimations(
+            R.anim.slide_right,
+            R.anim.slide_left
+        )
+
+        showFragment.replace(R.id.cv_fragment_start, fragment)
+        showFragment.addToBackStack(null)
+        showFragment.commit()
+
+    }
+}
 }
