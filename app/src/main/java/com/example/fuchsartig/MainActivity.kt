@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.fuchsartig.databinding.ActivityMainBinding
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.hide()
                 }
-                R.id.navigation_onboarding -> {
+                R.id.navigation_register -> {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }

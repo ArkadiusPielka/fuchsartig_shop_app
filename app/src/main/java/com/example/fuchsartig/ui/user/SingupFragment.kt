@@ -5,12 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
-import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.databinding.FragmentSignupBinding
-import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -52,7 +49,7 @@ class SingupFragment : Fragment() {
                 findNavController().navigate(R.id.navigation_home)
             }
             .setPositiveButton("Jetzt") { _, _ ->
-                findNavController().navigate(R.id.navigation_onboarding)
+                findNavController().navigate(R.id.navigation_register)
             }
             .show()
     }

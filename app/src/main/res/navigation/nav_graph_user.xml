@@ -51,10 +51,10 @@
         android:label="fragment_singup"
         tools:layout="@layout/fragment_signup" />
     <fragment
-        android:id="@+id/navigation_onboarding"
-        android:name="com.example.fuchsartig.ui.user.OnboardingFragment"
+        android:id="@+id/navigation_register"
+        android:name="com.example.fuchsartig.ui.user.RegisterFragment"
         android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" />
+        tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/masterCardFragment"
         android:name="com.example.fuchsartig.ui.user.MasterCardFragment"

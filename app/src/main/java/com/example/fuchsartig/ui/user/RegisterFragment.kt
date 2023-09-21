@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.fuchsartig.R
-import com.example.fuchsartig.databinding.FragmentOnboardingBinding
+import com.example.fuchsartig.databinding.FragmentRegisterBinding
 
-class OnboardingFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-    private lateinit var binding: FragmentOnboardingBinding
+    private lateinit var binding: FragmentRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class OnboardingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentOnboardingBinding.inflate(inflater, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
 
         return binding.root
@@ -34,10 +34,13 @@ class OnboardingFragment : Fragment() {
 
         showFragment()
 
-        val firstName = binding.inputFirstName.text.toString().trim()
-        val lastName = binding.inputLastName.text.toString().trim()
+
 
         binding.btnSavePersonalData.setOnClickListener {
+
+            val firstName = binding.inputFirstName.text.toString().trim()
+            val lastName = binding.inputLastName.text.toString().trim()
+
             if (firstName != "" && lastName != "") {
                 binding.inputFirstName.setText("")
                 binding.inputLastName.setText("")
@@ -64,9 +67,13 @@ class OnboardingFragment : Fragment() {
             if (binding.inputPayment.visibility == View.GONE) {
                 binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_up)
                 binding.inputPayment.visibility = View.VISIBLE
+
             } else {
                 binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_down)
                 binding.inputPayment.visibility = View.GONE
+                binding.cvFragmentPayment.visibility = View.GONE
+                binding.btnSavePayment.visibility = View.GONE
+                binding.rbGroup.clearCheck()
             }
         }
     }
@@ -76,44 +83,31 @@ class OnboardingFragment : Fragment() {
         val rbBanking = binding.rbBanking
         val rbPayPal = binding.rbPaypal
 
-        // Beim Start wird das LoginFragment angezeigt
-        val fragmentManager: FragmentManager = childFragmentManager
-        val showStartFragment: FragmentTransaction = fragmentManager.beginTransaction()
-
-
         rbMasterCard.setOnClickListener {
-
-            val fragmentOnboardingManager: FragmentManager = childFragmentManager
-            val showStartFragment: FragmentTransaction = fragmentOnboardingManager.beginTransaction()
-
-            val nowFragment = fragmentOnboardingManager.findFragmentById(R.id.cv_fragment_payment)
-            if (nowFragment != null) {
-                showStartFragment.remove(nowFragment)
-            }
-
-            binding.cvFragmentPayment.visibility = View.VISIBLE
-            binding.btnSavePayment.visibility = View.VISIBLE
-            showStartFragment.replace(R.id.cv_fragment_payment, MasterCardFragment())
-            showStartFragment.commit()
+           checkFragment(MasterCardFragment())
         }
 
-//        showStartFragment.replace(R.id.cv_fragment_start, LoginFragment())
-//        showStartFragment.commit()
-//
-//        switchView.setOnCheckedChangeListener { _, isChecked ->
-//            val fragment = if (isChecked) SingupFragment() else LoginFragment()
-//
-//
-//            val showFragment: FragmentTransaction = fragmentManager.beginTransaction()
-//
-//            showFragment.setCustomAnimations(
-//                R.anim.slide_right,
-//                R.anim.slide_left
-//            )
-//
-//            showFragment.replace(R.id.cv_fragment_start, fragment)
-//            showFragment.addToBackStack(null)
-//            showFragment.commit()
+        rbBanking.setOnClickListener {
+            checkFragment(BankingFragment())
+        }
 
+        rbPayPal.setOnClickListener {
+            checkFragment(PayPalFragment())
+        }
+
+    }
+
+    fun checkFragment(fragment: Fragment){
+        val fragmentOnboardingManager: FragmentManager = childFragmentManager
+        val showStartFragment: FragmentTransaction = fragmentOnboardingManager.beginTransaction()
+
+        val nowFragment = fragmentOnboardingManager.findFragmentById(R.id.cv_fragment_payment)
+        if (nowFragment != null) {
+            showStartFragment.remove(nowFragment)
+        }
+        binding.cvFragmentPayment.visibility = View.VISIBLE
+        binding.btnSavePayment.visibility = View.VISIBLE
+        showStartFragment.replace(R.id.cv_fragment_payment, fragment)
+        showStartFragment.commit()
     }
 }

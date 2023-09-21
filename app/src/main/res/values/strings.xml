@@ -25,10 +25,10 @@
     <string name="card_number">Kartennummer</string>
     <string name="card_check_number">Kartenprüfnummer (CVV)</string>
     <string name="card_owner_copy">Name des Kontoinhabers verwenden</string>
-<!--    <string name="payment">Zahlungsart</string>-->
-<!--    <string name="payment">Zahlungsart</string>-->
-<!--    <string name="payment">Zahlungsart</string>-->
-<!--    <string name="payment">Zahlungsart</string>-->
+    <!--    <string name="payment">Zahlungsart</string>-->
+    <!--    <string name="payment">Zahlungsart</string>-->
+    <!--    <string name="payment">Zahlungsart</string>-->
+    <!--    <string name="payment">Zahlungsart</string>-->
 
 
     <string name="btn_login">Einloggen</string>
