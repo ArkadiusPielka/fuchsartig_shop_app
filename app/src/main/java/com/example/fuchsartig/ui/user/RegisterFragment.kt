@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
 
@@ -33,6 +34,10 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showFragment()
+
+        binding.btnHome.setOnClickListener {
+            findNavController().navigate(R.id.navigation_home)
+        }
 
 
 

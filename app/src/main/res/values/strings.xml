@@ -13,6 +13,8 @@
     <string name="mail">E-Mail</string>
     <string name="password">Password</string>
     <string name="password_forgot">Password vergessen</string>
+    <string name="empty_favorite">keine Favoriten</string>
+    <string name="empty_cart">Einkaufswagen ist leer</string>
 
     <string name="personal_data">Persönliche Daten</string>
     <string name="first_name">Vorname</string>

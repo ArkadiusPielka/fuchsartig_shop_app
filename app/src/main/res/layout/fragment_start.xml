@@ -85,7 +85,7 @@
         android:id="@+id/btn_visitor"
         style="@style/btn_user"
         android:text="@string/btn_visitor"
-        android:layout_marginBottom="8dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
