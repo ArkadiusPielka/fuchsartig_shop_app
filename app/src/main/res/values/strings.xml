@@ -28,9 +28,9 @@
     <string name="card_number">Kartennummer</string>
     <string name="card_check_number">Kartenprüfnummer (CVV)</string>
     <string name="card_owner_copy">Name des Kontoinhabers verwenden</string>
-    <!--    <string name="payment">Zahlungsart</string>-->
-    <!--    <string name="payment">Zahlungsart</string>-->
-    <!--    <string name="payment">Zahlungsart</string>-->
+    <string name="bank_owner">Kontoinhaber</string>
+    <string name="iban">IBAN</string>
+    <string name="bic">BIC (Swift-Code)</string>
     <!--    <string name="payment">Zahlungsart</string>-->
 
 
@@ -39,9 +39,8 @@
     <string name="btn_visitor">Als Gast starten</string>
     <string name="btn_save">Übernehmen</string>
     <string name="btn_save_card">Karte hinzufügen</string>
+    <string name="btn_save_bank">Konto hinzufügen</string>
     <string name="btn_buy_now"> Jetzt Kaufen</string>
-
-
 
 
     <!-- TODO: Remove or change this placeholder text -->
