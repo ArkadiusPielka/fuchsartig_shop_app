@@ -6,7 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.example.fuchsartig.R
+import com.example.fuchsartig.adapter.ShopCartAdapter
+import com.example.fuchsartig.adapter.ViewPageAdapter
 import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.databinding.FragmentShoppingVentureBinding
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
@@ -35,9 +39,15 @@ class ShoppingVentureFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val price = product.price.toDouble()
-//        val newPrice = price * 2
-//        val newPriceFormat = String.format("%.2f".format(newPrice))
+        addObserver()
     }
 
+//    TODO logik einbinden
+    private fun addObserver() {
+        sharedViewModel.products.observe(viewLifecycleOwner, Observer {
+            binding.rvShoppingVenture.adapter = ShopCartAdapter(it, sharedViewModel)
+
+
+        })
+    }
 }

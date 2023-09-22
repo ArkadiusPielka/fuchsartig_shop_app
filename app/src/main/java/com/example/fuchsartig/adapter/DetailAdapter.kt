@@ -9,12 +9,15 @@ import coil.transform.RoundedCornersTransformation
 import com.example.fuchsartig.databinding.ListItemDetailBinding
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
-    class DetailAdapter(val dataSet: List<String>, private val sharedViewModel: MainViewModel) : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>(){
+class DetailAdapter(val dataSet: List<String>, private val sharedViewModel: MainViewModel) :
+    RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
 
-    class DetailViewHolder(val binding: ListItemDetailBinding) : RecyclerView.ViewHolder(binding.root)
+    class DetailViewHolder(val binding: ListItemDetailBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailViewHolder {
-        val binding = ListItemDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ListItemDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DetailViewHolder(binding)
     }
 
