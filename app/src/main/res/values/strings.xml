@@ -40,8 +40,8 @@
     <string name="btn_save">Übernehmen</string>
     <string name="btn_save_card">Karte hinzufügen</string>
     <string name="btn_save_bank">Konto hinzufügen</string>
-    <string name="btn_buy_now"> Jetzt Kaufen</string>
-
+    <string name="btn_buy_now">Jetzt Kaufen</string>
+    <string name="btn_paypal">zu PayPal</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
