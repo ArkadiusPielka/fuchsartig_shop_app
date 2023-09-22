@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <style name="tv_title">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">?colorSecondary</item>
         <item name="android:textSize">16sp</item>
@@ -16,11 +15,87 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="btn">
+    <style name="ic_btn">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="backgroundTint">@color/transparent</item>
     </style>
+
+    <style name="btn_user">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="layout_edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="endIconMode">clear_text</item>
+    </style>
+
+    <style name="layout_edit_text_password">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="endIconMode">password_toggle</item>
+    </style>
+
+    <style name="input_edit_text_mail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">@color/transparent</item>
+<!--        <item name="android:imeOptions">actionDone</item>-->
+       <item name="android:inputType">textEmailAddress</item>
+    </style>
+
+
+    <style name="input_edit_text_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:inputType">text</item>
+<!--        <item name="android:imeOptions">actionDone</item>-->
+    </style>
+
+    <style name="input_edit_text_number">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:inputType">number</item>
+<!--        <item name="android:imeOptions">actionDone</item>-->
+    </style>
+
+    <style name="input_edit_text_all">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">@color/transparent</item>
+<!--        <item name="android:imeOptions">actionDone</item>-->
+    </style>
+
+    <style name="input_edit_text_password">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:inputType">textPassword</item>
+<!--        <item name="android:imeOptions">actionDone</item>-->
+    </style>
+
+<style name="card_view">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">16dp</item>
+    <item name="android:layout_marginEnd">16dp</item>
+    <item name="android:layout_marginTop">8dp</item>
+    <item name="android:layout_marginBottom">8dp</item>
+    <item name="cardCornerRadius">20dp</item>
+    <item name="strokeColor">@color/primary_color</item>
+    <item name="strokeWidth">2dp</item>
+    <item name="cardBackgroundColor">@color/transparent</item>
+    <item name="background">@color/white</item>
+</style>
+
 
     <style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>

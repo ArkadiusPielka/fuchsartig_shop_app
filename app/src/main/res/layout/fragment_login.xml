@@ -29,8 +29,7 @@
 
             <ImageButton
                 android:id="@+id/btn_facebook"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/ic_btn"
                 android:scaleType="centerInside"
                 android:layout_weight="1"
                 android:backgroundTint="@color/transparent"
@@ -38,8 +37,7 @@
 
             <ImageButton
                 android:id="@+id/btn_google"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/ic_btn"
                 android:scaleType="centerInside"
                 android:layout_weight="1"
                 android:backgroundTint="@color/transparent"
@@ -49,49 +47,37 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            app:endIconMode="clear_text"
+            style="@style/layout_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_google_facebool">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_mail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:hint="E-Mail" />
+               style="@style/input_edit_text_mail"
+                android:hint="@string/mail" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="16dp"
-            app:endIconMode="password_toggle"
+            style="@style/layout_edit_text_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_mail">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:hint="Password"
-                android:inputType="textPassword" />
+                style="@style/input_edit_text_password"
+                android:hint="@string/password" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_log_in"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            style="@style/btn_user"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/btn_login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/layout_password"
@@ -99,12 +85,14 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:layout_width="66dp"
-            android:layout_height="41dp"
-            android:text="Password vergessen"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_log_in"
+            android:id="@+id/tv_password_forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textColor="@color/blue"
+            android:text="@string/password_forgot"
             app:layout_constraintEnd_toEndOf="@+id/layout_password"
-            app:layout_constraintTop_toTopOf="@+id/btn_log_in" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_password" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

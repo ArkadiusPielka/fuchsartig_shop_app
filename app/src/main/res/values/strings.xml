@@ -9,7 +9,10 @@
     <string name="shopping">Einkaufswagen</string>
     <string name="settings">Einstellungen</string>
     <string name="details">Produkt Details</string>
-
+    <string name="tv_home">Das ist neu</string>
+    <string name="mail">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="password_forgot">Password vergessen</string>
 
     <string name="personal_data">Persönliche Daten</string>
     <string name="first_name">Vorname</string>
@@ -36,8 +39,13 @@
     <string name="btn_visitor">Als Gast starten</string>
     <string name="btn_save">Übernehmen</string>
     <string name="btn_save_card">Karte hinzufügen</string>
+    <string name="btn_buy_now"> Jetzt Kaufen</string>
+
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    Jetzt Kaufen
 </resources>

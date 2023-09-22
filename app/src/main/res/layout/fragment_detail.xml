@@ -23,8 +23,6 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
             android:text="@string/test"
@@ -76,7 +74,7 @@
 
                 <ImageButton
                     android:id="@+id/btn_like"
-                    style="@style/btn"
+                    style="@style/ic_btn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/indicator"
                     app:srcCompat="@drawable/ic_heart_border" />
@@ -106,7 +104,6 @@
                     style="@style/tv_title"
                     android:layout_marginEnd="8dp"
                     android:text="10,95"
-                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/img_euro"
                     app:layout_constraintEnd_toStartOf="@id/img_euro"
                     app:layout_constraintTop_toTopOf="@+id/img_euro" />
@@ -124,12 +121,10 @@
                 <TextView
                     android:id="@+id/tv_home"
                     style="@style/tv_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="Produktbeschreibung"
                     android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_like" />
 
@@ -139,18 +134,15 @@
                     android:layout_height="100dp"
                     android:layout_margin="8dp"
                     android:text="Produktbeschreibung"
-                    app:layout_constraintEnd_toEndOf="parent"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_home" />
 
 
                 <Button
                     android:id="@+id/btn_buy_now"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="Jetzt Kaufen"
+                    style="@style/btn_user"
+                    android:text="@string/btn_buy_now"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -159,11 +151,8 @@
 
                 <Button
                     android:id="@+id/btn_in_cart"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Einkaufswagen"
-                    android:layout_marginBottom="16dp"
+                    style="@style/btn_user"
+                    android:text="@string/shopping"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

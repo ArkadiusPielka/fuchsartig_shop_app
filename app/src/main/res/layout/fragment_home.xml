@@ -19,9 +19,8 @@
 
     <TextView
         android:id="@+id/text_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Das ist neu"
+       style="@style/tv_title"
+        android:text="@string/tv_home"
         android:textColor="?attr/colorSecondary"
         android:textSize="24sp"
         android:textStyle="bold"

@@ -36,6 +36,7 @@ class RegisterFragment : Fragment() {
 
 
 
+
         binding.btnSavePersonalData.setOnClickListener {
 
             val firstName = binding.inputFirstName.text.toString().trim()

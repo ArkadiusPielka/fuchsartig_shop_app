@@ -27,7 +27,7 @@
 
         <ImageButton
             android:id="@+id/btn_like"
-            style="@style/btn"
+            style="@style/ic_btn"
             android:src="@drawable/ic_heart_border"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
