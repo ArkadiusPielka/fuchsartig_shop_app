@@ -78,7 +78,7 @@ class RegisterFragment : Fragment() {
                 binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_down)
                 binding.inputPayment.visibility = View.GONE
                 binding.cvFragmentPayment.visibility = View.GONE
-                binding.btnSavePayment.visibility = View.GONE
+//                binding.btnSavePayment.visibility = View.GONE
                 binding.rbGroup.clearCheck()
             }
         }
@@ -112,7 +112,7 @@ class RegisterFragment : Fragment() {
             showStartFragment.remove(nowFragment)
         }
         binding.cvFragmentPayment.visibility = View.VISIBLE
-        binding.btnSavePayment.visibility = View.VISIBLE
+//        binding.btnSavePayment.visibility = View.VISIBLE
         showStartFragment.replace(R.id.cv_fragment_payment, fragment)
         showStartFragment.commit()
     }
