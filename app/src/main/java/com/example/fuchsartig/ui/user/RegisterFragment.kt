@@ -10,6 +10,12 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.CalendarConstraints
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 class RegisterFragment : Fragment() {
 
@@ -34,6 +40,7 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showFragment()
+        birthday()
 
         binding.btnHome.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
@@ -121,5 +128,36 @@ class RegisterFragment : Fragment() {
 //        binding.btnSavePayment.visibility = View.VISIBLE
         showStartFragment.replace(R.id.cv_fragment_payment, fragment)
         showStartFragment.commit()
+    }
+
+    fun birthday(){
+
+        val inputBirthdate = binding.inputBirthdate
+
+        val constraintsBuilder = CalendarConstraints.Builder()
+        val maxCalendar = MaterialDatePicker.todayInUtcMilliseconds()
+        constraintsBuilder.setEnd(maxCalendar)
+        val constraints = constraintsBuilder.build()
+
+        val builder = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Wählen Sie Ihr Geburtsdatum")
+            .setCalendarConstraints(constraints)
+
+        val datePicker = builder.build()
+
+        inputBirthdate.setOnClickListener {
+            datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
+        }
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.timeInMillis = selection
+
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val formattedDate = dateFormat.format(calendar.time)
+
+            inputBirthdate.setText(formattedDate)
+        }
+
     }
 }

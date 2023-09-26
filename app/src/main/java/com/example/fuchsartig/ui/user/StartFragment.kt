@@ -40,30 +40,30 @@ class StartFragment : Fragment() {
         }
     }
 
-private fun showFragment(){
-    val switchView = binding.switchCompat
+    private fun showFragment() {
+        val switchView = binding.switchCompat
 
-    // Beim Start wird das LoginFragment angezeigt
-    val fragmentManager: FragmentManager = childFragmentManager
-    val showStartFragment: FragmentTransaction = fragmentManager.beginTransaction()
-    showStartFragment.replace(R.id.cv_fragment_start, LoginFragment())
-    showStartFragment.commit()
+        // Beim Start wird das LoginFragment angezeigt
+        val fragmentManager: FragmentManager = childFragmentManager
+        val showStartFragment: FragmentTransaction = fragmentManager.beginTransaction()
+        showStartFragment.replace(R.id.cv_fragment_start, LoginFragment())
+        showStartFragment.commit()
 
-    switchView.setOnCheckedChangeListener { _, isChecked ->
-        val fragment = if (isChecked) SingupFragment() else LoginFragment()
+        switchView.setOnCheckedChangeListener { _, isChecked ->
+            val fragment = if (isChecked) SingupFragment() else LoginFragment()
 
 
-        val showFragment: FragmentTransaction = fragmentManager.beginTransaction()
+            val showFragment: FragmentTransaction = fragmentManager.beginTransaction()
 
-        showFragment.setCustomAnimations(
-            R.anim.slide_right,
-            R.anim.slide_left
-        )
+            showFragment.setCustomAnimations(
+                R.anim.slide_right,
+                R.anim.slide_left
+            )
 
-        showFragment.replace(R.id.cv_fragment_start, fragment)
-        showFragment.addToBackStack(null)
-        showFragment.commit()
+            showFragment.replace(R.id.cv_fragment_start, fragment)
+            showFragment.addToBackStack(null)
+            showFragment.commit()
 
+        }
     }
-}
 }

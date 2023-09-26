@@ -8,6 +8,7 @@ data class Profile(
     val street: String = "",
     val hausNr: String = "",
     val plz: String = "",
+    val city: String = "",
     val country: String = "",
-    val land: String = "",
+
 )

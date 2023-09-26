@@ -19,6 +19,9 @@
     <string name="empty_cart">Einkaufswagen ist leer</string>
     <string name="buy_artikel">Zur Kasse gehen (%1$s Artikel)</string>
     <string name="go_shopping">weiter Einkaufen</string>
+    <string name="register">Registrieren</string>
+    <string name="profile">Profil</string>
+    <string name="birthdate">Geburtsdatum</string>
 
     <string name="personal_data">Persönliche Daten</string>
     <string name="personal_login_data">Log in ändern</string>

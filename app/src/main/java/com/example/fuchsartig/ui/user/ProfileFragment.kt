@@ -9,6 +9,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentProfileBinding
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 
 class ProfileFragment : Fragment() {
@@ -33,6 +39,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showFragment()
+        birthday()
 
         binding.btnEdit.setOnClickListener {
             visibility()
@@ -132,6 +139,37 @@ class ProfileFragment : Fragment() {
 
         rbPayPal.setOnClickListener {
             checkFragment(PayPalFragment())
+        }
+
+    }
+
+    fun birthday(){
+
+        val inputBirthdate = binding.inputBirthdate
+
+        val constraintsBuilder = CalendarConstraints.Builder()
+        val maxCalendar = MaterialDatePicker.todayInUtcMilliseconds()
+        constraintsBuilder.setEnd(maxCalendar)
+        val constraints = constraintsBuilder.build()
+
+        val builder = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Wählen Sie Ihr Geburtsdatum")
+            .setCalendarConstraints(constraints)
+
+        val datePicker = builder.build()
+
+        inputBirthdate.setOnClickListener {
+            datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
+        }
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.timeInMillis = selection
+
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val formattedDate = dateFormat.format(calendar.time)
+
+            inputBirthdate.setText(formattedDate)
         }
 
     }
