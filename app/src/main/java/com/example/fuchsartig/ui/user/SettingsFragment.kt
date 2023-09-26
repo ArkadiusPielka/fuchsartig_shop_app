@@ -32,6 +32,10 @@ private lateinit var binding: FragmentSettingsBinding
         binding.btnLogOut.setOnClickListener {
             findNavController().navigate(R.id.navigation_login)
         }
+
+        binding.btnProfil.setOnClickListener {
+            findNavController().navigate(R.id.navigation_profil)
+        }
     }
 
 }

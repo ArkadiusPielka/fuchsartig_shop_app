@@ -60,4 +60,9 @@
         android:name="com.example.fuchsartig.ui.user.MasterCardFragment"
         android:label="fragment_master_card"
         tools:layout="@layout/fragment_master_card" />
+    <fragment
+        android:id="@+id/navigation_profil"
+        android:name="com.example.fuchsartig.ui.user.ProfileFragment"
+        android:label="Profil"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

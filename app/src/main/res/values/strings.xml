@@ -12,6 +12,8 @@
     <string name="tv_home">Das ist neu</string>
     <string name="mail">E-Mail</string>
     <string name="password">Password</string>
+    <string name="current_password">Aktuelles Password</string>
+    <string name="new_password">Neues Password</string>
     <string name="password_forgot">Password vergessen</string>
     <string name="empty_favorite">keine Favoriten</string>
     <string name="empty_cart">Einkaufswagen ist leer</string>
@@ -19,6 +21,7 @@
     <string name="go_shopping">weiter Einkaufen</string>
 
     <string name="personal_data">Persönliche Daten</string>
+    <string name="personal_login_data">Log in ändern</string>
     <string name="first_name">Vorname</string>
     <string name="last_name">Nachname</string>
     <string name="street">Straße</string>

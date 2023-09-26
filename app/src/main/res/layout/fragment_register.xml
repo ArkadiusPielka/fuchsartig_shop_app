@@ -76,7 +76,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cw_personal_data"
+                android:id="@+id/layout_personal_data"
                 style="@style/card_view"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,10 +117,10 @@
                         app:tint="@color/green" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/input_personal_data"
+                        android:id="@+id/cv_personal_data"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/btn_drop_down">
 
                         <TextView
@@ -278,12 +278,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cw_payment"
+                android:id="@+id/layout_payment"
                 style="@style/card_view"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cw_personal_data">
+                app:layout_constraintTop_toBottomOf="@id/layout_personal_data">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -319,7 +319,7 @@
                         app:tint="@color/green" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/input_payment"
+                        android:id="@+id/cv_payment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -368,21 +368,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="16dp"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toTopOf="@id/btn_save_payment"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/input_payment" />
+                        app:layout_constraintTop_toBottomOf="@id/cv_payment" />
 
-<!--                    <Button-->
-<!--                        android:id="@+id/btn_save_payment"-->
-<!--                        style="@style/btn_user"-->
-<!--                        android:layout_marginBottom="16dp"-->
-<!--                        android:text="@string/btn_save"-->
-<!--                        android:visibility="gone"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/cv_fragment_payment" />-->
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>

@@ -55,35 +55,41 @@ class RegisterFragment : Fragment() {
                 binding.btnDone.visibility = View.INVISIBLE
             }
             binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
-            binding.inputPersonalData.visibility = View.GONE
+            binding.cvPersonalData.visibility = View.GONE
         }
 
 
         binding.btnDropDown.setOnClickListener {
-            if (binding.inputPersonalData.visibility == View.GONE) {
-                binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
-                binding.inputPersonalData.visibility = View.VISIBLE
-            } else {
-                binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
-                binding.inputPersonalData.visibility = View.GONE
-            }
+            dropDownPersonalData()
         }
 
         binding.btnDropDownPayment.setOnClickListener {
-            if (binding.inputPayment.visibility == View.GONE) {
-                binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_up)
-                binding.inputPayment.visibility = View.VISIBLE
-
-            } else {
-                binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_down)
-                binding.inputPayment.visibility = View.GONE
-                binding.cvFragmentPayment.visibility = View.GONE
-//                binding.btnSavePayment.visibility = View.GONE
-                binding.rbGroup.clearCheck()
-            }
+            dropDownPayment()
         }
     }
 
+    private fun dropDownPersonalData(){
+        if (binding.cvPersonalData.visibility == View.GONE) {
+            binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
+            binding.cvPersonalData.visibility = View.VISIBLE
+        } else {
+            binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
+            binding.cvPersonalData.visibility = View.GONE
+        }
+    }
+
+    private fun dropDownPayment(){
+        if (binding.cvPayment.visibility == View.GONE) {
+            binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_up)
+            binding.cvPayment.visibility = View.VISIBLE
+
+        } else {
+            binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_down)
+            binding.cvPayment.visibility = View.GONE
+            binding.cvFragmentPayment.visibility = View.GONE
+            binding.rbGroup.clearCheck()
+        }
+    }
     private fun showFragment() {
         val rbMasterCard = binding.rbMastercard
         val rbBanking = binding.rbBanking

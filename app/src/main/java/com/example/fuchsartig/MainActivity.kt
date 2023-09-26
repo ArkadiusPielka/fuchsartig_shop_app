@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }
+                R.id.navigation_profil -> {
+                    binding.bottomNav.visibility = View.GONE
+                    supportActionBar?.show()
+                }
                 else -> {
                     binding.bottomNav.visibility = View.VISIBLE
                     supportActionBar?.hide()
