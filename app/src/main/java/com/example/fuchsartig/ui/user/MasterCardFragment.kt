@@ -29,5 +29,9 @@ private lateinit var binding: FragmentMasterCardBinding
         super.onViewCreated(view, savedInstanceState)
 
         binding.spinnerMonth
+
+        binding.btnSaveCard.setOnClickListener {
+
+        }
     }
 }

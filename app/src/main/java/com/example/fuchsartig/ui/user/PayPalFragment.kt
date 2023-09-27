@@ -27,5 +27,9 @@ class PayPalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnPaypal.setOnClickListener {
+
+        }
     }
 }

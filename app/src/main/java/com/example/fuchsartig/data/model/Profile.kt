@@ -1,5 +1,7 @@
 package com.example.fuchsartig.data.model
 
+import java.util.Date
+
 data class Profile(
     val gender: String = "",
     val firstName: String = "",
@@ -10,5 +12,6 @@ data class Profile(
     val plz: String = "",
     val city: String = "",
     val country: String = "",
+    val birthdate: Date? = null
 
 )

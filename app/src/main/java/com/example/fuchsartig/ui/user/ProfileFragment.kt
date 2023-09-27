@@ -45,6 +45,11 @@ class ProfileFragment : Fragment() {
             visibility()
         }
 
+        binding.btnSaveLoginData.setOnClickListener {
+
+        }
+
+
         binding.btnSavePersonalData.setOnClickListener {
 
             val firstName = binding.inputFirstName.text.toString().trim()
@@ -93,10 +98,10 @@ class ProfileFragment : Fragment() {
 
     private fun dropDownLogin(){
         if (binding.cvPersonalLoginData.visibility == View.GONE) {
-            binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
+            binding.btnDropDownLogin.setImageResource(R.drawable.ic_drop_up)
             binding.cvPersonalLoginData.visibility = View.VISIBLE
         } else {
-            binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
+            binding.btnDropDownLogin.setImageResource(R.drawable.ic_drop_down)
             binding.cvPersonalLoginData.visibility = View.GONE
         }
     }
@@ -183,7 +188,6 @@ class ProfileFragment : Fragment() {
             showStartFragment.remove(nowFragment)
         }
         binding.cvFragmentPayment.visibility = View.VISIBLE
-//        binding.btnSavePayment.visibility = View.VISIBLE
         showStartFragment.replace(R.id.cv_fragment_payment, fragment)
         showStartFragment.commit()
     }

@@ -78,6 +78,7 @@
                 android:id="@+id/layout_login_data"
                 style="@style/card_view"
                 app:cardElevation="0dp"
+               android:layout_marginVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_img_profil">
@@ -182,6 +183,7 @@
                 android:id="@+id/layout_personal_data"
                 style="@style/card_view"
                 app:cardElevation="0dp"
+                android:layout_marginVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_login_data">
@@ -223,7 +225,7 @@
                         android:id="@+id/cv_personal_data"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/btn_drop_down">
 
                         <TextView
@@ -400,6 +402,7 @@
                 android:id="@+id/layout_payment"
                 style="@style/card_view"
                 app:cardElevation="0dp"
+                android:layout_marginVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_personal_data">
