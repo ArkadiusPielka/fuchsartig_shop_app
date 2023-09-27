@@ -5,14 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentSettingsBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 
 
 class SettingsFragment : Fragment() {
 
-private lateinit var binding: FragmentSettingsBinding
+    private lateinit var binding: FragmentSettingsBinding
+
+    private val authViewModel: AuthViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,7 +27,7 @@ private lateinit var binding: FragmentSettingsBinding
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       binding = FragmentSettingsBinding.inflate(inflater,container,false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -30,6 +35,11 @@ private lateinit var binding: FragmentSettingsBinding
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnLogOut.setOnClickListener {
+            findNavController().navigate(R.id.navigation_login)
+            authViewModel.logout()
+        }
+
+        binding.btnLogIn.setOnClickListener {
             findNavController().navigate(R.id.navigation_login)
         }
 

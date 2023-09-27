@@ -11,15 +11,6 @@
         android:title="@string/prokuct"
         android:icon="@drawable/ic_bag"/>
 
-    <item
-        android:id="@+id/navigation_favorite"
-        android:title="@string/favorite"
-        android:icon="@drawable/ic_heart_border" />
-
-    <item
-        android:id="@+id/navigation_shopping"
-        android:title="@string/shopping"
-        android:icon="@drawable/ic_shopping_cart_empty"/>
 
     <item
         android:id="@+id/navigation_settings"

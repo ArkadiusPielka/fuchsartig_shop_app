@@ -12,6 +12,7 @@ data class Profile(
     val plz: String = "",
     val city: String = "",
     val country: String = "",
-    val birthdate: Date? = null
+    val birthdate: Date? = null,
+    val paymentType: String = ""
 
 )

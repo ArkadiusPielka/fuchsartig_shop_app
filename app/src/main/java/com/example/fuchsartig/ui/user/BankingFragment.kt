@@ -29,7 +29,7 @@ class BankingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSavePayment.setOnClickListener {
+        binding.btnSaveBanking.setOnClickListener {
 
         }
     }

@@ -8,13 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
+import com.example.fuchsartig.MainActivity
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentStartBinding
+import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
 
 class StartFragment : Fragment() {
 
     private lateinit var binding: FragmentStartBinding
+
+    private lateinit var sharedViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,6 +42,7 @@ class StartFragment : Fragment() {
 
         binding.btnVisitor.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
+
         }
     }
 

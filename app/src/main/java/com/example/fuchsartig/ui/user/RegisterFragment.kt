@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
+import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.CalendarConstraints
 import java.text.SimpleDateFormat
@@ -20,6 +21,8 @@ import java.util.TimeZone
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+
+//    private lateinit var shareViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

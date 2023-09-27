@@ -67,4 +67,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
         _currentImages.value = _currentImages.value
     }
+
+    fun getUserRole(userRole: Boolean): Boolean {
+        return userRole
+    }
 }

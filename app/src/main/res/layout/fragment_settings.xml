@@ -19,6 +19,7 @@
             android:id="@+id/btn_log_out"
             style="@style/card_view_cart"
             android:layout_width="100dp"
+            android:visibility="visible"
             android:layout_height="wrap_content"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@color/transparent">
@@ -44,7 +45,41 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:gravity="bottom"
-                    android:text="Log out" />
+                    android:text="@string/Log_out" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_log_in"
+            style="@style/card_view_cart"
+            android:layout_width="100dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/transparent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_log_out" />
+
+                <TextView
+                    style="@style/tv_title"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:text="@string/log_in" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

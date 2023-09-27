@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentProfileBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
@@ -19,9 +21,12 @@ import java.util.TimeZone
 
 class ProfileFragment : Fragment() {
 
-        private lateinit var binding: FragmentProfileBinding
+    private lateinit var binding: FragmentProfileBinding
 
-    private var visibility  = false
+    private val authViewModel: AuthViewModel by activityViewModels()
+
+
+    private var visibility = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,12 +36,14 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       binding = FragmentProfileBinding.inflate(inflater,container,false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.inputProfilEmail.setText(authViewModel.currentUser.value?.email.toString())
 
         showFragment()
         birthday()
@@ -79,14 +86,14 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun visibility(){
+    private fun visibility() {
 
         if (!visibility) {
             visibility = true
             binding.cvPayment.visibility = View.VISIBLE
             binding.cvPersonalData.visibility = View.VISIBLE
             binding.cvPersonalLoginData.visibility = View.VISIBLE
-        } else{
+        } else {
             visibility = false
             binding.cvPayment.visibility = View.GONE
             binding.cvPersonalData.visibility = View.GONE
@@ -96,7 +103,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun dropDownLogin(){
+    private fun dropDownLogin() {
         if (binding.cvPersonalLoginData.visibility == View.GONE) {
             binding.btnDropDownLogin.setImageResource(R.drawable.ic_drop_up)
             binding.cvPersonalLoginData.visibility = View.VISIBLE
@@ -106,7 +113,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun dropDownPersonalData(){
+    private fun dropDownPersonalData() {
         if (binding.cvPersonalData.visibility == View.GONE) {
             binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
             binding.cvPersonalData.visibility = View.VISIBLE
@@ -116,7 +123,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun dropDownPayment(){
+    private fun dropDownPayment() {
         if (binding.cvPayment.visibility == View.GONE) {
             binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_up)
             binding.cvPayment.visibility = View.VISIBLE
@@ -148,7 +155,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    fun birthday(){
+    fun birthday() {
 
         val inputBirthdate = binding.inputBirthdate
 
@@ -179,7 +186,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun checkFragment(fragment: Fragment){
+    private fun checkFragment(fragment: Fragment) {
         val fragmentOnboardingManager: FragmentManager = childFragmentManager
         val showStartFragment: FragmentTransaction = fragmentOnboardingManager.beginTransaction()
 
