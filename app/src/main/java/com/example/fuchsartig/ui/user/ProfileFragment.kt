@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import com.example.fuchsartig.R
+import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentProfileBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.google.android.material.datepicker.CalendarConstraints
@@ -45,8 +48,10 @@ class ProfileFragment : Fragment() {
 
         binding.inputProfilEmail.setText(authViewModel.currentUser.value?.email.toString())
 
+
         showFragment()
         birthday()
+        fillSpinner()
 
         binding.btnEdit.setOnClickListener {
             visibility()
@@ -59,19 +64,51 @@ class ProfileFragment : Fragment() {
 
         binding.btnSavePersonalData.setOnClickListener {
 
-            val firstName = binding.inputFirstName.text.toString().trim()
-            val lastName = binding.inputLastName.text.toString().trim()
+            val gender = binding.spinnerGender.toString()
+            val firstName = binding.inputFirstName.text.toString()
+            val lastName = binding.inputLastName.text.toString()
+            val birth = binding.inputBirthdate.text.toString()
+            val city = binding.inputCity.text.toString()
+            val hausNr = binding.inputHausNumber.text.toString()
+            val country = binding.inputCountry.text.toString()
+            val street = binding.inputStreet.text.toString()
+            val plz = binding.inputPlz.text.toString()
 
-            if (firstName != "" && lastName != "") {
-                binding.inputFirstName.setText("")
-                binding.inputLastName.setText("")
-                binding.btnDone.visibility = View.VISIBLE
-            } else {
-                binding.btnDone.visibility = View.INVISIBLE
-            }
-            binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
-            binding.cvPersonalData.visibility = View.GONE
+            authViewModel.updateProfile(
+                Profile(
+                    gender = gender,
+                    firstName = firstName,
+                    lastName = lastName,
+                    birthdate = birth,
+                    city = city,
+                    hausNr = hausNr,
+                    country = country,
+                    street = street,
+                    plz = plz
+                )
+            )
+
+//            if (firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != "") {
+//                authViewModel.updateProfile(Profile(personalData = true))
+//            }
+
         }
+
+        authViewModel.profileRef.addSnapshotListener { snapshot, error ->
+            if (error == null && snapshot != null) {
+                val updatedProfile = snapshot.toObject(Profile::class.java)
+
+                binding.inputFirstName.setText(updatedProfile?.firstName)
+                binding.inputLastName.setText(updatedProfile?.lastName)
+                binding.inputBirthdate.setText(updatedProfile?.birthdate)
+                binding.inputCity.setText(updatedProfile?.city)
+                binding.inputHausNumber.setText(updatedProfile?.hausNr)
+                binding.inputCountry.setText(updatedProfile?.country)
+                binding.inputStreet.setText(updatedProfile?.street)
+                binding.inputPlz.setText(updatedProfile?.plz)
+            }
+        }
+
 
         binding.btnDropDownLogin.setOnClickListener {
             dropDownLogin()
@@ -197,5 +234,39 @@ class ProfileFragment : Fragment() {
         binding.cvFragmentPayment.visibility = View.VISIBLE
         showStartFragment.replace(R.id.cv_fragment_payment, fragment)
         showStartFragment.commit()
+    }
+
+    private fun fillSpinner() {
+
+        val spinnerList = mutableListOf<String>("", "Herr", "Frau")
+
+
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                spinnerList
+            )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        oder simple_spinner_item
+        binding.spinnerGender.adapter = adapter
+
+        binding.spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedAmount = spinnerList[position]
+                authViewModel.updateProfile(Profile(gender = selectedAmount))
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
     }
 }

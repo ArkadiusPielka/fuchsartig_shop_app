@@ -9,14 +9,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
+//import com.google.firebase.storage.FirebaseStorage
 
 class AuthViewModel : ViewModel() {
 
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseStore = FirebaseFirestore.getInstance()
-    private val firebaseStorage = FirebaseStorage.getInstance()
+//    private val firebaseStorage = FirebaseStorage.getInstance()
 
 
     private val _currentUser = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
@@ -25,7 +25,7 @@ class AuthViewModel : ViewModel() {
 
     lateinit var profileRef: DocumentReference
 
-    private val storageRef = firebaseStorage.reference
+//    private val storageRef = firebaseStorage.reference
 
     init {
         if (firebaseAuth.currentUser != null) {
@@ -38,7 +38,8 @@ class AuthViewModel : ViewModel() {
                 if (authResult.isSuccessful) {
                     setupUserEnv()
                     setupNewProfile()
-                    logout()
+//                    logout()
+//                    login(email, password)
                 } else {
                     Log.e("REGISER", "${authResult.exception}")
                 }

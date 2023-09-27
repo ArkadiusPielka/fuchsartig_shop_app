@@ -1,15 +1,22 @@
 package com.example.fuchsartig.ui.user
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
+import com.example.fuchsartig.data.model.Product
+import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.CalendarConstraints
@@ -21,6 +28,8 @@ import java.util.TimeZone
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
 //    private lateinit var shareViewModel: MainViewModel
 
@@ -34,8 +43,6 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
@@ -43,31 +50,58 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showFragment()
-        birthday()
+
 
         binding.btnHome.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
         }
 
-
-
-
         binding.btnSavePersonalData.setOnClickListener {
+            birthday()
+            fillSpinner()
+            val firstName = binding.inputFirstName.text.toString()
+            val lastName = binding.inputLastName.text.toString()
+            val birth = binding.inputBirthdate.text.toString()
+            val city = binding.inputCity.text.toString()
+            val hausNr = binding.inputHausNumber.text.toString()
+            val country = binding.inputCountry.text.toString()
+            val street = binding.inputStreet.text.toString()
+            val plz = binding.inputPlz.text.toString()
 
-            val firstName = binding.inputFirstName.text.toString().trim()
-            val lastName = binding.inputLastName.text.toString().trim()
+            authViewModel.updateProfile(
+                Profile(
+                    firstName = firstName,
+                    lastName = lastName,
+                    birthdate = birth,
+                    city = city,
+                    hausNr = hausNr,
+                    country = country,
+                    street = street,
+                    plz = plz
+                )
+            )
 
-            if (firstName != "" && lastName != "") {
-                binding.inputFirstName.setText("")
-                binding.inputLastName.setText("")
-                binding.btnDone.visibility = View.VISIBLE
-            } else {
-                binding.btnDone.visibility = View.INVISIBLE
-            }
-            binding.btnDropDown.setImageResource(R.drawable.ic_drop_down)
-            binding.cvPersonalData.visibility = View.GONE
+//            if (firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != "") {
+//                authViewModel.updateProfile(Profile(personalData = true))
+//            }
+
         }
 
+        authViewModel.profileRef.addSnapshotListener {snapshot, error ->
+            if (error == null && snapshot != null){
+                val updatedProfile = snapshot.toObject(Profile::class.java)
+                binding.inputFirstName.setText(updatedProfile?.firstName)
+                binding.inputLastName.setText(updatedProfile?.lastName)
+                binding.inputBirthdate.setText(updatedProfile?.birthdate)
+                binding.inputCity.setText(updatedProfile?.city)
+                binding.inputHausNumber.setText(updatedProfile?.hausNr)
+                binding.inputCountry.setText(updatedProfile?.country)
+                binding.inputStreet.setText(updatedProfile?.street)
+                binding.inputPlz.setText(updatedProfile?.plz)
+            } else {
+                Log.e("REGISTER", "$error")
+            }
+        }
 
         binding.btnDropDown.setOnClickListener {
             dropDownPersonalData()
@@ -78,7 +112,9 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun dropDownPersonalData(){
+    private fun dropDownPersonalData() {
+
+
         if (binding.cvPersonalData.visibility == View.GONE) {
             binding.btnDropDown.setImageResource(R.drawable.ic_drop_up)
             binding.cvPersonalData.visibility = View.VISIBLE
@@ -88,7 +124,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun dropDownPayment(){
+    private fun dropDownPayment() {
         if (binding.cvPayment.visibility == View.GONE) {
             binding.btnDropDownPayment.setImageResource(R.drawable.ic_drop_up)
             binding.cvPayment.visibility = View.VISIBLE
@@ -100,13 +136,14 @@ class RegisterFragment : Fragment() {
             binding.rbGroup.clearCheck()
         }
     }
+
     private fun showFragment() {
         val rbMasterCard = binding.rbMastercard
         val rbBanking = binding.rbBanking
         val rbPayPal = binding.rbPaypal
 
         rbMasterCard.setOnClickListener {
-           checkFragment(MasterCardFragment())
+            checkFragment(MasterCardFragment())
         }
 
         rbBanking.setOnClickListener {
@@ -119,7 +156,7 @@ class RegisterFragment : Fragment() {
 
     }
 
-    fun checkFragment(fragment: Fragment){
+    fun checkFragment(fragment: Fragment) {
         val fragmentOnboardingManager: FragmentManager = childFragmentManager
         val showStartFragment: FragmentTransaction = fragmentOnboardingManager.beginTransaction()
 
@@ -133,7 +170,7 @@ class RegisterFragment : Fragment() {
         showStartFragment.commit()
     }
 
-    fun birthday(){
+    fun birthday(): String {
 
         val inputBirthdate = binding.inputBirthdate
 
@@ -148,6 +185,8 @@ class RegisterFragment : Fragment() {
 
         val datePicker = builder.build()
 
+        var formattedDate = ""
+
         inputBirthdate.setOnClickListener {
             datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
         }
@@ -157,9 +196,46 @@ class RegisterFragment : Fragment() {
             calendar.timeInMillis = selection
 
             val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            val formattedDate = dateFormat.format(calendar.time)
+            formattedDate = dateFormat.format(calendar.time)
 
             inputBirthdate.setText(formattedDate)
+        }
+
+        return formattedDate
+
+    }
+
+    private fun fillSpinner() {
+
+
+        val spinnerList = mutableListOf<String>("", "Herr", "Frau")
+
+
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                spinnerList
+            )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        oder simple_spinner_item
+        binding.spinnerGender.adapter = adapter
+
+        binding.spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedAmount = spinnerList[position]
+                authViewModel.updateProfile(Profile(gender = selectedAmount))
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
 
     }
