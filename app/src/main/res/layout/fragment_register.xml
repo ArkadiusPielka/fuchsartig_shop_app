@@ -123,23 +123,37 @@
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@id/btn_drop_down">
 
-                        <TextView
-                            android:id="@+id/textView4"
-                            style="@style/tv_title"
-                            android:layout_marginStart="24dp"
-                            android:text="Anrede:"
-                            app:layout_constraintBottom_toBottomOf="@+id/spinner_gender"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/spinner_gender" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/textView4"-->
+<!--                            style="@style/tv_title"-->
+<!--                            android:layout_marginStart="24dp"-->
+<!--                            android:text="Anrede:"-->
+<!--                            app:layout_constraintBottom_toBottomOf="@+id/spinner_gender"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="@+id/spinner_gender" />-->
 
                         <Spinner
                             android:id="@+id/spinner_gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="16dp"
-                            android:layout_marginStart="8dp"
-                            app:layout_constraintStart_toEndOf="@+id/textView4"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_gender"
+                            style="@style/layout_edit_text"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spinner_gender">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_gender"
+                            style="@style/input_edit_text_text"
+                            android:hint="Auswählen oder eingeben" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/layout_first_name"
@@ -147,7 +161,7 @@
                             android:layout_marginTop="16dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/spinner_gender">
+                            app:layout_constraintTop_toBottomOf="@id/layout_gender">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/input_first_name"

@@ -18,10 +18,13 @@ class AuthViewModel : ViewModel() {
     private val firebaseStore = FirebaseFirestore.getInstance()
 //    private val firebaseStorage = FirebaseStorage.getInstance()
 
+    val selectedGender = MutableLiveData<String>()
+
 
     private val _currentUser = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
+
 
     lateinit var profileRef: DocumentReference
 
@@ -38,8 +41,6 @@ class AuthViewModel : ViewModel() {
                 if (authResult.isSuccessful) {
                     setupUserEnv()
                     setupNewProfile()
-//                    logout()
-//                    login(email, password)
                 } else {
                     Log.e("REGISER", "${authResult.exception}")
                 }
@@ -64,6 +65,7 @@ class AuthViewModel : ViewModel() {
     fun updateProfile(profile: Profile) {
         profileRef.set(profile)
     }
+
 
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser

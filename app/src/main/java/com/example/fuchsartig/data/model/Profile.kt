@@ -3,6 +3,7 @@ package com.example.fuchsartig.data.model
 import java.util.Date
 
 data class Profile(
+
     val gender: String = "",
     val firstName: String = "",
     val lastName: String = "",

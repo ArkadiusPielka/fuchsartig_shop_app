@@ -48,7 +48,6 @@ class ProfileFragment : Fragment() {
 
         binding.inputProfilEmail.setText(authViewModel.currentUser.value?.email.toString())
 
-
         showFragment()
         birthday()
         fillSpinner()
@@ -64,7 +63,7 @@ class ProfileFragment : Fragment() {
 
         binding.btnSavePersonalData.setOnClickListener {
 
-            val gender = binding.spinnerGender.toString()
+            val genderSelected = binding.inputGender.text.toString()
             val firstName = binding.inputFirstName.text.toString()
             val lastName = binding.inputLastName.text.toString()
             val birth = binding.inputBirthdate.text.toString()
@@ -74,30 +73,27 @@ class ProfileFragment : Fragment() {
             val street = binding.inputStreet.text.toString()
             val plz = binding.inputPlz.text.toString()
 
-            authViewModel.updateProfile(
-                Profile(
-                    gender = gender,
-                    firstName = firstName,
-                    lastName = lastName,
-                    birthdate = birth,
-                    city = city,
-                    hausNr = hausNr,
-                    country = country,
-                    street = street,
-                    plz = plz
-                )
+            val profile = Profile(
+                gender = genderSelected,
+                firstName = firstName,
+                lastName = lastName,
+                birthdate = birth,
+                city = city,
+                hausNr = hausNr,
+                country = country,
+                street = street,
+                plz = plz
             )
-
-//            if (firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != "") {
-//                authViewModel.updateProfile(Profile(personalData = true))
-//            }
+            authViewModel.updateProfile(
+                profile
+            )
 
         }
 
         authViewModel.profileRef.addSnapshotListener { snapshot, error ->
             if (error == null && snapshot != null) {
                 val updatedProfile = snapshot.toObject(Profile::class.java)
-
+                binding.inputGender.setText(updatedProfile?.gender)
                 binding.inputFirstName.setText(updatedProfile?.firstName)
                 binding.inputLastName.setText(updatedProfile?.lastName)
                 binding.inputBirthdate.setText(updatedProfile?.birthdate)
@@ -192,7 +188,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    fun birthday() {
+    fun birthday(): String {
 
         val inputBirthdate = binding.inputBirthdate
 
@@ -207,6 +203,8 @@ class ProfileFragment : Fragment() {
 
         val datePicker = builder.build()
 
+        var formattedDate = ""
+
         inputBirthdate.setOnClickListener {
             datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
         }
@@ -216,10 +214,12 @@ class ProfileFragment : Fragment() {
             calendar.timeInMillis = selection
 
             val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            val formattedDate = dateFormat.format(calendar.time)
+            formattedDate = dateFormat.format(calendar.time)
 
             inputBirthdate.setText(formattedDate)
         }
+
+        return formattedDate
 
     }
 
@@ -238,35 +238,37 @@ class ProfileFragment : Fragment() {
 
     private fun fillSpinner() {
 
-        val spinnerList = mutableListOf<String>("", "Herr", "Frau")
+        val spinnerList = mutableListOf("Anrede", "Herr", "Frau")
 
+        var selectedOption = ""
 
-        val adapter: ArrayAdapter<String> =
-            ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                spinnerList
-            )
+        val adapter: ArrayAdapter<String> = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            spinnerList
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        oder simple_spinner_item
         binding.spinnerGender.adapter = adapter
 
-        binding.spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedAmount = spinnerList[position]
-                authViewModel.updateProfile(Profile(gender = selectedAmount))
+        binding.spinnerGender.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedOption = spinnerList[position]
+                    authViewModel.selectedGender.value = selectedOption
+                    if (authViewModel.selectedGender.value != "Anrede") {
+                        binding.inputGender.setText(authViewModel.selectedGender.value )
+                    } else {
+//                        binding.inputGender.setText(selectedOption)
+                    }                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
 
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-
     }
 }

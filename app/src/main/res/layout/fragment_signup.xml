@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="230dp"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:backgroundTint="@color/transparent"
@@ -15,31 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ll_google_facebool"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/layout_mail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/btn_facebook"
-                style="@style/ic_btn"
-                android:layout_weight="1"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_facebook" />
-
-            <ImageButton
-                android:id="@+id/btn_google"
-                style="@style/ic_btn"
-                android:layout_weight="1"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_google" />
-
-        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_mail"
@@ -47,7 +22,7 @@
             android:layout_marginHorizontal="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_google_facebool">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <com.google.android.material.textfield.TextInputEditText

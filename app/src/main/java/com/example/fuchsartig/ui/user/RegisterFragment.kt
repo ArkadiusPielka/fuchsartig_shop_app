@@ -1,7 +1,6 @@
 package com.example.fuchsartig.ui.user
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
-import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
@@ -50,15 +48,16 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showFragment()
-
+        birthday()
+        fillSpinner()
 
         binding.btnHome.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
         }
 
         binding.btnSavePersonalData.setOnClickListener {
-            birthday()
-            fillSpinner()
+
+            val genderSelected = binding.inputGender.text.toString()
             val firstName = binding.inputFirstName.text.toString()
             val lastName = binding.inputLastName.text.toString()
             val birth = binding.inputBirthdate.text.toString()
@@ -68,40 +67,38 @@ class RegisterFragment : Fragment() {
             val street = binding.inputStreet.text.toString()
             val plz = binding.inputPlz.text.toString()
 
-            authViewModel.updateProfile(
-                Profile(
-                    firstName = firstName,
-                    lastName = lastName,
-                    birthdate = birth,
-                    city = city,
-                    hausNr = hausNr,
-                    country = country,
-                    street = street,
-                    plz = plz
-                )
+            val profile = Profile(
+                gender = genderSelected,
+                firstName = firstName,
+                lastName = lastName,
+                birthdate = birth,
+                city = city,
+                hausNr = hausNr,
+                country = country,
+                street = street,
+                plz = plz
             )
+            authViewModel.updateProfile(
+                profile
+            )
+        }
 
-//            if (firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != "") {
-//                authViewModel.updateProfile(Profile(personalData = true))
+//        authViewModel.profileRef.addSnapshotListener { snapshot, error ->
+//            if (error == null && snapshot != null) {
+//                val updatedProfile = snapshot.toObject(Profile::class.java)
+//                binding.inputGender.setText(updatedProfile?.gender)
+//                binding.inputFirstName.setText(updatedProfile?.firstName)
+//                binding.inputLastName.setText(updatedProfile?.lastName)
+//                binding.inputBirthdate.setText(updatedProfile?.birthdate)
+//                binding.inputCity.setText(updatedProfile?.city)
+//                binding.inputHausNumber.setText(updatedProfile?.hausNr)
+//                binding.inputCountry.setText(updatedProfile?.country)
+//                binding.inputStreet.setText(updatedProfile?.street)
+//                binding.inputPlz.setText(updatedProfile?.plz)
+//            } else {
+//                Log.e("REGISTER", "$error")
 //            }
-
-        }
-
-        authViewModel.profileRef.addSnapshotListener {snapshot, error ->
-            if (error == null && snapshot != null){
-                val updatedProfile = snapshot.toObject(Profile::class.java)
-                binding.inputFirstName.setText(updatedProfile?.firstName)
-                binding.inputLastName.setText(updatedProfile?.lastName)
-                binding.inputBirthdate.setText(updatedProfile?.birthdate)
-                binding.inputCity.setText(updatedProfile?.city)
-                binding.inputHausNumber.setText(updatedProfile?.hausNr)
-                binding.inputCountry.setText(updatedProfile?.country)
-                binding.inputStreet.setText(updatedProfile?.street)
-                binding.inputPlz.setText(updatedProfile?.plz)
-            } else {
-                Log.e("REGISTER", "$error")
-            }
-        }
+//        }
 
         binding.btnDropDown.setOnClickListener {
             dropDownPersonalData()
@@ -205,38 +202,41 @@ class RegisterFragment : Fragment() {
 
     }
 
+
     private fun fillSpinner() {
 
+        val spinnerList = mutableListOf("Anrede", "Herr", "Frau")
 
-        val spinnerList = mutableListOf<String>("", "Herr", "Frau")
+        var selectedOption = ""
 
-
-        val adapter: ArrayAdapter<String> =
-            ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                spinnerList
-            )
+        val adapter: ArrayAdapter<String> = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            spinnerList
+        )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        oder simple_spinner_item
         binding.spinnerGender.adapter = adapter
 
-        binding.spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedAmount = spinnerList[position]
-                authViewModel.updateProfile(Profile(gender = selectedAmount))
+        binding.spinnerGender.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedOption = spinnerList[position]
+                    authViewModel.selectedGender.value = selectedOption
+                    if (authViewModel.selectedGender.value != "Anrede") {
+                        binding.inputGender.setText(authViewModel.selectedGender.value )
+                    } else {
+//                        binding.inputGender.setText(selectedOption)
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
 
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-
     }
 }
