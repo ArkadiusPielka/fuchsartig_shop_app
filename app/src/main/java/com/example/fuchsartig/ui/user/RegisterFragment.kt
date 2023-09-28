@@ -83,22 +83,6 @@ class RegisterFragment : Fragment() {
             )
         }
 
-//        authViewModel.profileRef.addSnapshotListener { snapshot, error ->
-//            if (error == null && snapshot != null) {
-//                val updatedProfile = snapshot.toObject(Profile::class.java)
-//                binding.inputGender.setText(updatedProfile?.gender)
-//                binding.inputFirstName.setText(updatedProfile?.firstName)
-//                binding.inputLastName.setText(updatedProfile?.lastName)
-//                binding.inputBirthdate.setText(updatedProfile?.birthdate)
-//                binding.inputCity.setText(updatedProfile?.city)
-//                binding.inputHausNumber.setText(updatedProfile?.hausNr)
-//                binding.inputCountry.setText(updatedProfile?.country)
-//                binding.inputStreet.setText(updatedProfile?.street)
-//                binding.inputPlz.setText(updatedProfile?.plz)
-//            } else {
-//                Log.e("REGISTER", "$error")
-//            }
-//        }
 
         binding.btnDropDown.setOnClickListener {
             dropDownPersonalData()
@@ -229,8 +213,6 @@ class RegisterFragment : Fragment() {
                     authViewModel.selectedGender.value = selectedOption
                     if (authViewModel.selectedGender.value != "Anrede") {
                         binding.inputGender.setText(authViewModel.selectedGender.value )
-                    } else {
-//                        binding.inputGender.setText(selectedOption)
                     }
                 }
 

@@ -87,7 +87,7 @@ class ProfileFragment : Fragment() {
             authViewModel.updateProfile(
                 profile
             )
-
+            dropDownPersonalData()
         }
 
         authViewModel.profileRef.addSnapshotListener { snapshot, error ->
@@ -261,10 +261,9 @@ class ProfileFragment : Fragment() {
                     selectedOption = spinnerList[position]
                     authViewModel.selectedGender.value = selectedOption
                     if (authViewModel.selectedGender.value != "Anrede") {
-                        binding.inputGender.setText(authViewModel.selectedGender.value )
-                    } else {
-//                        binding.inputGender.setText(selectedOption)
-                    }                }
+                        binding.inputGender.setText(authViewModel.selectedGender.value)
+                    }
+                }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }

@@ -42,7 +42,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_bic"
             style="@style/input_edit_text_text"
-            android:hint="@string/iban" />
+            android:hint="@string/bic" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
