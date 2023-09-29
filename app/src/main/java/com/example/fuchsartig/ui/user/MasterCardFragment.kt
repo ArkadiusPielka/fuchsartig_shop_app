@@ -2,23 +2,27 @@ package com.example.fuchsartig.ui.user
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.fuchsartig.R
+import androidx.fragment.app.activityViewModels
+import com.example.fuchsartig.data.model.MasterCard
+import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentMasterCardBinding
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
-import java.text.SimpleDateFormat
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import java.util.Calendar
 import java.util.Locale
-import java.util.TimeZone
 
 
 class MasterCardFragment : Fragment() {
 
-private lateinit var binding: FragmentMasterCardBinding
+    private lateinit var binding: FragmentMasterCardBinding
+
+    private val authViewModel: AuthViewModel by activityViewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,7 +32,7 @@ private lateinit var binding: FragmentMasterCardBinding
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMasterCardBinding.inflate(inflater,container,false)
+        binding = FragmentMasterCardBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,14 +41,53 @@ private lateinit var binding: FragmentMasterCardBinding
 
         cardValid()
 
+
+        binding.cbCardOwner.setOnClickListener {
+            if (binding.cbCardOwner.isChecked) {
+                authViewModel.profileRef.get().addOnSuccessListener {
+                    val profile = it.toObject(Profile::class.java)
+                    if (profile != null) {
+                        val firstName = profile.firstName.toString()
+                        val lastName = profile.lastName.toString()
+                        Log.d("Firebase Data", "FirstName: $firstName, LastName: $lastName")
+                        binding.inputCardOwner.setText("$firstName $lastName")
+                    }
+                }
+            } else {
+                binding.inputCardOwner.text?.clear()
+            }
+        }
+
         binding.btnSaveCard.setOnClickListener {
 
+            val cardNumber = binding.inputCardNumber.text.toString()
+            val cardDate = binding.inputCardDate.text.toString()
+            val cardSaveNumber = binding.inputCardCheckNumber.text.toString()
+            val cardOwner = binding.inputCardOwner.text.toString()
+
+            val updatedMasterCard = MasterCard("mastercard",cardOwner, cardNumber, cardDate, cardSaveNumber)
+
+            authViewModel.updateMastercard(updatedMasterCard)
         }
+        authViewModel.mastercardRef.addSnapshotListener { snapshot, error ->
+            if (error == null && snapshot != null) {
+                val masterCard = snapshot.toObject(MasterCard::class.java)
+                Log.d("mastercard", "$masterCard")
+                if (masterCard != null) {
+                    binding.inputCardNumber.setText(masterCard.cardNumber)
+                    binding.inputCardDate.setText(masterCard.cardValid)
+                    binding.inputCardCheckNumber.setText(masterCard.cardSecurityNumber)
+                    binding.inputCardOwner.setText(masterCard.cardOwner)
+                }
+            }
+        }
+
+
     }
+
     private fun cardValid() {
         val inputCardDate = binding.inputCardDate
 
-        // Setze den Klicklistener für das Eingabefeld
         inputCardDate.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
@@ -54,8 +97,12 @@ private lateinit var binding: FragmentMasterCardBinding
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, _ ->
-                    // Hier erhalten Sie das ausgewählte Datum (Tag wird nicht verwendet)
-                    val formattedDate = String.format(Locale.getDefault(), "%02d.%04d", selectedMonth + 1, selectedYear)
+                    val formattedDate = String.format(
+                        Locale.getDefault(),
+                        "%02d.%04d",
+                        selectedMonth + 1,
+                        selectedYear
+                    )
                     inputCardDate.setText(formattedDate)
                 },
                 year,
@@ -63,44 +110,8 @@ private lateinit var binding: FragmentMasterCardBinding
                 day
             )
 
-            // Zeige den DatePickerDialog
             datePickerDialog.show()
         }
     }
 
-
-//    fun cardValid(): String {
-//
-//        val inputCardValid = binding.inputCardDate
-//
-//        val constraintsBuilder = CalendarConstraints.Builder()
-//        val maxCalendar = MaterialDatePicker.todayInUtcMilliseconds()
-//        constraintsBuilder.setEnd(maxCalendar)
-//        val constraints = constraintsBuilder.build()
-//
-//        val builder = MaterialDatePicker.Builder.datePicker()
-//            .setTitleText("Wählen Sie Ihr Geburtsdatum")
-//            .setCalendarConstraints(constraints)
-//
-//        val datePicker = builder.build()
-//
-//        var formattedDate = ""
-//
-//        inputCardValid.setOnClickListener {
-//            datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
-//        }
-//
-//        datePicker.addOnPositiveButtonClickListener { selection ->
-//            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-//            calendar.timeInMillis = selection
-//
-//            val dateFormat = SimpleDateFormat("MM.yyyy", Locale.getDefault())
-//            formattedDate = dateFormat.format(calendar.time)
-//
-//            inputCardValid.setText(formattedDate)
-//        }
-//
-//        return formattedDate
-//
-//    }
 }

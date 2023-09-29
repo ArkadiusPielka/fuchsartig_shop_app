@@ -4,11 +4,16 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fuchsartig.data.model.Banking
+import com.example.fuchsartig.data.model.MasterCard
+import com.example.fuchsartig.data.model.PayPal
 import com.example.fuchsartig.data.model.Profile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+
 //import com.google.firebase.storage.FirebaseStorage
 
 class AuthViewModel : ViewModel() {
@@ -26,7 +31,17 @@ class AuthViewModel : ViewModel() {
         get() = _currentUser
 
 
+
+
     lateinit var profileRef: DocumentReference
+
+    lateinit var paymentRef: DocumentReference
+
+    lateinit var mastercardRef: DocumentReference
+
+    lateinit var bankingRef: DocumentReference
+
+    lateinit var paypalRef: DocumentReference
 
 //    private val storageRef = firebaseStorage.reference
 
@@ -35,6 +50,7 @@ class AuthViewModel : ViewModel() {
             setupUserEnv()
         }
     }
+
     fun singUp(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { authResult ->
@@ -60,12 +76,26 @@ class AuthViewModel : ViewModel() {
 
     fun setupNewProfile() {
         profileRef.set(Profile())
+
+        setPayment()
     }
 
     fun updateProfile(profile: Profile) {
         profileRef.set(profile)
     }
 
+    fun setPayment(){
+        val paymentRef = profileRef.collection("payment")
+
+        mastercardRef = paymentRef.document("mastercard")
+        mastercardRef.set(MasterCard())
+
+        bankingRef = paymentRef.document("banking")
+        bankingRef.set(Banking())
+
+        paypalRef = paymentRef.document("paypal")
+        paypalRef.set(PayPal())
+    }
 
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
@@ -76,4 +106,24 @@ class AuthViewModel : ViewModel() {
         firebaseAuth.signOut()
         _currentUser.value = firebaseAuth.currentUser
     }
+
+    fun updatePaymentMethod(payment: String) {
+        paymentRef = profileRef.collection("payment").document(payment)
+
+    }
+
+    fun updateMastercard(input: MasterCard){
+        updatePaymentMethod("mastercard")
+        paymentRef.set(input)
+    }
+    fun updateBanking(input: Banking){
+        updatePaymentMethod("banking")
+        paymentRef.set(input)
+    }
+
+    fun updatePaypal(input: PayPal){
+        updatePaymentMethod("paypal")
+        paymentRef.set(input)
+    }
 }
+

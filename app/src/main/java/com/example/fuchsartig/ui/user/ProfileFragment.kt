@@ -72,6 +72,19 @@ class ProfileFragment : Fragment() {
             val country = binding.inputCountry.text.toString()
             val street = binding.inputStreet.text.toString()
             val plz = binding.inputPlz.text.toString()
+            var personalData = false
+
+            if (genderSelected != "" && firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != ""){
+                personalData = true
+            } else {
+                false
+            }
+
+            if (personalData){
+                binding.btnDone.visibility = View.VISIBLE
+            } else {
+                binding.btnDone.visibility = View.INVISIBLE
+            }
 
             val profile = Profile(
                 gender = genderSelected,
@@ -82,11 +95,12 @@ class ProfileFragment : Fragment() {
                 hausNr = hausNr,
                 country = country,
                 street = street,
-                plz = plz
+                plz = plz,
+                personalData = personalData
             )
-            authViewModel.updateProfile(
-                profile
-            )
+
+            authViewModel.updateProfile(profile)
+
             dropDownPersonalData()
         }
 
