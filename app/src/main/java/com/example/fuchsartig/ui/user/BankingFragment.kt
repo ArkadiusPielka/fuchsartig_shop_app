@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Banking
-import com.example.fuchsartig.data.model.MasterCard
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentBankingBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
@@ -71,8 +69,8 @@ class BankingFragment : Fragment() {
 
                 if (banking != null) {
                     binding.inputBankOwner.setText(banking.bankingOwner)
-                    binding.inputIban.setText(banking.IBAN)
-                    binding.inputBic.setText(banking.BIC)
+                    binding.inputIban.setText(banking.iban)
+                    binding.inputBic.setText(banking.bic)
 
                 }
             }
