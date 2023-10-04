@@ -68,6 +68,7 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener { loginResult ->
                 if (loginResult.isSuccessful) {
                     setupUserEnv()
+                    setPayment()
                 } else {
                     Log.e("LOGIN", "${loginResult.exception}")
                 }
@@ -95,6 +96,15 @@ class AuthViewModel : ViewModel() {
 
         paypalRef = paymentRef.document("paypal")
         paypalRef.set(PayPal())
+    }
+
+    fun loadPayment(){
+        val paymentRef = profileRef.collection("payment")
+
+        mastercardRef = paymentRef.document("mastercard")
+        bankingRef = paymentRef.document("banking")
+        paypalRef = paymentRef.document("paypal")
+
     }
 
     fun setupUserEnv() {

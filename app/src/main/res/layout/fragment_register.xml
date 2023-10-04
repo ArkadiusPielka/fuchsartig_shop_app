@@ -120,17 +120,8 @@
                         android:id="@+id/cv_personal_data"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/btn_drop_down">
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/textView4"-->
-<!--                            style="@style/tv_title"-->
-<!--                            android:layout_marginStart="24dp"-->
-<!--                            android:text="Anrede:"-->
-<!--                            app:layout_constraintBottom_toBottomOf="@+id/spinner_gender"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="@+id/spinner_gender" />-->
 
                         <Spinner
                             android:id="@+id/spinner_gender"

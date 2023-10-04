@@ -69,6 +69,7 @@ class MasterCardFragment : Fragment() {
 
             authViewModel.updateMastercard(updatedMasterCard)
         }
+
         authViewModel.mastercardRef.addSnapshotListener { snapshot, error ->
             if (error == null && snapshot != null) {
                 val masterCard = snapshot.toObject(MasterCard::class.java)

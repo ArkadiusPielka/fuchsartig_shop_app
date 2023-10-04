@@ -81,6 +81,7 @@ class RegisterFragment : Fragment() {
             authViewModel.updateProfile(
                 profile
             )
+            dropDownPersonalData()
         }
 
 
