@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import com.example.fuchsartig.data.model.Banking
 import com.example.fuchsartig.data.model.MasterCard
 import com.example.fuchsartig.data.model.PayPal
+import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.data.model.Profile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 
 //import com.google.firebase.storage.FirebaseStorage
 
@@ -25,6 +26,7 @@ class AuthViewModel : ViewModel() {
 
     val selectedGender = MutableLiveData<String>()
 
+    var favoriteProducts = mutableListOf<Product>()
 
     private val _currentUser = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
     val currentUser: LiveData<FirebaseUser?>
@@ -41,7 +43,7 @@ class AuthViewModel : ViewModel() {
 
     lateinit var paypalRef: DocumentReference
 
-    lateinit var favoritesRef: DocumentReference
+    lateinit var favoritesRef: CollectionReference
 
 //    private val storageRef = firebaseStorage.reference
 
@@ -105,13 +107,23 @@ class AuthViewModel : ViewModel() {
         paypalRef = paymentRef.document("paypal")
     }
 
-    fun setFavorites(){
-        val favoriteRef = profileRef.collection("favorites")
+
+    fun addFavorites(product: Product) {
+
+        favoritesRef.document(product.apiId.toString()).set(product)
+//        product.liked = true
+    }
+
+    fun removeFavorites(product: Product) {
+        favoritesRef.document(product.apiId.toString()).delete()
+//        product.liked = false
     }
 
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
         profileRef = firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
+        favoritesRef = profileRef.collection("favorites")
+
         loadPayment()
     }
 

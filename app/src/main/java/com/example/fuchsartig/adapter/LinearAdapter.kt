@@ -9,11 +9,13 @@ import coil.load
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.databinding.ListItemLinearBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
 class LinearAdapter(
     private val dataSet: List<Product>,
-    private val sharedViewModel: MainViewModel
+    private val sharedViewModel: MainViewModel,
+    private val authViewModel: AuthViewModel
 ) : RecyclerView.Adapter<LinearAdapter.LinearViewHolder>() {
 
 
@@ -49,13 +51,21 @@ class LinearAdapter(
 
         }
 
+        if (product.liked){
+            binding.btnLike.setImageResource(R.drawable.ic_heart_full)
+        } else {
+            binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+        }
+
         binding.btnLike.setOnClickListener {
-            if (!product.is_liked) {
-                product.is_liked = true
-                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
+            if (!product.liked) {
+                product.liked = true
+                authViewModel.addFavorites(product)
+//                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
-                product.is_liked = false
-                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+                product.liked = false
+                authViewModel.removeFavorites(product)
+//                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
         }
     }

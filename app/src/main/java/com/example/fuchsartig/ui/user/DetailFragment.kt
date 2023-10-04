@@ -14,6 +14,7 @@ import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import android.widget.AdapterView
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Product
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 
 
 class DetailFragment : Fragment() {
@@ -21,6 +22,8 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
 
     private val sharedViewModel: MainViewModel by activityViewModels()
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +53,14 @@ class DetailFragment : Fragment() {
             binding.tvDescription.text = product.descript
             binding.tvPrice.text = product.price
 
+            if (authViewModel.favoriteProducts.contains(product)) {
+
+                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
+            } else {
+                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+            }
+
+
             isLiked(product)
             fillSpinner(product)
 
@@ -75,7 +86,11 @@ class DetailFragment : Fragment() {
         }
 
         val adapter: ArrayAdapter<Int> =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList)
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                spinnerList
+            )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //        oder simple_spinner_item
         binding.spinner.adapter = adapter
@@ -99,14 +114,16 @@ class DetailFragment : Fragment() {
 
     }
 
-    private fun isLiked(product: Product){
+    private fun isLiked(product: Product) {
 
         binding.btnLike.setOnClickListener {
-            if (!product.is_liked) {
-                product.is_liked = true
+            if (!product.liked) {
+                product.liked = true
+                authViewModel.addFavorites(product)
                 binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
-                product.is_liked = false
+                product.liked = false
+                authViewModel.removeFavorites(product)
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
         }

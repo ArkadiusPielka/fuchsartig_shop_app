@@ -50,6 +50,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _layout.value = layoutStatus
     }
 
+    fun updateLayout(){
+        _layout.value = _layout.value
+    }
+
     fun currentProduct(input: Product) {
         _currentProduct.postValue(input)
     }

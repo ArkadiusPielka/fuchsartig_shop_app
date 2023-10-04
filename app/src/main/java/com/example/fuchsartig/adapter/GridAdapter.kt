@@ -9,9 +9,10 @@ import coil.load
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.databinding.ListItemGridBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
-class GridAdapter(private val dataSet: List<Product>, private val sharedViewModel: MainViewModel) :
+class GridAdapter(private val dataSet: List<Product>, private val sharedViewModel: MainViewModel, private val authViewModel: AuthViewModel) :
     RecyclerView.Adapter<GridAdapter.GridViewHolder>() {
 
 
@@ -43,12 +44,20 @@ class GridAdapter(private val dataSet: List<Product>, private val sharedViewMode
 
         }
 
+        if (authViewModel.favoriteProducts.contains(product)){
+            binding.btnLike.setImageResource(R.drawable.ic_heart_full)
+        } else {
+            binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+        }
+
         binding.btnLike.setOnClickListener {
-            if (!product.is_liked) {
-                product.is_liked = true
+            if (!product.liked) {
+                product.liked = true
+                authViewModel.addFavorites(product)
                 binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
-                product.is_liked = false
+                product.liked = false
+                authViewModel.removeFavorites(product)
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
         }

@@ -16,6 +16,7 @@ import com.example.fuchsartig.adapter.GridAdapter
 import com.example.fuchsartig.adapter.LinearAdapter
 import com.example.fuchsartig.databinding.FragmentProductBinding
 import com.example.fuchsartig.ui.ViewModels.ApiLayoutStatus
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
 
@@ -25,6 +26,8 @@ class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
 
     private val sharedViewModel: MainViewModel by activityViewModels()
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +48,14 @@ class ProductFragment : Fragment() {
 
         setupButtons()
         addObserver()
+
+
     }
 
     private fun addObserver() {
 
         sharedViewModel.products.observe(viewLifecycleOwner, Observer { products ->
+
 
             sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
 
@@ -58,7 +64,7 @@ class ProductFragment : Fragment() {
                     ApiLayoutStatus.LINEAR -> {
 
                         binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
-                        binding.rvProduct.adapter = LinearAdapter(products,sharedViewModel)
+                        binding.rvProduct.adapter = LinearAdapter(products,sharedViewModel,authViewModel)
 
                         binding.cvSortVertical.setCardBackgroundColor(
                             ContextCompat.getColor(requireContext(), R.color.primary_color)
@@ -71,7 +77,7 @@ class ProductFragment : Fragment() {
                     ApiLayoutStatus.GRID -> {
 
                         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-                        binding.rvProduct.adapter = GridAdapter(products,sharedViewModel)
+                        binding.rvProduct.adapter = GridAdapter(products,sharedViewModel,authViewModel)
 
                         binding.cvSortVertical.setCardBackgroundColor(
                             ContextCompat.getColor(requireContext(), R.color.white)

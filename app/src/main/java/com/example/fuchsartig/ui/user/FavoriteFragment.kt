@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fuchsartig.R
 import com.example.fuchsartig.adapter.GridAdapter
 import com.example.fuchsartig.adapter.LinearAdapter
+import com.example.fuchsartig.data.model.MasterCard
+import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.databinding.FragmentFavoriteBinding
 import com.example.fuchsartig.ui.ViewModels.ApiLayoutStatus
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -26,6 +29,8 @@ class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
 
     private val sharedViewModel: MainViewModel by activityViewModels()
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,44 +50,69 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupButtons()
         addObserver()
+
+        authViewModel.favoritesRef.addSnapshotListener { value, error ->
+            if (error == null && value != null) {
+                val listProduct = mutableListOf<Product>()
+                for (product in value) {
+                    val newProduct = product.toObject(Product::class.java)
+                    listProduct.add(newProduct)
+                }
+                authViewModel.favoriteProducts = listProduct
+                sharedViewModel.updateLayout()
+            }
+        }
     }
 
     private fun addObserver() {
 
-        sharedViewModel.products.observe(viewLifecycleOwner, Observer { products ->
+//        if (authViewModel.favoritesRef.document()) {
+//        binding.favoriteFiller.visibility = View.VISIBLE
+//        binding.rvShoppingVenture.visibility = View.GONE
+//        } else {
+            binding.favoriteFiller.visibility = View.GONE
+            binding.rvShoppingVenture.visibility = View.VISIBLE
+//        }
 
-            sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
 
-                when (status) {
 
-                    ApiLayoutStatus.LINEAR -> {
+        sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
 
-                        binding.rvShoppingVenture.layoutManager = LinearLayoutManager(requireContext())
-                        binding.rvShoppingVenture.adapter = LinearAdapter(products,sharedViewModel)
+            when (status) {
 
-                        binding.cvSortVertical.setCardBackgroundColor(
-                            ContextCompat.getColor(requireContext(), R.color.primary_color)
-                        )
-                        binding.cvSortHorizontal.setCardBackgroundColor(
-                            ContextCompat.getColor(requireContext(), R.color.white)
-                        )
-                    }
+                ApiLayoutStatus.LINEAR -> {
 
-                    ApiLayoutStatus.GRID -> {
+                    binding.rvShoppingVenture.layoutManager = LinearLayoutManager(requireContext())
+                    binding.rvShoppingVenture.adapter = LinearAdapter(
+                        authViewModel.favoriteProducts,
+                        sharedViewModel,
+                        authViewModel
+                    )
 
-                        binding.rvShoppingVenture.layoutManager = GridLayoutManager(requireContext(), 2)
-                        binding.rvShoppingVenture.adapter = GridAdapter(products,sharedViewModel)
-
-                        binding.cvSortVertical.setCardBackgroundColor(
-                            ContextCompat.getColor(requireContext(), R.color.white)
-                        )
-                        binding.cvSortHorizontal.setCardBackgroundColor(
-                            ContextCompat.getColor(requireContext(), R.color.primary_color)
-                        )
-                    }
+                    binding.cvSortVertical.setCardBackgroundColor(
+                        ContextCompat.getColor(requireContext(), R.color.primary_color)
+                    )
+                    binding.cvSortHorizontal.setCardBackgroundColor(
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    )
                 }
-            })
+
+                ApiLayoutStatus.GRID -> {
+
+                    binding.rvShoppingVenture.layoutManager = GridLayoutManager(requireContext(), 2)
+                    binding.rvShoppingVenture.adapter =
+                        GridAdapter(authViewModel.favoriteProducts, sharedViewModel, authViewModel)
+
+                    binding.cvSortVertical.setCardBackgroundColor(
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    )
+                    binding.cvSortHorizontal.setCardBackgroundColor(
+                        ContextCompat.getColor(requireContext(), R.color.primary_color)
+                    )
+                }
+            }
         })
+
     }
 
     private fun setupButtons() {
