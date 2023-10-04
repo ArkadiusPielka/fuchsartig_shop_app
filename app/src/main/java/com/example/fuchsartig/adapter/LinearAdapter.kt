@@ -50,6 +50,9 @@ class LinearAdapter(
             navController.navigate(R.id.navigation_detail)
 
         }
+        for (product in dataSet) {
+            product.liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
+        }
 
         if (product.liked){
             binding.btnLike.setImageResource(R.drawable.ic_heart_full)
@@ -60,6 +63,7 @@ class LinearAdapter(
         binding.btnLike.setOnClickListener {
             if (!product.liked) {
                 product.liked = true
+
                 authViewModel.addFavorites(product)
 //                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
@@ -68,5 +72,7 @@ class LinearAdapter(
 //                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
         }
+
+
     }
 }

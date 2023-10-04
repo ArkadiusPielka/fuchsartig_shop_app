@@ -1,6 +1,7 @@
 package com.example.fuchsartig.ui.ViewModels
 
 import android.app.Application
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,7 @@ enum class ApiLayoutStatus { LINEAR, GRID }
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 //    private val dataBase = getInstance(application)
+
 
     private val repository = Repository(ProductApi)
 
@@ -31,6 +33,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _currentImages = MutableLiveData<MutableList<String>>(mutableListOf())
     val currentImages: LiveData<MutableList<String>>
         get() = _currentImages
+
 
     init {
         loadProduct()
@@ -75,4 +78,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getUserRole(userRole: Boolean): Boolean {
         return userRole
     }
+
 }

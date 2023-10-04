@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fuchsartig.R
 import com.example.fuchsartig.adapter.GridAdapter
 import com.example.fuchsartig.adapter.LinearAdapter
+import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.databinding.FragmentProductBinding
 import com.example.fuchsartig.ui.ViewModels.ApiLayoutStatus
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
@@ -45,7 +46,7 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
         setupButtons()
         addObserver()
 
@@ -55,7 +56,6 @@ class ProductFragment : Fragment() {
     private fun addObserver() {
 
         sharedViewModel.products.observe(viewLifecycleOwner, Observer { products ->
-
 
             sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
 

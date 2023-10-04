@@ -28,6 +28,7 @@ class AuthViewModel : ViewModel() {
 
     var favoriteProducts = mutableListOf<Product>()
 
+
     private val _currentUser = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
@@ -109,22 +110,35 @@ class AuthViewModel : ViewModel() {
 
 
     fun addFavorites(product: Product) {
-
         favoritesRef.document(product.apiId.toString()).set(product)
-//        product.liked = true
     }
 
     fun removeFavorites(product: Product) {
         favoritesRef.document(product.apiId.toString()).delete()
-//        product.liked = false
     }
+
+    fun loadFavorites() {
+        favoriteProducts.clear()
+
+        favoritesRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot) {
+                    val product = document.toObject(Product::class.java)
+                    favoriteProducts.add(product)
+                }
+            }
+
+    }
+
 
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
-        profileRef = firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
+        profileRef =
+            firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
         favoritesRef = profileRef.collection("favorites")
 
         loadPayment()
+        loadFavorites()
     }
 
     fun logout() {

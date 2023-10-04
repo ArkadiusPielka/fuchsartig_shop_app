@@ -53,13 +53,12 @@ class DetailFragment : Fragment() {
             binding.tvDescription.text = product.descript
             binding.tvPrice.text = product.price
 
-            if (authViewModel.favoriteProducts.contains(product)) {
-
+            val liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
+            if (liked) {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
-
 
             isLiked(product)
             fillSpinner(product)

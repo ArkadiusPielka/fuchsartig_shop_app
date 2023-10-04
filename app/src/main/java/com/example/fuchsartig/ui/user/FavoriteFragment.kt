@@ -48,8 +48,12 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
         setupButtons()
         addObserver()
+        showFiller()
+
+
 
         authViewModel.favoritesRef.addSnapshotListener { value, error ->
             if (error == null && value != null) {
@@ -65,16 +69,6 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun addObserver() {
-
-//        if (authViewModel.favoritesRef.document()) {
-//        binding.favoriteFiller.visibility = View.VISIBLE
-//        binding.rvShoppingVenture.visibility = View.GONE
-//        } else {
-            binding.favoriteFiller.visibility = View.GONE
-            binding.rvShoppingVenture.visibility = View.VISIBLE
-//        }
-
-
 
         sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
 
@@ -133,5 +127,17 @@ class FavoriteFragment : Fragment() {
 
         }
 
+    }
+
+    fun showFiller(){
+        if (authViewModel.favoriteProducts.isEmpty()) {
+            binding.favoriteFiller.visibility = View.VISIBLE
+            binding.rvShoppingVenture.visibility = View.GONE
+            sharedViewModel.updateLayout()
+        } else {
+            binding.favoriteFiller.visibility = View.GONE
+            binding.rvShoppingVenture.visibility = View.VISIBLE
+            sharedViewModel.updateLayout()
+        }
     }
 }

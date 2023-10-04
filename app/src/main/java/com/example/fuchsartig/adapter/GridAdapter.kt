@@ -44,7 +44,11 @@ class GridAdapter(private val dataSet: List<Product>, private val sharedViewMode
 
         }
 
-        if (authViewModel.favoriteProducts.contains(product)){
+        for (product in dataSet) {
+            product.liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
+        }
+
+        if (product.liked){
             binding.btnLike.setImageResource(R.drawable.ic_heart_full)
         } else {
             binding.btnLike.setImageResource(R.drawable.ic_heart_border)
