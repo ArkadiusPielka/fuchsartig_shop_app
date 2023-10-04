@@ -31,8 +31,6 @@ class AuthViewModel : ViewModel() {
         get() = _currentUser
 
 
-
-
     lateinit var profileRef: DocumentReference
 
     lateinit var paymentRef: DocumentReference
@@ -42,6 +40,8 @@ class AuthViewModel : ViewModel() {
     lateinit var bankingRef: DocumentReference
 
     lateinit var paypalRef: DocumentReference
+
+    lateinit var favoritesRef: DocumentReference
 
 //    private val storageRef = firebaseStorage.reference
 
@@ -68,7 +68,6 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener { loginResult ->
                 if (loginResult.isSuccessful) {
                     setupUserEnv()
-                    setPayment()
                 } else {
                     Log.e("LOGIN", "${loginResult.exception}")
                 }
@@ -85,7 +84,7 @@ class AuthViewModel : ViewModel() {
         profileRef.set(profile)
     }
 
-    fun setPayment(){
+    fun setPayment() {
         val paymentRef = profileRef.collection("payment")
 
         mastercardRef = paymentRef.document("mastercard")
@@ -98,18 +97,22 @@ class AuthViewModel : ViewModel() {
         paypalRef.set(PayPal())
     }
 
-    fun loadPayment(){
+    fun loadPayment() {
         val paymentRef = profileRef.collection("payment")
 
         mastercardRef = paymentRef.document("mastercard")
         bankingRef = paymentRef.document("banking")
         paypalRef = paymentRef.document("paypal")
+    }
 
+    fun setFavorites(){
+        val favoriteRef = profileRef.collection("favorites")
     }
 
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
         profileRef = firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
+        loadPayment()
     }
 
     fun logout() {
@@ -122,16 +125,17 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    fun updateMastercard(input: MasterCard){
+    fun updateMastercard(input: MasterCard) {
         updatePaymentMethod("mastercard")
         paymentRef.set(input)
     }
-    fun updateBanking(input: Banking){
+
+    fun updateBanking(input: Banking) {
         updatePaymentMethod("banking")
         paymentRef.set(input)
     }
 
-    fun updatePaypal(input: PayPal){
+    fun updatePaypal(input: PayPal) {
         updatePaymentMethod("paypal")
         paymentRef.set(input)
     }

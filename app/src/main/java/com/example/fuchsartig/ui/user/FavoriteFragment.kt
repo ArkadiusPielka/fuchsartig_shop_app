@@ -5,10 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fuchsartig.R
+import com.example.fuchsartig.adapter.GridAdapter
+import com.example.fuchsartig.adapter.LinearAdapter
 import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.databinding.FragmentFavoriteBinding
+import com.example.fuchsartig.ui.ViewModels.ApiLayoutStatus
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -35,9 +43,65 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupButtons()
+        addObserver()
+    }
 
-//        val libraryMenuItem = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
-//            .menu.findItem(R.id.navigation_favorite)
-//        libraryMenuItem.setIcon(R.drawable.ic_heart_border)
+    private fun addObserver() {
+
+        sharedViewModel.products.observe(viewLifecycleOwner, Observer { products ->
+
+            sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
+
+                when (status) {
+
+                    ApiLayoutStatus.LINEAR -> {
+
+                        binding.rvShoppingVenture.layoutManager = LinearLayoutManager(requireContext())
+                        binding.rvShoppingVenture.adapter = LinearAdapter(products,sharedViewModel)
+
+                        binding.cvSortVertical.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.primary_color)
+                        )
+                        binding.cvSortHorizontal.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.white)
+                        )
+                    }
+
+                    ApiLayoutStatus.GRID -> {
+
+                        binding.rvShoppingVenture.layoutManager = GridLayoutManager(requireContext(), 2)
+                        binding.rvShoppingVenture.adapter = GridAdapter(products,sharedViewModel)
+
+                        binding.cvSortVertical.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.white)
+                        )
+                        binding.cvSortHorizontal.setCardBackgroundColor(
+                            ContextCompat.getColor(requireContext(), R.color.primary_color)
+                        )
+                    }
+                }
+            })
+        })
+    }
+
+    private fun setupButtons() {
+
+        val slideRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_right)
+
+        binding.cvSortVertical.setOnClickListener {
+
+            sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
+            binding.rvShoppingVenture.startAnimation(slideRight)
+
+        }
+
+        binding.cvSortHorizontal.setOnClickListener {
+
+            sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.GRID)
+            binding.rvShoppingVenture.startAnimation(slideRight)
+
+        }
+
     }
 }

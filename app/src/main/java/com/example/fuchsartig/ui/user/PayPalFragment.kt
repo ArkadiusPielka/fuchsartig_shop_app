@@ -47,7 +47,7 @@ class PayPalFragment : Fragment() {
             authViewModel.updatePaypal(updatedPaypal)
         }
 
-        authViewModel.paymentRef.addSnapshotListener { snapshot, error ->
+        authViewModel.paypalRef.addSnapshotListener { snapshot, error ->
             if (error == null && snapshot != null) {
                 val paypal = snapshot.toObject(PayPal::class.java)
 
