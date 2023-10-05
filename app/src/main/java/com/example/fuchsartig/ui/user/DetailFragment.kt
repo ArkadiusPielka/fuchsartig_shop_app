@@ -12,6 +12,7 @@ import com.example.fuchsartig.adapter.DetailAdapter
 import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import android.widget.AdapterView
+import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
@@ -59,7 +60,11 @@ class DetailFragment : Fragment() {
             } else {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
-
+            binding.btnInCart.setOnClickListener {
+                authViewModel.addToCart(product)
+//                findNavController().navigate(R.id.navigation_product)
+                //TODO nachricht hinzufügen
+            }
             isLiked(product)
             fillSpinner(product)
 

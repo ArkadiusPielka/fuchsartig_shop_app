@@ -8,14 +8,24 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.databinding.ListItemShoppingVentureBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
-class ShopCartAdapter(private val dataSet: List<Product>, private val sharedViewModel: MainViewModel) : RecyclerView.Adapter<ShopCartAdapter.ShopViewHolder>(){
+class ShopCartAdapter(
+    private val dataSet: List<Product>,
+    private val sharedViewModel: MainViewModel,
+    private val authViewModel: AuthViewModel
+) : RecyclerView.Adapter<ShopCartAdapter.ShopViewHolder>() {
 
-    class ShopViewHolder(val binding: ListItemShoppingVentureBinding): RecyclerView.ViewHolder(binding.root)
+    class ShopViewHolder(val binding: ListItemShoppingVentureBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder {
-        val binding = ListItemShoppingVentureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListItemShoppingVentureBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ShopViewHolder(binding)
     }
 
@@ -29,13 +39,39 @@ class ShopCartAdapter(private val dataSet: List<Product>, private val sharedView
         val imgUri = product.img1.toUri().buildUpon().scheme("https").build()
 
 
-        binding.imgProduct.load(imgUri){
+        for (product in dataSet) {
+            val price = product.price.toDouble()
+            var productPrice = price * product.selectedNumber
+            authViewModel.currentPrice.postValue(productPrice.toString())
+        }
 
+        binding.btnMinus.setOnClickListener {
+
+
+
+            if (product.selectedNumber == 1) {
+                authViewModel.removeFromCart(product)
+            } else {
+                product.selectedNumber -= 1
+                binding.tvAmount.text = product.selectedNumber.toString()
+            }
+
+        }
+
+        binding.btnPlus.setOnClickListener {
+
+        }
+
+        binding.imgProduct.load(imgUri) {
             transformations(RoundedCornersTransformation(10f))
         }
         binding.tvPrice.text = product.price
         binding.tvTitle.text = product.title
+        binding.tvAmount.text = product.selectedNumber.toString()
 
+//        val price = product.price.toInt()
+//        val produktPrice = price * product.selectedNumber
 
+//        authViewModel.currentPrice.value = produktPrice.toString()
     }
 }

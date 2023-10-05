@@ -26,8 +26,11 @@ class AuthViewModel : ViewModel() {
 
     val selectedGender = MutableLiveData<String>()
 
+    var currentPrice = MutableLiveData<String>()
+
     var favoriteProducts = mutableListOf<Product>()
 
+    var buyingProducts = mutableListOf<Product>()
 
     private val _currentUser = MutableLiveData<FirebaseUser?>(firebaseAuth.currentUser)
     val currentUser: LiveData<FirebaseUser?>
@@ -45,6 +48,8 @@ class AuthViewModel : ViewModel() {
     lateinit var paypalRef: DocumentReference
 
     lateinit var favoritesRef: CollectionReference
+
+    lateinit var shoppingRef: CollectionReference
 
 //    private val storageRef = firebaseStorage.reference
 
@@ -130,13 +135,38 @@ class AuthViewModel : ViewModel() {
 
     }
 
+    fun addToCart(product: Product) {
+        shoppingRef.document(product.apiId.toString()).set(product)
+    }
 
+    fun removeFromCart(product: Product) {
+        shoppingRef.document(product.apiId.toString()).delete()
+    }
+
+    fun loadShoppinCart() {
+        buyingProducts.clear()
+
+        shoppingRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot) {
+                    val product = document.toObject(Product::class.java)
+                    buyingProducts.add(product)
+                }
+            }
+
+    }
+
+//    fun updateSelectedNumber(product: Product, newSelectedNumber: Int) {
+//        product.selectedNumber = newSelectedNumber
+//    }
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
         profileRef =
             firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
         favoritesRef = profileRef.collection("favorites")
+        shoppingRef = profileRef.collection("shopping")
 
+        loadShoppinCart()
         loadPayment()
         loadFavorites()
     }

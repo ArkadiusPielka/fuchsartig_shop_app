@@ -65,11 +65,9 @@ class LinearAdapter(
                 product.liked = true
 
                 authViewModel.addFavorites(product)
-//                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
                 product.liked = false
                 authViewModel.removeFavorites(product)
-//                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
         }
 
