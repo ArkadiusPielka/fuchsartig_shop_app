@@ -53,7 +53,9 @@ class FavoriteFragment : Fragment() {
         addObserver()
         showFiller()
 
+    }
 
+    private fun addObserver() {
 
         authViewModel.favoritesRef.addSnapshotListener { value, error ->
             if (error == null && value != null) {
@@ -66,9 +68,6 @@ class FavoriteFragment : Fragment() {
                 sharedViewModel.updateLayout()
             }
         }
-    }
-
-    private fun addObserver() {
 
         sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
 
