@@ -1,14 +1,19 @@
 package com.example.fuchsartig.ui.ViewModels
 
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
+import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Banking
 import com.example.fuchsartig.data.model.MasterCard
 import com.example.fuchsartig.data.model.PayPal
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.data.model.Profile
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
@@ -27,6 +32,7 @@ class AuthViewModel : ViewModel() {
     val selectedGender = MutableLiveData<String>()
 
     var currentPrice = MutableLiveData<String>()
+
 
     var favoriteProducts = mutableListOf<Product>()
 
@@ -122,7 +128,7 @@ class AuthViewModel : ViewModel() {
         favoritesRef.document(product.apiId.toString()).delete()
     }
 
-    fun loadFavorites() {
+    private fun loadFavorites() {
         favoriteProducts.clear()
 
         favoritesRef.get()
@@ -143,7 +149,32 @@ class AuthViewModel : ViewModel() {
         shoppingRef.document(product.apiId.toString()).delete()
     }
 
-    fun loadShoppinCart() {
+    fun reduceAmount(product: Product){
+        if (product.selectedNumber == 1){
+            removeFromCart(product)
+        } else {
+            val updateAmount = product.selectedNumber - 1
+            val productRef = shoppingRef.document(product.apiId.toString())
+            productRef.update("selectedNumber", updateAmount)
+
+
+        }
+    }
+
+    fun addAmount(product: Product){
+        val productAmount = product.number.toInt()
+        if (product.selectedNumber == productAmount){
+           // TODO setAllert
+        } else {
+            val updateAmount = product.selectedNumber + 1
+            val productRef = shoppingRef.document(product.apiId.toString())
+            productRef.update("selectedNumber", updateAmount)
+
+
+        }
+    }
+
+    private fun loadShoppinCart() {
         buyingProducts.clear()
 
         shoppingRef.get()
@@ -156,10 +187,7 @@ class AuthViewModel : ViewModel() {
 
     }
 
-//    fun updateSelectedNumber(product: Product, newSelectedNumber: Int) {
-//        product.selectedNumber = newSelectedNumber
-//    }
-    fun setupUserEnv() {
+private fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
         profileRef =
             firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
@@ -195,5 +223,12 @@ class AuthViewModel : ViewModel() {
         updatePaymentMethod("paypal")
         paymentRef.set(input)
     }
+
+//    private fun maxAmount() {
+//        MaterialAlertDialogBuilder(requireContext())
+//            .setTitle("Maximale Anzahl erreicht")
+//            .setCancelable(true)
+//            .show()
+//    }
 }
 

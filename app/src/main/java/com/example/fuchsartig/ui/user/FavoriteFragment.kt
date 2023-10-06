@@ -51,8 +51,6 @@ class FavoriteFragment : Fragment() {
         sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
         setupButtons()
         addObserver()
-        showFiller()
-
     }
 
     private fun addObserver() {
@@ -66,77 +64,91 @@ class FavoriteFragment : Fragment() {
                 }
                 authViewModel.favoriteProducts = listProduct
                 sharedViewModel.updateLayout()
-            }
-        }
 
-        sharedViewModel.layout.observe(viewLifecycleOwner, Observer { status ->
-
-            when (status) {
-
-                ApiLayoutStatus.LINEAR -> {
-
-                    binding.rvShoppingVenture.layoutManager = LinearLayoutManager(requireContext())
-                    binding.rvShoppingVenture.adapter = LinearAdapter(
-                        authViewModel.favoriteProducts,
-                        sharedViewModel,
-                        authViewModel
-                    )
-
-                    binding.cvSortVertical.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.primary_color)
-                    )
-                    binding.cvSortHorizontal.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.white)
-                    )
-                }
-
-                ApiLayoutStatus.GRID -> {
-
-                    binding.rvShoppingVenture.layoutManager = GridLayoutManager(requireContext(), 2)
-                    binding.rvShoppingVenture.adapter =
-                        GridAdapter(authViewModel.favoriteProducts, sharedViewModel, authViewModel)
-
-                    binding.cvSortVertical.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.white)
-                    )
-                    binding.cvSortHorizontal.setCardBackgroundColor(
-                        ContextCompat.getColor(requireContext(), R.color.primary_color)
-                    )
+                if (listProduct.isEmpty()) {
+                    binding.favoriteFiller.visibility = View.VISIBLE
+                    binding.rvShoppingVenture.visibility = View.GONE
+                    binding.ll.visibility = View.GONE
+                } else {
+                    binding.favoriteFiller.visibility = View.GONE
+                    binding.rvShoppingVenture.visibility = View.VISIBLE
+                    binding.ll.visibility = View.VISIBLE
                 }
             }
-        })
+        }
+// TODO nav bar herz bearbeiten
+
+//        if (authViewModel.favoriteProducts.isEmpty()) {
+//            val favoriteMenuItem =
+//                requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+//                    .menu.findItem(R.id.navigation_favorite)
+//            favoriteMenuItem.setIcon(R.drawable.ic_heart_border)
+//        } else {
+//            val favoriteMenuItem =
+//                requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+//                    .menu.findItem(R.id.navigation_favorite)
+//            favoriteMenuItem.setIcon(R.drawable.ic_heart_full)
+//        }
+
+
+sharedViewModel.layout.observe(viewLifecycleOwner, Observer {
+    status ->
+
+    when (status) {
+
+        ApiLayoutStatus.LINEAR -> {
+
+            binding.rvShoppingVenture.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvShoppingVenture.adapter = LinearAdapter(
+                authViewModel.favoriteProducts,
+                sharedViewModel,
+                authViewModel
+            )
+
+            binding.cvSortVertical.setCardBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.primary_color)
+            )
+            binding.cvSortHorizontal.setCardBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.white)
+            )
+        }
+
+        ApiLayoutStatus.GRID -> {
+
+            binding.rvShoppingVenture.layoutManager = GridLayoutManager(requireContext(), 2)
+            binding.rvShoppingVenture.adapter =
+                GridAdapter(authViewModel.favoriteProducts, sharedViewModel, authViewModel)
+
+            binding.cvSortVertical.setCardBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.white)
+            )
+            binding.cvSortHorizontal.setCardBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.primary_color)
+            )
+        }
+    }
+})
+
+}
+
+private fun setupButtons() {
+
+    val slideRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_right)
+
+    binding.cvSortVertical.setOnClickListener {
+
+        sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
+        binding.rvShoppingVenture.startAnimation(slideRight)
 
     }
 
-    private fun setupButtons() {
+    binding.cvSortHorizontal.setOnClickListener {
 
-        val slideRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_right)
-
-        binding.cvSortVertical.setOnClickListener {
-
-            sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.LINEAR)
-            binding.rvShoppingVenture.startAnimation(slideRight)
-
-        }
-
-        binding.cvSortHorizontal.setOnClickListener {
-
-            sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.GRID)
-            binding.rvShoppingVenture.startAnimation(slideRight)
-
-        }
+        sharedViewModel.setApiLayoutStatus(ApiLayoutStatus.GRID)
+        binding.rvShoppingVenture.startAnimation(slideRight)
 
     }
 
-    fun showFiller(){
-        if (authViewModel.favoriteProducts.isEmpty()) {
-            binding.favoriteFiller.visibility = View.VISIBLE
-            binding.rvShoppingVenture.visibility = View.GONE
-            sharedViewModel.updateLayout()
-        } else {
-            binding.favoriteFiller.visibility = View.GONE
-            binding.rvShoppingVenture.visibility = View.VISIBLE
-            sharedViewModel.updateLayout()
-        }
-    }
+}
+
 }

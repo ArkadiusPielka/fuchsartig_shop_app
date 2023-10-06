@@ -36,6 +36,8 @@
     <TextView
         android:id="@+id/tv_price"
         style="@style/tv_title"
+        android:layout_width="50dp"
+        android:gravity="end"
         android:text="10.95"
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/info_price"

@@ -46,20 +46,14 @@ class ShopCartAdapter(
         }
 
         binding.btnMinus.setOnClickListener {
-
-
-
-            if (product.selectedNumber == 1) {
-                authViewModel.removeFromCart(product)
-            } else {
-                product.selectedNumber -= 1
-                binding.tvAmount.text = product.selectedNumber.toString()
-            }
-
+            // TODO auslagern in authViewModel
+            authViewModel.reduceAmount(product)
+            binding.tvAmount.text = product.selectedNumber.toString()
         }
 
         binding.btnPlus.setOnClickListener {
-
+            authViewModel.addAmount(product)
+            binding.tvAmount.text = product.selectedNumber.toString()
         }
 
         binding.imgProduct.load(imgUri) {
@@ -69,9 +63,5 @@ class ShopCartAdapter(
         binding.tvTitle.text = product.title
         binding.tvAmount.text = product.selectedNumber.toString()
 
-//        val price = product.price.toInt()
-//        val produktPrice = price * product.selectedNumber
-
-//        authViewModel.currentPrice.value = produktPrice.toString()
     }
 }

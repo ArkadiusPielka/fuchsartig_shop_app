@@ -55,33 +55,47 @@ class ShoppingVentureFragment : Fragment() {
 
                 val listProduct = mutableListOf<Product>()
                 var totalPrice = 0.0
+                var productAmount = 0
 
                 for (product in value) {
                     val newProduct = product.toObject(Product::class.java)
                     listProduct.add(newProduct)
 
                     totalPrice += newProduct.price.toDouble() * newProduct.selectedNumber
+                    productAmount += newProduct.selectedNumber
+
                 }
                 binding.rvShoppingVenture.adapter =
                     ShopCartAdapter(listProduct, sharedViewModel, authViewModel)
                 authViewModel.buyingProducts = listProduct
                 sharedViewModel.updateLayout()
 
-                binding.tvCurrentPrice.text = String.format("%.2f".format(totalPrice))
+                if (listProduct.isEmpty()) {
+                    binding.tvCurrentPrice.text = ""
+                    binding.imgEuro.visibility = View.INVISIBLE
+                    binding.favoriteFiller.visibility = View.VISIBLE
+                    binding.cvShoppingCart.visibility = View.GONE
+//                    binding.btnBuy.text = getString(R.string.buy_artikel, ammount.toString())
+                } else {
+                    binding.favoriteFiller.visibility = View.GONE
+                    binding.cvShoppingCart.visibility = View.VISIBLE
+                    binding.tvCurrentPrice.text = String.format("%.2f".format(totalPrice))
+//                    binding.btnBuy.text = getString(R.string.buy_artikel, productAmount.toString())
+
+                }
+//                if (binding != null && binding.btnBuy != null) {
+//                    if (value.isEmpty) {
+//                        binding.btnBuy.text = getString(R.string.buy_artikel_0)
+//                    } else {
+//                        binding.btnBuy.text =
+//                            getString(R.string.buy_artikel, productAmount.toString())
+//                    }
+//                }
             }
         }
-
 
         binding.tvGoShopping.setOnClickListener {
 //            findNavController().navigate(R.id.navigation_product)
         }
-
-//        if (authViewModel.currentPrice.value.isNullOrEmpty()){
-//            binding.tvCurrentPrice.text = ""
-//            binding.imgEuro.visibility = View.INVISIBLE
-//        } else {
-//        binding.tvCurrentPrice.text = authViewModel.currentPrice.value.toString()
-//        binding.imgEuro.visibility = View.VISIBLE
-//        }
     }
 }
