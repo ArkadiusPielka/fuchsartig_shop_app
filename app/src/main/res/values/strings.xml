@@ -11,7 +11,14 @@
     <string name="details">Produkt Details</string>
     <string name="tv_home">Das ist neu</string>
     <string name="mail">E-Mail</string>
+    <string name="deliver_to">Lieverung an:</string>
+    <string name="article">Artikel:</string>
+    <string name="amount">Anzahl:</string>
+    <string name="amount_price">Einzelpreis:</string>
+    <string name="delivery_adress">Lieferadresse</string>
     <string name="password">Password</string>
+    <string name="your_order">Ihre Bestellung</string>
+    <string name="name">Vorname/Nachname</string>
     <string name="current_password">Aktuelles Password</string>
     <string name="new_password">Neues Password</string>
     <string name="password_forgot">Password vergessen</string>

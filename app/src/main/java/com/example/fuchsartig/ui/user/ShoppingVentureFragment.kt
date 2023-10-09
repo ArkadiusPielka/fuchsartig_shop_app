@@ -83,19 +83,24 @@ class ShoppingVentureFragment : Fragment() {
 //                    binding.btnBuy.text = getString(R.string.buy_artikel, productAmount.toString())
 
                 }
-//                if (binding != null && binding.btnBuy != null) {
-//                    if (value.isEmpty) {
-//                        binding.btnBuy.text = getString(R.string.buy_artikel_0)
-//                    } else {
-//                        binding.btnBuy.text =
-//                            getString(R.string.buy_artikel, productAmount.toString())
-//                    }
-//                }
+                if (isAdded) {
+                    if (binding != null && binding.btnBuy != null) {
+                        if (value.isEmpty) {
+                            binding.btnBuy.text = getString(R.string.buy_artikel_0)
+                        } else {
+                            binding.btnBuy.text = getString(R.string.buy_artikel, productAmount.toString())
+                        }
+                    }
+                }
             }
         }
 
         binding.tvGoShopping.setOnClickListener {
 //            findNavController().navigate(R.id.navigation_product)
+        }
+
+        binding.btnBuy.setOnClickListener {
+            findNavController().navigate(R.id.orderFragment)
         }
     }
 }

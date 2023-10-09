@@ -16,7 +16,7 @@ import java.util.Calendar
 import java.util.Locale
 
 
-class MasterCardFragment : Fragment() {
+class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
 
     private lateinit var binding: FragmentMasterCardBinding
 
@@ -41,6 +41,11 @@ class MasterCardFragment : Fragment() {
 
         cardValid()
 
+        if (!showBtn){
+            binding.btnSaveCard.visibility = View.GONE
+        } else{
+            binding.btnSaveCard.visibility = View.VISIBLE
+        }
 
         binding.cbCardOwner.setOnClickListener {
             if (binding.cbCardOwner.isChecked) {

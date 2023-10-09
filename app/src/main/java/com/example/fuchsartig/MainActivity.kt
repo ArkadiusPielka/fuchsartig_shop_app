@@ -62,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }
+                R.id.orderFragment ->{
+                    binding.bottomNav.visibility = View.GONE
+                    supportActionBar?.show()
+                }
                 else -> {
                     binding.bottomNav.visibility = View.VISIBLE
                     supportActionBar?.hide()

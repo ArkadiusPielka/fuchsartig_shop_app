@@ -1,0 +1,98 @@
+package com.example.fuchsartig.ui.user
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
+import com.example.fuchsartig.R
+import com.example.fuchsartig.data.model.Profile
+import com.example.fuchsartig.databinding.FragmentOrderBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
+
+
+class OrderFragment : Fragment() {
+
+    private lateinit var binding: FragmentOrderBinding
+
+    private val authViewModel: AuthViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentOrderBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showFragment()
+        addObserver()
+    }
+
+    fun addObserver(){
+        authViewModel.profileRef.get().addOnSuccessListener {
+            val profile = it.toObject(Profile::class.java)
+            if (profile != null) {
+                val firstName = profile.firstName.toString()
+                val lastName = profile.lastName.toString()
+                Log.d("Firebase Data", "FirstName: $firstName, LastName: $lastName")
+                binding.inputName.setText("$firstName $lastName")
+                binding.inputNameDelivery.setText("$firstName $lastName")
+            }
+        }
+        authViewModel.profileRef.addSnapshotListener { snapshot, error ->
+            if (error == null && snapshot != null) {
+                val updatedProfile = snapshot.toObject(Profile::class.java)
+                binding.inputGender.setText(updatedProfile?.gender)
+                binding.inputCity.setText(updatedProfile?.city)
+                binding.inputHausNumber.setText(updatedProfile?.hausNr)
+                binding.inputCountry.setText(updatedProfile?.country)
+                binding.inputStreet.setText(updatedProfile?.street)
+                binding.inputPlz.setText(updatedProfile?.plz)
+            }
+        }
+    }
+
+    private fun showFragment() {
+        val rbMasterCard = binding.rbMastercard
+        val rbBanking = binding.rbBanking
+        val rbPayPal = binding.rbPaypal
+
+        rbMasterCard.setOnClickListener {
+            checkFragment(MasterCardFragment(false))
+        }
+
+        rbBanking.setOnClickListener {
+            checkFragment(BankingFragment())
+        }
+
+        rbPayPal.setOnClickListener {
+            checkFragment(PayPalFragment())
+        }
+
+    }
+
+    fun checkFragment(fragment: Fragment) {
+        val fragmentOnboardingManager: FragmentManager = childFragmentManager
+        val showStartFragment: FragmentTransaction = fragmentOnboardingManager.beginTransaction()
+
+        val nowFragment = fragmentOnboardingManager.findFragmentById(R.id.cv_fragment_payment)
+        if (nowFragment != null) {
+            showStartFragment.remove(nowFragment)
+        }
+        binding.cvFragmentPayment.visibility = View.VISIBLE
+        showStartFragment.replace(R.id.cv_fragment_payment, fragment)
+        showStartFragment.commit()
+    }
+}
