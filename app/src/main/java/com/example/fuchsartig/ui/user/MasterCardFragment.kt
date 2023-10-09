@@ -43,8 +43,18 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
 
         if (!showBtn){
             binding.btnSaveCard.visibility = View.GONE
+            binding.inputCardOwner.visibility = View.GONE
+            binding.cbCardOwner.visibility = View.GONE
+            binding.inputCardDate.visibility = View.GONE
+            binding.inputCardCheckNumber.visibility = View.GONE
+            binding.inputCardNumber.isEnabled = false
         } else{
             binding.btnSaveCard.visibility = View.VISIBLE
+            binding.inputCardOwner.visibility = View.VISIBLE
+            binding.cbCardOwner.visibility = View.VISIBLE
+            binding.inputCardDate.visibility = View.VISIBLE
+            binding.inputCardCheckNumber.visibility = View.VISIBLE
+            binding.inputCardNumber.isEnabled = true
         }
 
         binding.cbCardOwner.setOnClickListener {
@@ -69,8 +79,15 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
             val cardDate = binding.inputCardDate.text.toString()
             val cardSaveNumber = binding.inputCardCheckNumber.text.toString()
             val cardOwner = binding.inputCardOwner.text.toString()
+            var masterCardCheck = false
 
-            val updatedMasterCard = MasterCard("mastercard",cardOwner, cardNumber, cardDate, cardSaveNumber)
+            if (cardNumber != "" && cardDate != "" && cardSaveNumber != "" && cardOwner != ""){
+                masterCardCheck = true
+            } else {
+                false
+            }
+
+            val updatedMasterCard = MasterCard("mastercard",cardOwner, cardNumber, cardDate, cardSaveNumber, masterCardCheck)
 
             authViewModel.updateMastercard(updatedMasterCard)
         }

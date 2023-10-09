@@ -40,9 +40,15 @@ class PayPalFragment : Fragment() {
 
             val email = binding.inputMail.text.toString()
             val password = binding.inputPassword.text.toString()
+            var paypalCheck = false
 
+            if (email != "" && password != ""){
+                paypalCheck = true
+            } else {
+                false
+            }
 
-            val updatedPaypal = PayPal("paypal",email, password)
+            val updatedPaypal = PayPal("paypal",email, password,paypalCheck)
 
             authViewModel.updatePaypal(updatedPaypal)
         }

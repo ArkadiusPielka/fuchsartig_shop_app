@@ -52,6 +52,18 @@ class ProfileFragment : Fragment() {
         birthday()
         fillSpinner()
 
+        authViewModel.profileRef.get().addOnSuccessListener {
+            val profile = it.toObject(Profile::class.java)
+            if (profile != null) {
+                val checkProfile = profile.personalData
+                if (checkProfile){
+                    binding.btnDone.visibility = View.VISIBLE
+                } else {
+                    binding.btnDone.visibility = View.INVISIBLE
+                }
+            }
+        }
+
         binding.btnEdit.setOnClickListener {
             visibility()
         }

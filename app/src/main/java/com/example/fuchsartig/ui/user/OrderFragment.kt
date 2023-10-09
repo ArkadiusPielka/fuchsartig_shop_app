@@ -37,10 +37,11 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showFragment()
+        enableText()
         addObserver()
     }
 
-    fun addObserver(){
+    private fun addObserver(){
         authViewModel.profileRef.get().addOnSuccessListener {
             val profile = it.toObject(Profile::class.java)
             if (profile != null) {
@@ -60,6 +61,38 @@ class OrderFragment : Fragment() {
                 binding.inputCountry.setText(updatedProfile?.country)
                 binding.inputStreet.setText(updatedProfile?.street)
                 binding.inputPlz.setText(updatedProfile?.plz)
+            }
+        }
+        authViewModel.mastercardRef.get().addOnSuccessListener {
+            if (it.exists()){
+                val masterCardCheck = it.getBoolean("masterCardCheck")
+                if (masterCardCheck == true){
+                    binding.rbMastercard.visibility = View.VISIBLE
+                } else {
+                    binding.rbMastercard.visibility = View.GONE
+                }
+            }
+        }
+
+        authViewModel.bankingRef.get().addOnSuccessListener {
+            if (it.exists()){
+                val bankingCheck = it.getBoolean("bankingCheck")
+                if (bankingCheck == true){
+                    binding.rbBanking.visibility = View.VISIBLE
+                } else {
+                    binding.rbBanking.visibility = View.GONE
+                }
+            }
+        }
+
+        authViewModel.paypalRef.get().addOnSuccessListener {
+            if (it.exists()){
+                val paypalCheck = it.getBoolean("paypalCheck")
+                if (paypalCheck == true){
+                    binding.rbPaypal.visibility = View.VISIBLE
+                } else {
+                    binding.rbPaypal.visibility = View.GONE
+                }
             }
         }
     }
@@ -83,7 +116,7 @@ class OrderFragment : Fragment() {
 
     }
 
-    fun checkFragment(fragment: Fragment) {
+    private fun checkFragment(fragment: Fragment) {
         val fragmentOnboardingManager: FragmentManager = childFragmentManager
         val showStartFragment: FragmentTransaction = fragmentOnboardingManager.beginTransaction()
 
@@ -94,5 +127,16 @@ class OrderFragment : Fragment() {
         binding.cvFragmentPayment.visibility = View.VISIBLE
         showStartFragment.replace(R.id.cv_fragment_payment, fragment)
         showStartFragment.commit()
+    }
+
+    private fun enableText() {
+        binding.inputGender.isEnabled = false
+        binding.inputCity.isEnabled = false
+        binding.inputHausNumber.isEnabled = false
+        binding.inputCountry.isEnabled = false
+        binding.inputStreet.isEnabled = false
+        binding.inputPlz.isEnabled = false
+        binding.inputName.isEnabled = false
+        binding.inputNameDelivery.isEnabled = false
     }
 }

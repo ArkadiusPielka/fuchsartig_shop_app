@@ -6,5 +6,6 @@ data class Banking(
     @DocumentId val id: String = "banking",
     val bankingOwner: String = "",
     val iban: String = "",
-    val bic: String = ""
+    val bic: String = "",
+    val bankingCheck: Boolean = false
 )

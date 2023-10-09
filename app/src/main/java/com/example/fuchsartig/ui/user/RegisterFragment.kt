@@ -1,6 +1,7 @@
 package com.example.fuchsartig.ui.user
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
+import com.example.fuchsartig.data.model.MasterCard
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
@@ -51,6 +53,18 @@ class RegisterFragment : Fragment() {
         birthday()
         fillSpinner()
 
+        authViewModel.profileRef.get().addOnSuccessListener {
+            val profile = it.toObject(Profile::class.java)
+            if (profile != null) {
+                val checkProfile = profile.personalData
+               if (checkProfile){
+                   binding.btnDone.visibility = View.VISIBLE
+               } else {
+                   binding.btnDone.visibility = View.INVISIBLE
+               }
+            }
+        }
+
         binding.btnHome.setOnClickListener {
             findNavController().navigate(R.id.navigation_home)
         }
@@ -66,6 +80,15 @@ class RegisterFragment : Fragment() {
             val country = binding.inputCountry.text.toString()
             val street = binding.inputStreet.text.toString()
             val plz = binding.inputPlz.text.toString()
+            var personalData = false
+
+            if (genderSelected != "" && firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != ""){
+                personalData = true
+            } else {
+                false
+            }
+
+
 
             val profile = Profile(
                 gender = genderSelected,
@@ -76,7 +99,8 @@ class RegisterFragment : Fragment() {
                 hausNr = hausNr,
                 country = country,
                 street = street,
-                plz = plz
+                plz = plz,
+                personalData = personalData
             )
             authViewModel.updateProfile(
                 profile

@@ -17,6 +17,7 @@ import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.databinding.FragmentShoppingVentureBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class ShoppingVentureFragment : Fragment() {
@@ -75,12 +76,10 @@ class ShoppingVentureFragment : Fragment() {
                     binding.imgEuro.visibility = View.INVISIBLE
                     binding.favoriteFiller.visibility = View.VISIBLE
                     binding.cvShoppingCart.visibility = View.GONE
-//                    binding.btnBuy.text = getString(R.string.buy_artikel, ammount.toString())
                 } else {
                     binding.favoriteFiller.visibility = View.GONE
                     binding.cvShoppingCart.visibility = View.VISIBLE
                     binding.tvCurrentPrice.text = String.format("%.2f".format(totalPrice))
-//                    binding.btnBuy.text = getString(R.string.buy_artikel, productAmount.toString())
 
                 }
                 if (isAdded) {
@@ -100,7 +99,39 @@ class ShoppingVentureFragment : Fragment() {
         }
 
         binding.btnBuy.setOnClickListener {
-            findNavController().navigate(R.id.orderFragment)
+            checkUserInput()
         }
+    }
+
+    private fun checkUserInput (){
+        authViewModel.profileRef.get().addOnSuccessListener { profilRef ->
+            val profilCheck = profilRef.getBoolean("personalData")
+            authViewModel.mastercardRef.get().addOnSuccessListener {masterCardRef ->
+                val masterCardCheck = masterCardRef.getBoolean("masterCardCheck")
+                authViewModel.bankingRef.get().addOnSuccessListener { bankingRef ->
+                    val bankingCheck = bankingRef.getBoolean("bankingCheck")
+                    authViewModel.paypalRef.get().addOnSuccessListener { paypalRef ->
+                        val paypalCheck = paypalRef.getBoolean("paypalCheck")
+
+                        if (profilCheck == true && (masterCardCheck == true || bankingCheck == true || paypalCheck == true)){
+                            findNavController().navigate(R.id.orderFragment)
+                        } else {
+                            missingUserInput()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun missingUserInput() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Vielen Dank für Bestellung")
+            .setMessage("Leider fehlen noch weitere Angaben um den Bestellvorgen abzuschließen.")
+            .setCancelable(false)
+            .setPositiveButton("OK") { _, _ ->
+                findNavController().navigate(R.id.navigation_profil)
+            }
+            .show()
     }
 }

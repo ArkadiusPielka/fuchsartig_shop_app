@@ -7,6 +7,7 @@ data class MasterCard(
     val cardOwner: String = "",
     val cardNumber: String = "",
     val cardValid: String = "",
-    val cardSecurityNumber: String = ""
+    val cardSecurityNumber: String = "",
+    val masterCardCheck: Boolean = false
 
 )

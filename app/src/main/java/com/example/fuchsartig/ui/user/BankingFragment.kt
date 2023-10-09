@@ -58,6 +58,14 @@ class BankingFragment : Fragment() {
             val iban = binding.inputIban.text.toString()
             val bic = binding.inputBic.text.toString()
 
+            var bankingCheck = false
+
+            if (bankOwner != "" && iban != "" && bic != ""){
+                bankingCheck = true
+            } else {
+                false
+            }
+
             val updatedBanking = Banking("banking",bankOwner, iban, bic)
 
             authViewModel.updateBanking(updatedBanking)
