@@ -3,6 +3,7 @@ package com.example.fuchsartig
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedViewModel: MainViewModel
 
-    private lateinit var authViewModel: AuthViewModel
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,17 @@ class MainActivity : AppCompatActivity() {
 
         bottemNavUser()
 
-
+        authViewModel.currentUser.observe(this) { user ->
+            if (user?.uid != null) {
+                // Benutzer ist angemeldet
+                binding.bottomNav.menu.clear()
+                binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_user)
+            } else {
+                // Benutzer ist nicht angemeldet
+                binding.bottomNav.menu.clear()
+                binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_not_login)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

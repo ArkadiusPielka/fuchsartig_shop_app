@@ -54,7 +54,13 @@ class LinearAdapter(
             product.liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
         }
 
-        if (product.liked){
+        if (authViewModel.currentUser.value?.uid == null) {
+            for (product in dataSet) {
+                product.liked = false
+            }
+        }
+
+        if (product.liked) {
             binding.btnLike.setImageResource(R.drawable.ic_heart_full)
         } else {
             binding.btnLike.setImageResource(R.drawable.ic_heart_border)

@@ -34,6 +34,16 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (authViewModel.currentUser.value?.uid == null){
+            binding.btnLogOut.visibility = View.GONE
+            binding.btnProfil.visibility = View.GONE
+            binding.btnLogIn.visibility = View.VISIBLE
+        } else {
+            binding.btnLogOut.visibility = View.VISIBLE
+            binding.btnProfil.visibility = View.VISIBLE
+            binding.btnLogIn.visibility = View.GONE
+        }
+
         binding.btnLogOut.setOnClickListener {
             findNavController().navigate(R.id.navigation_login)
             authViewModel.logout()

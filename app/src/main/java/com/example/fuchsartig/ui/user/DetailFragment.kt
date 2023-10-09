@@ -54,6 +54,10 @@ class DetailFragment : Fragment() {
             binding.tvDescription.text = product.descript
             binding.tvPrice.text = product.price
 
+            if (authViewModel.currentUser.value?.uid == null) {
+                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+            }
+
             val liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
             if (liked) {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_full)
@@ -96,7 +100,6 @@ class DetailFragment : Fragment() {
                 spinnerList
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        oder simple_spinner_item
         binding.spinner.adapter = adapter
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

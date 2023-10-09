@@ -48,6 +48,12 @@ class GridAdapter(private val dataSet: List<Product>, private val sharedViewMode
             product.liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
         }
 
+        if (authViewModel.currentUser.value?.uid == null){
+            for (product in dataSet){
+                product.liked = false
+            }
+        }
+
         if (product.liked){
             binding.btnLike.setImageResource(R.drawable.ic_heart_full)
         } else {
