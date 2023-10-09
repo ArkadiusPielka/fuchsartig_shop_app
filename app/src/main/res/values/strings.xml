@@ -63,6 +63,8 @@
     <string name="btn_save_bank">Konto hinzufügen</string>
     <string name="btn_buy_now">Jetzt Kaufen</string>
     <string name="btn_paypal">zu PayPal</string>
+    <string name="agb">Mit Ihrer Bestellung erklären Sie sich mit unseren Allgemeinen Geschäftsbedingungen einverstanden. Bitte lesen Sie unsere Datenschutzerklärung und unsere Hinweise zu Cookies.</string>
+    <string name="agb_assing">Ich Stimme zu</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

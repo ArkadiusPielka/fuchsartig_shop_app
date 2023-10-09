@@ -69,6 +69,7 @@ class ShoppingVentureFragment : Fragment() {
                 binding.rvShoppingVenture.adapter =
                     ShopCartAdapter(listProduct, sharedViewModel, authViewModel)
                 authViewModel.buyingProducts = listProduct
+                authViewModel.totalPrice = totalPrice
                 sharedViewModel.updateLayout()
 
                 if (listProduct.isEmpty()) {
@@ -83,12 +84,10 @@ class ShoppingVentureFragment : Fragment() {
 
                 }
                 if (isAdded) {
-                    if (binding != null && binding.btnBuy != null) {
-                        if (value.isEmpty) {
-                            binding.btnBuy.text = getString(R.string.buy_artikel_0)
-                        } else {
-                            binding.btnBuy.text = getString(R.string.buy_artikel, productAmount.toString())
-                        }
+                    if (value.isEmpty) {
+                        binding.btnBuy.text = getString(R.string.buy_artikel_0)
+                    } else {
+                        binding.btnBuy.text = getString(R.string.buy_artikel, productAmount.toString())
                     }
                 }
             }

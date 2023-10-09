@@ -33,6 +33,8 @@ class AuthViewModel : ViewModel() {
 
     var currentPrice = MutableLiveData<String>()
 
+    var totalPrice: Double = 0.0
+
 
     var favoriteProducts = mutableListOf<Product>()
 

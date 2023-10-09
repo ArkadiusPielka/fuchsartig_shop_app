@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.MainActivity
 import com.example.fuchsartig.R
 import com.example.fuchsartig.databinding.FragmentStartBinding
+import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class StartFragment : Fragment() {
@@ -19,6 +23,8 @@ class StartFragment : Fragment() {
     private lateinit var binding: FragmentStartBinding
 
     private lateinit var sharedViewModel: MainViewModel
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,7 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnVisitor.setOnClickListener {
+
             findNavController().navigate(R.id.navigation_home)
 
         }
@@ -72,4 +79,5 @@ class StartFragment : Fragment() {
 
         }
     }
+
 }

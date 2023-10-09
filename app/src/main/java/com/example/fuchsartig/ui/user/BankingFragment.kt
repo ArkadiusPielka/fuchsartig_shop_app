@@ -66,7 +66,7 @@ class BankingFragment : Fragment() {
                 false
             }
 
-            val updatedBanking = Banking("banking",bankOwner, iban, bic)
+            val updatedBanking = Banking("banking",bankOwner, iban, bic,bankingCheck)
 
             authViewModel.updateBanking(updatedBanking)
         }
