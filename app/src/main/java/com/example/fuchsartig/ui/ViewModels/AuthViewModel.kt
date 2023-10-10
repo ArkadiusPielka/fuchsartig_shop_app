@@ -100,6 +100,10 @@ class AuthViewModel : ViewModel() {
         profileRef.set(profile)
     }
 
+    fun isAdmin(profile: Profile): Boolean{
+        return profile.admin
+    }
+
     fun setPayment() {
         val paymentRef = profileRef.collection("payment")
 
@@ -151,8 +155,8 @@ class AuthViewModel : ViewModel() {
         shoppingRef.document(product.apiId.toString()).delete()
     }
 
-    fun reduceAmount(product: Product){
-        if (product.selectedNumber == 1){
+    fun reduceAmount(product: Product) {
+        if (product.selectedNumber == 1) {
             removeFromCart(product)
         } else {
             val updateAmount = product.selectedNumber - 1
@@ -163,10 +167,10 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun addAmount(product: Product){
+    fun addAmount(product: Product) {
         val productAmount = product.number.toInt()
-        if (product.selectedNumber == productAmount){
-           // TODO setAllert
+        if (product.selectedNumber == productAmount) {
+            // TODO setAllert
         } else {
             val updateAmount = product.selectedNumber + 1
             val productRef = shoppingRef.document(product.apiId.toString())
@@ -190,7 +194,7 @@ class AuthViewModel : ViewModel() {
 
     }
 
-private fun setupUserEnv() {
+    private fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
         profileRef =
             firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
@@ -227,11 +231,5 @@ private fun setupUserEnv() {
         paymentRef.set(input)
     }
 
-//    private fun maxAmount() {
-//        MaterialAlertDialogBuilder(requireContext())
-//            .setTitle("Maximale Anzahl erreicht")
-//            .setCancelable(true)
-//            .show()
-//    }
 }
 

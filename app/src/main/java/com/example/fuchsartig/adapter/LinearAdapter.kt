@@ -67,6 +67,12 @@ class LinearAdapter(
             binding.btnLike.setImageResource(R.drawable.ic_heart_border)
         }
 
+        if (product.number == "0"){
+            binding.cvSoldOut.visibility = View.VISIBLE
+        } else {
+            binding.cvSoldOut.visibility = View.GONE
+        }
+
         binding.btnLike.setOnClickListener {
             if (!product.liked) {
                 product.liked = true

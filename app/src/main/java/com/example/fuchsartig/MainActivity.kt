@@ -8,10 +8,12 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.ActivityMainBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.ktx.toObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,8 +39,20 @@ class MainActivity : AppCompatActivity() {
 
         authViewModel.currentUser.observe(this) { user ->
             if (user?.uid != null) {
-                binding.bottomNav.menu.clear()
-                binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_user)
+                authViewModel.profileRef.get().addOnSuccessListener {
+                    val profile = it.toObject(Profile::class.java)
+                    if (profile != null) {
+                        val isAdmin = authViewModel.isAdmin(profile)
+                        if (isAdmin) {
+                            //TODO ADMIN hinzufügen
+//                            binding.bottomNav.menu.clear()
+//                            binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_admin)
+                        } else {
+                            binding.bottomNav.menu.clear()
+                            binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_user)
+                        }
+                    }
+                }
             } else {
                 binding.bottomNav.menu.clear()
                 binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_not_login)
@@ -50,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    fun bottemNavUser(){
+    fun bottemNavUser() {
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHost.navController
@@ -65,22 +79,27 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }
+
                 R.id.navigation_login -> {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.hide()
                 }
+
                 R.id.navigation_register -> {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }
+
                 R.id.navigation_profil -> {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }
-                R.id.orderFragment ->{
+
+                R.id.orderFragment -> {
                     binding.bottomNav.visibility = View.GONE
                     supportActionBar?.show()
                 }
+
                 else -> {
                     binding.bottomNav.visibility = View.VISIBLE
                     supportActionBar?.hide()

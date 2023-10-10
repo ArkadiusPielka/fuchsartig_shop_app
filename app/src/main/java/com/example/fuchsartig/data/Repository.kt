@@ -26,7 +26,7 @@ class Repository(private val api: ProductApi) {
         try {
             Log.d(TAG, "ProductNumber ${productUpdate.number}")
             val updateProduct = api.retrofitService.updateProductNumber(apiId, productUpdate)
-//            getProducts()
+            getProducts()
             Log.d(TAG, "updateProduct ${updateProduct.toString()}")
         } catch (e: Exception) {
             Log.e(TAG, "$e")

@@ -77,6 +77,20 @@ class DetailFragment : Fragment() {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
 
+            if (product.number == "0"){
+                binding.tvSouldOut.visibility = View.VISIBLE
+                binding.spinner.visibility = View.GONE
+                binding.amountDetail.visibility = View.GONE
+                binding.btnBuyNow.visibility = View.GONE
+                binding.btnInCart.visibility = View.GONE
+            } else {
+                binding.tvSouldOut.visibility = View.GONE
+                binding.spinner.visibility = View.VISIBLE
+                binding.amountDetail.visibility = View.VISIBLE
+                binding.btnBuyNow.visibility = View.VISIBLE
+                binding.btnInCart.visibility = View.VISIBLE
+            }
+
             binding.btnInCart.setOnClickListener {
                 authViewModel.addToCart(product)
 //                findNavController().navigate(R.id.navigation_product)

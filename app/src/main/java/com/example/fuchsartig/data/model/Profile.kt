@@ -15,5 +15,7 @@ data class Profile(
     val country: String = "",
     val birthdate: String = "",
     val paymentType: String = "",
-    val personalData: Boolean = false
+    val personalData: Boolean = false,
+    val admin: Boolean = false
 )
+

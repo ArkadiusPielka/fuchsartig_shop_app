@@ -65,9 +65,9 @@
     <string name="btn_paypal">zu PayPal</string>
     <string name="agb">Mit Ihrer Bestellung erklären Sie sich mit unseren Allgemeinen Geschäftsbedingungen einverstanden. Bitte lesen Sie unsere Datenschutzerklärung und unsere Hinweise zu Cookies.</string>
     <string name="agb_assing">Ich Stimme zu</string>
-
+    <string name="sold_out">Ausverkauft</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    Jetzt Kaufen
+    sold_out
 </resources>

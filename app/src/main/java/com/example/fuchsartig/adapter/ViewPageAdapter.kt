@@ -1,6 +1,7 @@
 package com.example.fuchsartig.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.net.toUri
@@ -42,6 +43,11 @@ class ViewPageAdapter(val dataSet: List<Product>,private val sharedViewModel: Ma
             val navController = holder.itemView.findNavController()
             navController.navigate(R.id.navigation_detail)
 
+        }
+        if (product.number == "0"){
+            binding.cvSoldOut.visibility = View.VISIBLE
+        } else {
+            binding.cvSoldOut.visibility = View.GONE
         }
     }
 
