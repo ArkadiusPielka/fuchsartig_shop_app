@@ -68,8 +68,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     repository.updateProductNumber(apiId, productUpdate)
                 }
             } catch (e: Exception) {
+
             }
-            loadProduct()
+
         }
 
     }

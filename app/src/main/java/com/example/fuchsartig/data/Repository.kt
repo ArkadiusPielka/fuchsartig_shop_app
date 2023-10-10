@@ -1,5 +1,6 @@
 package com.example.fuchsartig.data
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,13 +22,14 @@ class Repository(private val api: ProductApi) {
         }
     }
 
-    suspend fun updateProductNumber(apiId: Int, productUpdate: ProductNumberUpdate): Product {
+    suspend fun updateProductNumber(apiId: Int, productUpdate: ProductNumberUpdate) {
         try {
+            Log.d(TAG, "ProductNumber ${productUpdate.number}")
             val updateProduct = api.retrofitService.updateProductNumber(apiId, productUpdate)
-            getProducts()
-            return updateProduct
+//            getProducts()
+            Log.d(TAG, "updateProduct ${updateProduct.toString()}")
         } catch (e: Exception) {
-            throw e
+            Log.e(TAG, "$e")
         }
     }
 }

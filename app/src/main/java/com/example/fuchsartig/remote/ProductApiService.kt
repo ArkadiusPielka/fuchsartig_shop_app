@@ -9,11 +9,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 const val BASE_URL = "https://retoolapi.dev/"
-const val token = "LvSX4X"
+const val token = "rT1oQ6"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -29,10 +31,10 @@ interface ProductApiService {
     @GET("/$token/fuchsartig")
     suspend fun getProduct(): List<Product>
 
-    @PATCH("/$token/fuchsartig/{apiId}")
+    @PATCH("$token/fuchsartig/{apiId}")
     suspend fun updateProductNumber(
-        @Path("apiID") apiId: Int,
-        @Body productNumberUpdate: ProductNumberUpdate
+        @Path("apiId") apiId: Int,
+        @Body number: ProductNumberUpdate
     ): Product
 
 }

@@ -1,3 +1,5 @@
 package com.example.fuchsartig.data.model
 
-data class ProductNumberUpdate(var number: String)
+import com.squareup.moshi.Json
+
+data class ProductNumberUpdate(@Json(name = "number") var number: String)

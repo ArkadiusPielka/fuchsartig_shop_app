@@ -134,10 +134,14 @@ class OrderFragment : Fragment() {
                             for (document in documents) {
                                 document.reference.delete()
                             }
+
                         }
                 }
 
             }
+            val navController = findNavController()
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_home)
         }
 
     }
