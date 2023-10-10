@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.adapter.OrderAdapter
 import com.example.fuchsartig.adapter.ShopCartAdapter
 import com.example.fuchsartig.data.model.Product
+import com.example.fuchsartig.data.model.ProductNumberUpdate
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentOrderBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
@@ -114,10 +116,28 @@ class OrderFragment : Fragment() {
                 binding.tvTotalPrice.text = String.format("%.2f".format(price))
             }
         }
+
         binding.btnBuy.isEnabled = false
 
         binding.checkAgb.setOnClickListener {
             binding.btnBuy.isEnabled = binding.checkAgb.isChecked
+        }
+
+        binding.btnBuy.setOnClickListener {
+            authViewModel.shoppingRef.addSnapshotListener { value, error ->
+                if (error == null && value != null) {
+                    val selectedProducts = authViewModel.buyingProducts
+                    sharedViewModel.updateProductNumber(selectedProducts)
+                    val collectionRef = authViewModel.shoppingRef
+                    collectionRef.get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                document.reference.delete()
+                            }
+                        }
+                }
+
+            }
         }
 
     }

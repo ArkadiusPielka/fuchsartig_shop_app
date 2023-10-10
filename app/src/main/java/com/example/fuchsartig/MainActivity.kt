@@ -37,11 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         authViewModel.currentUser.observe(this) { user ->
             if (user?.uid != null) {
-                // Benutzer ist angemeldet
                 binding.bottomNav.menu.clear()
                 binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_user)
             } else {
-                // Benutzer ist nicht angemeldet
                 binding.bottomNav.menu.clear()
                 binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_not_login)
             }

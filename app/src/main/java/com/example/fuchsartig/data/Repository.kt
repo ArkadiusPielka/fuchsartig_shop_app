@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fuchsartig.data.model.Product
+import com.example.fuchsartig.data.model.ProductNumberUpdate
 import com.example.fuchsartig.remote.ProductApi
 
 class Repository(private val api: ProductApi) {
@@ -15,8 +16,18 @@ class Repository(private val api: ProductApi) {
     suspend fun getProducts() {
         try {
             _product.postValue(api.retrofitService.getProduct())
-        } catch (e: Exception){
-        Log.e("data", "noload $e")
+        } catch (e: Exception) {
+            Log.e("data", "noload $e")
+        }
+    }
+
+    suspend fun updateProductNumber(apiId: Int, productUpdate: ProductNumberUpdate): Product {
+        try {
+            val updateProduct = api.retrofitService.updateProductNumber(apiId, productUpdate)
+            getProducts()
+            return updateProduct
+        } catch (e: Exception) {
+            throw e
         }
     }
 }

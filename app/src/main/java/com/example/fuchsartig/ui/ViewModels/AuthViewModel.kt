@@ -176,6 +176,7 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+
     private fun loadShoppinCart() {
         buyingProducts.clear()
 

@@ -8,8 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.fuchsartig.data.Repository
 import com.example.fuchsartig.data.model.Product
+import com.example.fuchsartig.data.model.ProductNumberUpdate
 import com.example.fuchsartig.remote.ProductApi
 import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 enum class ApiLayoutStatus { LINEAR, GRID }
 
@@ -20,7 +24,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(ProductApi)
 
-    val products = repository.product
+    var products = repository.product
 
     private val _layout = MutableLiveData<ApiLayoutStatus>(ApiLayoutStatus.LINEAR)
     val layout: LiveData<ApiLayoutStatus>
@@ -49,11 +53,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun updateProductNumber(updateProducts: List<Product>) {
+        viewModelScope.launch {
+            try {
+                for (product in updateProducts) {
+
+                    val apiId = product.apiId
+                    val currentNumber = product.number.toInt()
+                    val selectedNumber = product.selectedNumber
+                    val newNumber = (currentNumber - selectedNumber).toString()
+
+                    val productUpdate = ProductNumberUpdate(newNumber)
+
+                    repository.updateProductNumber(apiId, productUpdate)
+                }
+            } catch (e: Exception) {
+            }
+            loadProduct()
+        }
+
+    }
+
     fun setApiLayoutStatus(layoutStatus: ApiLayoutStatus) {
         _layout.value = layoutStatus
     }
 
-    fun updateLayout(){
+    fun updateLayout() {
         _layout.value = _layout.value
     }
 
