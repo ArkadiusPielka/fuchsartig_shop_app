@@ -55,7 +55,19 @@ class DetailFragment : Fragment() {
             binding.tvPrice.text = product.price
 
             if (authViewModel.currentUser.value?.uid == null) {
-                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
+                binding.btnLike.visibility = View.INVISIBLE
+                binding.btnRegister.visibility = View.VISIBLE
+                binding.btnInCart.visibility = View.GONE
+                binding.btnBuyNow.visibility = View.GONE
+                binding.spinner.visibility = View.GONE
+                binding.amountDetail.visibility = View.GONE
+            } else {
+                binding.btnLike.visibility = View.VISIBLE
+                binding.btnRegister.visibility = View.GONE
+                binding.btnInCart.visibility = View.VISIBLE
+                binding.btnBuyNow.visibility = View.VISIBLE
+                binding.spinner.visibility = View.VISIBLE
+                binding.amountDetail.visibility = View.VISIBLE
             }
 
             val liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
@@ -64,6 +76,7 @@ class DetailFragment : Fragment() {
             } else {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
+
             binding.btnInCart.setOnClickListener {
                 authViewModel.addToCart(product)
 //                findNavController().navigate(R.id.navigation_product)
@@ -72,6 +85,9 @@ class DetailFragment : Fragment() {
             isLiked(product)
             fillSpinner(product)
 
+            binding.btnRegister.setOnClickListener {
+                findNavController().navigate(R.id.navigation_login)
+            }
         })
         sharedViewModel.currentImages.observe(viewLifecycleOwner, Observer {
             val viewPager2 = binding.viewPager2

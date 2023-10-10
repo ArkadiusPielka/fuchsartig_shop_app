@@ -77,19 +77,21 @@ class FavoriteFragment : Fragment() {
             }
         }
 // TODO nav bar herz bearbeiten
-
-//        if (authViewModel.favoriteProducts.isEmpty()) {
-//            val favoriteMenuItem =
-//                requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
-//                    .menu.findItem(R.id.navigation_favorite)
-//            favoriteMenuItem.setIcon(R.drawable.ic_heart_border)
-//        } else {
-//            val favoriteMenuItem =
-//                requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
-//                    .menu.findItem(R.id.navigation_favorite)
-//            favoriteMenuItem.setIcon(R.drawable.ic_heart_full)
-//        }
-
+        authViewModel.favoritesRef.addSnapshotListener { value, error ->
+            if (error == null && value != null) {
+                if (authViewModel.favoriteProducts.isEmpty()) {
+                    val favoriteMenuItem =
+                        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+                            .menu.findItem(R.id.navigation_favorite)
+                    favoriteMenuItem.setIcon(R.drawable.ic_heart_border)
+                } else {
+                    val favoriteMenuItem =
+                        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+                            .menu.findItem(R.id.navigation_favorite)
+                    favoriteMenuItem.setIcon(R.drawable.ic_heart_full)
+                }
+            }
+        }
 
 sharedViewModel.layout.observe(viewLifecycleOwner, Observer {
     status ->

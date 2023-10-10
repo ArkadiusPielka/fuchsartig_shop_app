@@ -1,6 +1,7 @@
 package com.example.fuchsartig.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.navigation.findNavController
@@ -55,9 +56,9 @@ class LinearAdapter(
         }
 
         if (authViewModel.currentUser.value?.uid == null) {
-            for (product in dataSet) {
-                product.liked = false
-            }
+            binding.btnLike.visibility = View.INVISIBLE
+            } else {
+            binding.btnLike.visibility = View.VISIBLE
         }
 
         if (product.liked) {
