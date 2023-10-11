@@ -1,5 +1,6 @@
 package com.example.fuchsartig.ui.ViewModels
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -35,6 +36,7 @@ class AuthViewModel : ViewModel() {
 
     var totalPrice: Double = 0.0
 
+    var isAdmin = MutableLiveData<Boolean>(false)
 
     var favoriteProducts = mutableListOf<Product>()
 
@@ -100,9 +102,6 @@ class AuthViewModel : ViewModel() {
         profileRef.set(profile)
     }
 
-    fun isAdmin(profile: Profile): Boolean{
-        return profile.admin
-    }
 
     fun setPayment() {
         val paymentRef = profileRef.collection("payment")
@@ -194,16 +193,27 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    private fun setupUserEnv() {
+    fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser
         profileRef =
             firebaseStore.collection("profile").document(firebaseAuth.currentUser?.uid!!)
         favoritesRef = profileRef.collection("favorites")
         shoppingRef = profileRef.collection("shopping")
 
-        loadShoppinCart()
-        loadPayment()
-        loadFavorites()
+        profileRef.get().addOnSuccessListener { profil ->
+            if (profil.exists()) {
+                val profile = profil.getBoolean("admin") == true
+
+                isAdmin.postValue(profile)
+                Log.d(TAG, "$isAdmin")
+            } else {
+                isAdmin.postValue(false)
+            }
+            loadShoppinCart()
+            loadPayment()
+            loadFavorites()
+        }
+
     }
 
     fun logout() {

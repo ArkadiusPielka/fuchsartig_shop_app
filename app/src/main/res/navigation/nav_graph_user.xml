@@ -70,4 +70,9 @@
         android:name="com.example.fuchsartig.ui.user.OrderFragment"
         android:label="@string/your_order"
         tools:layout="@layout/fragment_order" />
+    <fragment
+        android:id="@+id/navigation_home_admin"
+        android:name="com.example.fuchsartig.ui.admin.HomeAdminFragment"
+        android:label="fragment_home_admin"
+        tools:layout="@layout/fragment_home_admin" />
 </navigation>

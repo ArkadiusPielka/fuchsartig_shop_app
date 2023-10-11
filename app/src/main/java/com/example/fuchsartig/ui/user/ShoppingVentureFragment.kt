@@ -6,14 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.example.fuchsartig.R
 import com.example.fuchsartig.adapter.ShopCartAdapter
-import com.example.fuchsartig.adapter.ViewPageAdapter
 import com.example.fuchsartig.data.model.Product
-import com.example.fuchsartig.databinding.FragmentDetailBinding
 import com.example.fuchsartig.databinding.FragmentShoppingVentureBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel

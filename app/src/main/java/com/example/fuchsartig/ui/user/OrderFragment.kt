@@ -140,8 +140,7 @@ class OrderFragment : Fragment() {
 
             }
             val navController = findNavController()
-            navController.popBackStack()
-            navController.navigate(R.id.navigation_home)
+            navController.navigateUp()
         }
 
     }

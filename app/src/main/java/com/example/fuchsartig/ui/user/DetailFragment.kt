@@ -93,7 +93,7 @@ class DetailFragment : Fragment() {
 
             binding.btnInCart.setOnClickListener {
                 authViewModel.addToCart(product)
-//                findNavController().navigate(R.id.navigation_product)
+                findNavController().navigateUp()
                 //TODO nachricht hinzufügen
             }
             isLiked(product)

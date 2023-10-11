@@ -13,7 +13,6 @@ import com.example.fuchsartig.databinding.ActivityMainBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.ktx.toObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,25 +36,20 @@ class MainActivity : AppCompatActivity() {
 
         bottemNavUser()
 
+//        if (authViewModel.isAdmin) {
+//            binding.bottomNav.menu.clear()
+//            binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_admin)
+//        }
+
         authViewModel.currentUser.observe(this) { user ->
-            if (user?.uid != null) {
-                authViewModel.profileRef.get().addOnSuccessListener {
-                    val profile = it.toObject(Profile::class.java)
-                    if (profile != null) {
-                        val isAdmin = authViewModel.isAdmin(profile)
-                        if (isAdmin) {
-                            //TODO ADMIN hinzufügen
-//                            binding.bottomNav.menu.clear()
-//                            binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_admin)
-                        } else {
-                            binding.bottomNav.menu.clear()
-                            binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_user)
-                        }
-                    }
+            authViewModel.isAdmin.observe(this) { isAdmin ->
+                val menuResId = when {
+                    user?.uid == null -> R.menu.bottom_nav_menu_not_login
+                    isAdmin == true -> R.menu.bottom_nav_menu_admin
+                    else -> R.menu.bottom_nav_menu_user
                 }
-            } else {
                 binding.bottomNav.menu.clear()
-                binding.bottomNav.inflateMenu(R.menu.bottom_nav_menu_not_login)
+                binding.bottomNav.inflateMenu(menuResId)
             }
         }
     }
@@ -63,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+
 
     fun bottemNavUser() {
         val navHost =
