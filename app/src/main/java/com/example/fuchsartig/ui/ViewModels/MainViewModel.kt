@@ -34,6 +34,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentProduct: LiveData<Product>
         get() = _currentProduct
 
+    val emptyProduct = mutableListOf<Product>()
+
+
     private val _currentImages = MutableLiveData<MutableList<String>>(mutableListOf())
     val currentImages: LiveData<MutableList<String>>
         get() = _currentImages
@@ -70,9 +73,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             } catch (e: Exception) {
 
             }
+        }
+    }
 
+    fun getEmptyProducts(products: List<Product>): List<Product> {
+        val emptyProducts = mutableListOf<Product>()
+
+        for (product in products) {
+            if (product.number == "0" || product.number == "1") {
+                emptyProducts.add(product)
+            }
         }
 
+        return emptyProducts
     }
 
     fun setApiLayoutStatus(layoutStatus: ApiLayoutStatus) {

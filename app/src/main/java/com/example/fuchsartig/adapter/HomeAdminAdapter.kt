@@ -1,5 +1,7 @@
 package com.example.fuchsartig.adapter
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -10,13 +12,18 @@ import com.example.fuchsartig.databinding.ListItemHomeAdminBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
-class HomeAdminAdapter(private val dataSet: List<Product>, private val sharedViewModel: MainViewModel, private val authViewModel: AuthViewModel) :
+class HomeAdminAdapter(
+    private val dataSet: List<Product>,
+    private val sharedViewModel: MainViewModel
+) :
     RecyclerView.Adapter<HomeAdminAdapter.HomeAdminViewHolder>() {
 
-        class HomeAdminViewHolder(val binding: ListItemHomeAdminBinding): RecyclerView.ViewHolder(binding.root)
+    class HomeAdminViewHolder(val binding: ListItemHomeAdminBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeAdminViewHolder {
-        val binding = ListItemHomeAdminBinding.inflate(LayoutInflater.from(parent.context), parent,false)
+        val binding =
+            ListItemHomeAdminBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HomeAdminViewHolder(binding)
     }
 
@@ -31,7 +38,18 @@ class HomeAdminAdapter(private val dataSet: List<Product>, private val sharedVie
 
         binding.imgProduct.load(imgUri)
         binding.tvTitle.text = product.title
-        binding
+        binding.inputPrice.setText(product.price)
+        binding.inputAmount.setText(product.number)
+
+        val emptyProducts = mutableListOf<Product>()
+
+//        for (product in dataSet) {
+//            if (product.number == "0" || product.number == "1") {
+//                emptyProducts.add(product)
+//            }
+//        }
+//        Log.d(TAG,"$emptyProducts")
+//        sharedViewModel.emptyProduct.addAll(emptyProducts)
     }
 
 }
