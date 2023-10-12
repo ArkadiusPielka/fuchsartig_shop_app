@@ -75,4 +75,9 @@
         android:name="com.example.fuchsartig.ui.admin.HomeAdminFragment"
         android:label="fragment_home_admin"
         tools:layout="@layout/fragment_home_admin" />
+    <fragment
+        android:id="@+id/navigation_price"
+        android:name="com.example.fuchsartig.ui.admin.PriceAdminFragment"
+        android:label="fragment_price_admin"
+        tools:layout="@layout/fragment_price_admin" />
 </navigation>

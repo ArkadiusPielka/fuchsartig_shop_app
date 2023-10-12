@@ -33,7 +33,11 @@
     <string name="log_in">Anmelden</string>
     <string name="Log_out">Abmelden</string>
     <string name="card_date">Gültig bis</string>
-    <string name="current_amount">Aktuelle Anzahl:</string>
+    <string name="current_amount">Auf Lager:</string>
+    <string name="current_amount_add">Hinzufügen:</string>
+    <string name="storage">Auffüllen</string>
+    <string name="new_price">Preise</string>
+    <string name="new_price_add">Neuer Preis</string>
 
     <string name="personal_data">Persönliche Daten</string>
     <string name="personal_login_data">Log in ändern</string>
