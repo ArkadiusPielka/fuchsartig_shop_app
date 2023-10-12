@@ -34,5 +34,6 @@ class DetailAdapter(val dataSet: List<String>, private val sharedViewModel: Main
 
             transformations(RoundedCornersTransformation(5f))
         }
+
     }
 }

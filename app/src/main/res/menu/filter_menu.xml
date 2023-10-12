@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_all"
+        android:title="Alles" />
+    <item
+        android:id="@+id/item_cards"
+        android:title="Karten" />
+    <item
+        android:id="@+id/item_boxes"
+        android:title="Boxen" />
+
+    <item
+        android:id="@+id/item_bags"
+        android:title="Taschen" />
+
+    <item
+        android:id="@+id/item_books"
+        android:title="Bücher" />
+</menu>

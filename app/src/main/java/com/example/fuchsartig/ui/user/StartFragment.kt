@@ -47,7 +47,7 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnVisitor.setOnClickListener {
-
+            authViewModel.userLoggin = 0
             findNavController().navigate(R.id.navigation_home)
 
         }

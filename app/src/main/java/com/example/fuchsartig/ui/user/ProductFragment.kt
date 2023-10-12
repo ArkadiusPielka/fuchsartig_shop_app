@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -64,7 +65,8 @@ class ProductFragment : Fragment() {
                     ApiLayoutStatus.LINEAR -> {
 
                         binding.rvProduct.layoutManager = LinearLayoutManager(requireContext())
-                        binding.rvProduct.adapter = LinearAdapter(products,sharedViewModel,authViewModel)
+                        binding.rvProduct.adapter =
+                            LinearAdapter(products, sharedViewModel, authViewModel)
 
                         binding.cvSortVertical.setCardBackgroundColor(
                             ContextCompat.getColor(requireContext(), R.color.primary_color)
@@ -77,7 +79,8 @@ class ProductFragment : Fragment() {
                     ApiLayoutStatus.GRID -> {
 
                         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-                        binding.rvProduct.adapter = GridAdapter(products,sharedViewModel,authViewModel)
+                        binding.rvProduct.adapter =
+                            GridAdapter(products, sharedViewModel, authViewModel)
 
                         binding.cvSortVertical.setCardBackgroundColor(
                             ContextCompat.getColor(requireContext(), R.color.white)
@@ -109,12 +112,75 @@ class ProductFragment : Fragment() {
 
         }
 
-        binding.btnSearch.setOnClickListener {
-            if (binding.search.visibility == View.GONE) {
-                binding.search.visibility = View.VISIBLE
-            } else {
-                binding.search.visibility = View.GONE
+        binding.btnSearch.setOnClickListener { view ->
+            val popupMenu = PopupMenu(requireActivity(), view)
+            val menuInflater = popupMenu.menuInflater
+            menuInflater.inflate(R.menu.filter_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.item_all -> {
+                        val cards = sharedViewModel.products.value
+                        if (sharedViewModel.layout.value == ApiLayoutStatus.LINEAR) {
+                            binding.rvProduct.adapter =
+                                cards?.let { LinearAdapter(it, sharedViewModel, authViewModel) }
+                        } else {
+                            binding.rvProduct.adapter =
+                                cards?.let { GridAdapter(it, sharedViewModel, authViewModel) }
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    R.id.item_cards -> {
+                        val cards = sharedViewModel.products.value?.filter { product ->  product.category == "CARDS" }
+                        if (sharedViewModel.layout.value == ApiLayoutStatus.LINEAR) {
+                            binding.rvProduct.adapter =
+                                cards?.let { LinearAdapter(it, sharedViewModel, authViewModel) }
+                        } else {
+                            binding.rvProduct.adapter =
+                                cards?.let { GridAdapter(it, sharedViewModel, authViewModel) }
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    R.id.item_boxes -> {
+                        val cards = sharedViewModel.products.value?.filter { product ->  product.category == "BOXES" }
+                        if (sharedViewModel.layout.value == ApiLayoutStatus.LINEAR) {
+                            binding.rvProduct.adapter =
+                                cards?.let { LinearAdapter(it, sharedViewModel, authViewModel) }
+                        } else {
+                            binding.rvProduct.adapter =
+                                cards?.let { GridAdapter(it, sharedViewModel, authViewModel) }
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.item_bags -> {
+                        val cards = sharedViewModel.products.value?.filter { product ->  product.category == "BAGS" }
+                        if (sharedViewModel.layout.value == ApiLayoutStatus.LINEAR) {
+                            binding.rvProduct.adapter =
+                                cards?.let { LinearAdapter(it, sharedViewModel, authViewModel) }
+                        } else {
+                            binding.rvProduct.adapter =
+                                cards?.let { GridAdapter(it, sharedViewModel, authViewModel) }
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.item_books -> {
+                        val cards = sharedViewModel.products.value?.filter { product ->  product.category == "BOOKS" }
+                        if (sharedViewModel.layout.value == ApiLayoutStatus.LINEAR) {
+                            binding.rvProduct.adapter =
+                                cards?.let { LinearAdapter(it, sharedViewModel, authViewModel) }
+                        } else {
+                            binding.rvProduct.adapter =
+                                cards?.let { GridAdapter(it, sharedViewModel, authViewModel) }
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    else -> return@setOnMenuItemClickListener false
+                }
             }
+            popupMenu.show()
         }
     }
 }

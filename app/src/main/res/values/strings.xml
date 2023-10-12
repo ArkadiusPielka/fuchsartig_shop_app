@@ -38,6 +38,7 @@
     <string name="storage">Auffüllen</string>
     <string name="new_price">Preise</string>
     <string name="new_price_add">Neuer Preis</string>
+    <string name="description">Produktbeschreibung</string>
 
     <string name="personal_data">Persönliche Daten</string>
     <string name="personal_login_data">Log in ändern</string>

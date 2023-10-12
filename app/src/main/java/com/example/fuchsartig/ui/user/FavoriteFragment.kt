@@ -62,8 +62,11 @@ class FavoriteFragment : Fragment() {
                     val newProduct = product.toObject(Product::class.java)
                     listProduct.add(newProduct)
                 }
+
                 authViewModel.favoriteProducts = listProduct
                 sharedViewModel.updateLayout()
+
+
 
                 if (listProduct.isEmpty()) {
                     binding.favoriteFiller.visibility = View.VISIBLE

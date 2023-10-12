@@ -90,7 +90,8 @@
             android:id="@+id/btn_search"
             style="@style/ic_btn"
             android:layout_weight="1"
-            android:src="@drawable/baseline_search_24" />
+            android:visibility="visible"
+            android:src="@drawable/ic_filter" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

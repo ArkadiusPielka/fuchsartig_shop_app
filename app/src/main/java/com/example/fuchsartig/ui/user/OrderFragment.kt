@@ -50,27 +50,41 @@ class OrderFragment : Fragment() {
     }
 
     private fun addObserver() {
-        authViewModel.profileRef.get().addOnSuccessListener {
-            val profile = it.toObject(Profile::class.java)
-            if (profile != null) {
-                val firstName = profile.firstName.toString()
-                val lastName = profile.lastName.toString()
-                Log.d("Firebase Data", "FirstName: $firstName, LastName: $lastName")
-                binding.inputName.setText("$firstName $lastName")
-                binding.inputNameDelivery.setText("$firstName $lastName")
+
+        updateBuyButton(false)
+        profilData()
+        paymentData()
+
+        authViewModel.shoppingRef.addSnapshotListener { value, error ->
+            if (error == null && value != null) {
+
+                val listProduct = authViewModel.buyingProducts
+                val price = authViewModel.totalPrice
+
+                binding.rvOrder.adapter =
+                    OrderAdapter(listProduct, sharedViewModel, authViewModel)
+                sharedViewModel.updateLayout()
+                binding.tvTotalPrice.text = String.format("%.2f".format(price))
             }
         }
-        authViewModel.profileRef.addSnapshotListener { snapshot, error ->
-            if (error == null && snapshot != null) {
-                val updatedProfile = snapshot.toObject(Profile::class.java)
-                binding.inputGender.setText(updatedProfile?.gender)
-                binding.inputCity.setText(updatedProfile?.city)
-                binding.inputHausNumber.setText(updatedProfile?.hausNr)
-                binding.inputCountry.setText(updatedProfile?.country)
-                binding.inputStreet.setText(updatedProfile?.street)
-                binding.inputPlz.setText(updatedProfile?.plz)
+
+        binding.btnBuy.setOnClickListener {
+            authViewModel.shoppingRef.get().addOnSuccessListener { documents ->
+
+                val selectedProducts = authViewModel.buyingProducts
+                sharedViewModel.updateProductNumber(selectedProducts)
+
+                for (document in documents) {
+                    document.reference.delete()
+                }
+
+                val navController = findNavController()
+                navController.navigateUp()
             }
         }
+    }
+
+    private fun paymentData() {
         authViewModel.mastercardRef.get().addOnSuccessListener {
             if (it.exists()) {
                 val masterCardCheck = it.getBoolean("masterCardCheck")
@@ -103,46 +117,54 @@ class OrderFragment : Fragment() {
                 }
             }
         }
+    }
 
-        authViewModel.shoppingRef.addSnapshotListener { value, error ->
-            if (error == null && value != null) {
-
-                val listProduct = authViewModel.buyingProducts
-                val price = authViewModel.totalPrice
-
-                binding.rvOrder.adapter =
-                    OrderAdapter(listProduct, sharedViewModel, authViewModel)
-                sharedViewModel.updateLayout()
-                binding.tvTotalPrice.text = String.format("%.2f".format(price))
+    private fun profilData() {
+        authViewModel.profileRef.get().addOnSuccessListener {
+            val profile = it.toObject(Profile::class.java)
+            if (profile != null) {
+                val firstName = profile.firstName.toString()
+                val lastName = profile.lastName.toString()
+                Log.d("Firebase Data", "FirstName: $firstName, LastName: $lastName")
+                binding.inputName.setText("$firstName $lastName")
+                binding.inputNameDelivery.setText("$firstName $lastName")
             }
         }
-
-        binding.btnBuy.isEnabled = false
-
-        binding.checkAgb.setOnClickListener {
-            binding.btnBuy.isEnabled = binding.checkAgb.isChecked
-        }
-
-        binding.btnBuy.setOnClickListener {
-            authViewModel.shoppingRef.addSnapshotListener { value, error ->
-                if (error == null && value != null) {
-                    val selectedProducts = authViewModel.buyingProducts
-                    sharedViewModel.updateProductNumber(selectedProducts)
-                    val collectionRef = authViewModel.shoppingRef
-                    collectionRef.get()
-                        .addOnSuccessListener { documents ->
-                            for (document in documents) {
-                                document.reference.delete()
-                            }
-
-                        }
-                }
-
+        authViewModel.profileRef.addSnapshotListener { snapshot, error ->
+            if (error == null && snapshot != null) {
+                val updatedProfile = snapshot.toObject(Profile::class.java)
+                binding.inputGender.setText(updatedProfile?.gender)
+                binding.inputCity.setText(updatedProfile?.city)
+                binding.inputHausNumber.setText(updatedProfile?.hausNr)
+                binding.inputCountry.setText(updatedProfile?.country)
+                binding.inputStreet.setText(updatedProfile?.street)
+                binding.inputPlz.setText(updatedProfile?.plz)
             }
-            val navController = findNavController()
-            navController.navigateUp()
+        }
+    }
+
+    private fun updateBuyButton(isAgbChecked: Boolean) {
+
+        binding.btnBuy.isEnabled = isAgbChecked
+
+        binding.checkAgb.setOnCheckedChangeListener { _, isChecked ->
+            updateBuyButton(isChecked)
         }
 
+        binding.rbMastercard.setOnCheckedChangeListener { _, isChecked ->
+            updateBuyButton(binding.checkAgb.isChecked)
+        }
+
+        binding.rbBanking.setOnCheckedChangeListener { _, isChecked ->
+            updateBuyButton(binding.checkAgb.isChecked)
+        }
+
+        binding.rbPaypal.setOnCheckedChangeListener { _, isChecked ->
+            updateBuyButton(binding.checkAgb.isChecked)
+        }
+        val paymentMethodsSelected =
+            binding.rbMastercard.isChecked || binding.rbBanking.isChecked || binding.rbPaypal.isChecked
+        binding.btnBuy.isEnabled = isAgbChecked && paymentMethodsSelected
     }
 
     private fun showFragment() {

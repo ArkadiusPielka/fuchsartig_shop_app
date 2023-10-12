@@ -38,6 +38,8 @@ class AuthViewModel : ViewModel() {
 
     var isAdmin = MutableLiveData<Boolean>(false)
 
+    var userLoggin = 0
+
     var favoriteProducts = mutableListOf<Product>()
 
     var buyingProducts = mutableListOf<Product>()
@@ -75,6 +77,7 @@ class AuthViewModel : ViewModel() {
                 if (authResult.isSuccessful) {
                     setupUserEnv()
                     setupNewProfile()
+                    userLoggin = 1
                 } else {
                     Log.e("REGISER", "${authResult.exception}")
                 }
@@ -86,6 +89,7 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener { loginResult ->
                 if (loginResult.isSuccessful) {
                     setupUserEnv()
+                    userLoggin = 1
                 } else {
                     Log.e("LOGIN", "${loginResult.exception}")
                 }
@@ -147,7 +151,9 @@ class AuthViewModel : ViewModel() {
     }
 
     fun addToCart(product: Product) {
+
         shoppingRef.document(product.apiId.toString()).set(product)
+
     }
 
     fun removeFromCart(product: Product) {
@@ -192,6 +198,7 @@ class AuthViewModel : ViewModel() {
             }
 
     }
+
 
     fun setupUserEnv() {
         _currentUser.value = firebaseAuth.currentUser

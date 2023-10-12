@@ -1,9 +1,14 @@
 package com.example.fuchsartig.ui.user
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
@@ -54,21 +59,6 @@ class DetailFragment : Fragment() {
             binding.tvDescription.text = product.descript
             binding.tvPrice.text = product.price
 
-            if (authViewModel.currentUser.value?.uid == null) {
-                binding.btnLike.visibility = View.INVISIBLE
-                binding.btnRegister.visibility = View.VISIBLE
-                binding.btnInCart.visibility = View.GONE
-                binding.btnBuyNow.visibility = View.GONE
-                binding.spinner.visibility = View.GONE
-                binding.amountDetail.visibility = View.GONE
-            } else {
-                binding.btnLike.visibility = View.VISIBLE
-                binding.btnRegister.visibility = View.GONE
-                binding.btnInCart.visibility = View.VISIBLE
-                binding.btnBuyNow.visibility = View.VISIBLE
-                binding.spinner.visibility = View.VISIBLE
-                binding.amountDetail.visibility = View.VISIBLE
-            }
 
             val liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
             if (liked) {
@@ -77,19 +67,50 @@ class DetailFragment : Fragment() {
                 binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
 
-            if (product.number == "0"){
+            if (authViewModel.currentUser.value?.uid == null) {
+
+                binding.btnLike.visibility = INVISIBLE
+                binding.btnRegister.visibility = VISIBLE
+                binding.btnInCart.visibility = GONE
+                binding.btnBuyNow.visibility = GONE
+                binding.spinner.visibility = INVISIBLE
+                binding.amountDetail.visibility = INVISIBLE
+
+            } else if (product.number == "0") {
                 binding.tvSouldOut.visibility = View.VISIBLE
                 binding.spinner.visibility = View.GONE
                 binding.amountDetail.visibility = View.GONE
                 binding.btnBuyNow.visibility = View.GONE
                 binding.btnInCart.visibility = View.GONE
+                binding.btnLike.visibility = View.VISIBLE
             } else {
                 binding.tvSouldOut.visibility = View.GONE
                 binding.spinner.visibility = View.VISIBLE
                 binding.amountDetail.visibility = View.VISIBLE
                 binding.btnBuyNow.visibility = View.VISIBLE
                 binding.btnInCart.visibility = View.VISIBLE
+                binding.btnLike.visibility = View.VISIBLE
+
+//                binding.btnRegister.visibility = View.GONE
+//                binding.btnInCart.visibility = View.VISIBLE
+//                binding.btnBuyNow.visibility = View.VISIBLE
+//                binding.spinner.visibility = View.VISIBLE
+//                binding.amountDetail.visibility = View.VISIBLE
             }
+
+//            if (product.number == "0") {
+//                binding.tvSouldOut.visibility = View.VISIBLE
+//                binding.spinner.visibility = View.GONE
+//                binding.amountDetail.visibility = View.GONE
+//                binding.btnBuyNow.visibility = View.GONE
+//                binding.btnInCart.visibility = View.GONE
+//            } else {
+//                binding.tvSouldOut.visibility = View.GONE
+//                binding.spinner.visibility = View.VISIBLE
+//                binding.amountDetail.visibility = View.VISIBLE
+//                binding.btnBuyNow.visibility = View.VISIBLE
+//                binding.btnInCart.visibility = View.VISIBLE
+//            }
 
             binding.btnInCart.setOnClickListener {
                 authViewModel.addToCart(product)
@@ -112,6 +133,26 @@ class DetailFragment : Fragment() {
 
         })
     }
+
+    fun checkUser() {
+        if (authViewModel.currentUser.value?.uid == null) {
+            binding.btnLike.visibility = View.INVISIBLE
+            binding.btnRegister.visibility = View.VISIBLE
+            binding.btnInCart.visibility = View.GONE
+            binding.btnBuyNow.visibility = View.INVISIBLE
+            binding.spinner.visibility = View.INVISIBLE
+            binding.amountDetail.visibility = View.INVISIBLE
+        } else {
+            binding.btnLike.visibility = View.VISIBLE
+            binding.btnRegister.visibility = View.GONE
+            binding.btnInCart.visibility = View.VISIBLE
+            binding.btnBuyNow.visibility = View.VISIBLE
+            binding.spinner.visibility = View.VISIBLE
+            binding.amountDetail.visibility = View.VISIBLE
+        }
+    }
+
+
 
     private fun fillSpinner(product: Product) {
 
