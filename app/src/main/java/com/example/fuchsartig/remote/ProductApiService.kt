@@ -2,6 +2,7 @@ package com.example.fuchsartig.remote
 
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.data.model.ProductNumberUpdate
+import com.example.fuchsartig.data.model.ProductPriceUpdate
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import retrofit2.Retrofit
@@ -37,6 +38,11 @@ interface ProductApiService {
         @Body number: ProductNumberUpdate
     ): Product
 
+    @PATCH("$token/fuchsartig/{apiId}")
+    suspend fun updateProductPrice(
+        @Path("apiId") apiId: Int,
+        @Body price: ProductPriceUpdate
+    ): Product
 }
 
 object ProductApi {

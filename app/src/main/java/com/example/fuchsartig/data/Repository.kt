@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.data.model.ProductNumberUpdate
+import com.example.fuchsartig.data.model.ProductPriceUpdate
 import com.example.fuchsartig.remote.ProductApi
 
 class Repository(private val api: ProductApi) {
@@ -26,6 +27,17 @@ class Repository(private val api: ProductApi) {
         try {
             Log.d(TAG, "ProductNumber ${productUpdate.number}")
             val updateProduct = api.retrofitService.updateProductNumber(apiId, productUpdate)
+            getProducts()
+            Log.d(TAG, "updateProduct ${updateProduct.toString()}")
+        } catch (e: Exception) {
+            Log.e(TAG, "$e")
+        }
+    }
+
+    suspend fun updateProductPrice(apiId: Int, productUpdate: ProductPriceUpdate) {
+        try {
+            Log.d(TAG, "ProductNumber ${productUpdate.price}")
+            val updateProduct = api.retrofitService.updateProductPrice(apiId, productUpdate)
             getProducts()
             Log.d(TAG, "updateProduct ${updateProduct.toString()}")
         } catch (e: Exception) {

@@ -44,6 +44,7 @@ class HomeAdminFragment : Fragment() {
     fun addObserver() {
         sharedViewModel.products.observe(viewLifecycleOwner, Observer { products ->
             val emptyProducts = sharedViewModel.getEmptyProducts(products)
+
             binding.rvEmptyProducts.adapter = HomeAdminAdapter(emptyProducts, sharedViewModel)
         })
 

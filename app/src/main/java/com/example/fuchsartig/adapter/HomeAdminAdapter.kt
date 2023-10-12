@@ -42,7 +42,10 @@ class HomeAdminAdapter(
 
 
         binding.btnSave.setOnClickListener {
-            binding.inputAmount
+
+            val addAmount = binding.inputAmount.text.toString()
+            val amountToInt = addAmount.toInt()
+            sharedViewModel.addProductNumber(product, amountToInt)
         }
     }
 

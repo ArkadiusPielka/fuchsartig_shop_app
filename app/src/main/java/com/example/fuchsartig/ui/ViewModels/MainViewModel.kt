@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fuchsartig.data.Repository
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.data.model.ProductNumberUpdate
+import com.example.fuchsartig.data.model.ProductPriceUpdate
 import com.example.fuchsartig.remote.ProductApi
 import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
@@ -72,6 +73,38 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             } catch (e: Exception) {
 
+            }
+        }
+    }
+
+    fun addProductNumber(currentProduct: Product, addNumber: Int) {
+        viewModelScope.launch {
+            viewModelScope.launch {
+                try {
+                    val apiId = currentProduct.apiId
+                    val currentNumber = currentProduct.number.toInt()
+                    val newNumber = (currentNumber + addNumber).toString()
+
+                    val productUpdate = ProductNumberUpdate(newNumber)
+
+                    repository.updateProductNumber(apiId, productUpdate)
+                } catch (e: Exception) {
+                }
+            }
+        }
+    }
+
+    fun updateProductPrice(currentProduct: Product, newPrice: String) {
+        viewModelScope.launch {
+            viewModelScope.launch {
+                try {
+                    val apiId = currentProduct.apiId
+                    val productUpdate = ProductPriceUpdate(newPrice)
+
+                    repository.updateProductPrice(apiId, productUpdate)
+
+                } catch (e: Exception) {
+                }
             }
         }
     }
