@@ -77,6 +77,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+
+
     fun addProductNumber(currentProduct: Product, addNumber: Int) {
         viewModelScope.launch {
             viewModelScope.launch {

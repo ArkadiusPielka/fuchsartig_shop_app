@@ -55,9 +55,16 @@ class LinearAdapter(
             product.liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
         }
 
+        for (product in dataSet) {
+            val favoriteProduct = authViewModel.favoriteProducts.find { it.apiId == product.apiId }
+            favoriteProduct?.let {
+                it.number = product.number
+            }
+        }
+
         if (authViewModel.currentUser.value?.uid == null) {
             binding.btnLike.visibility = View.INVISIBLE
-            } else {
+        } else {
             binding.btnLike.visibility = View.VISIBLE
         }
 
@@ -76,11 +83,12 @@ class LinearAdapter(
         binding.btnLike.setOnClickListener {
             if (!product.liked) {
                 product.liked = true
-
                 authViewModel.addFavorites(product)
+                binding.btnLike.setImageResource(R.drawable.ic_heart_full)
             } else {
                 product.liked = false
                 authViewModel.removeFavorites(product)
+                binding.btnLike.setImageResource(R.drawable.ic_heart_border)
             }
         }
 

@@ -131,10 +131,12 @@ class AuthViewModel : ViewModel() {
 
     fun addFavorites(product: Product) {
         favoritesRef.document(product.apiId.toString()).set(product)
+
     }
 
     fun removeFavorites(product: Product) {
         favoritesRef.document(product.apiId.toString()).delete()
+
     }
 
     private fun loadFavorites() {
