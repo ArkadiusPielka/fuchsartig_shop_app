@@ -1,5 +1,6 @@
 package com.example.fuchsartig.ui.user
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import coil.load
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentProfileBinding
@@ -27,6 +30,12 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
 
     private val authViewModel: AuthViewModel by activityViewModels()
+
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            authViewModel.uploadImage(uri)
+        }
+    }
 
 
     private var visibility = false
@@ -72,48 +81,12 @@ class ProfileFragment : Fragment() {
 
         }
 
+        binding.imageUpload.setOnClickListener {
+            getContent.launch("image/*")
+        }
 
         binding.btnSavePersonalData.setOnClickListener {
-
-            val genderSelected = binding.inputGender.text.toString()
-            val firstName = binding.inputFirstName.text.toString()
-            val lastName = binding.inputLastName.text.toString()
-            val birth = binding.inputBirthdate.text.toString()
-            val city = binding.inputCity.text.toString()
-            val hausNr = binding.inputHausNumber.text.toString()
-            val country = binding.inputCountry.text.toString()
-            val street = binding.inputStreet.text.toString()
-            val plz = binding.inputPlz.text.toString()
-            var personalData = false
-
-            if (genderSelected != "" && firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != ""){
-                personalData = true
-            } else {
-                false
-            }
-
-            if (personalData){
-                binding.btnDone.visibility = View.VISIBLE
-            } else {
-                binding.btnDone.visibility = View.INVISIBLE
-            }
-
-            val profile = Profile(
-                gender = genderSelected,
-                firstName = firstName,
-                lastName = lastName,
-                birthdate = birth,
-                city = city,
-                hausNr = hausNr,
-                country = country,
-                street = street,
-                plz = plz,
-                personalData = personalData
-            )
-
-            authViewModel.updateProfile(profile)
-
-            dropDownPersonalData()
+            personalData()
         }
 
         authViewModel.profileRef.addSnapshotListener { snapshot, error ->
@@ -128,6 +101,9 @@ class ProfileFragment : Fragment() {
                 binding.inputCountry.setText(updatedProfile?.country)
                 binding.inputStreet.setText(updatedProfile?.street)
                 binding.inputPlz.setText(updatedProfile?.plz)
+                if (updatedProfile?.profileImg != "") {
+                    binding.imgProfil.load(updatedProfile?.profileImg)
+                }
             }
         }
 
@@ -160,6 +136,48 @@ class ProfileFragment : Fragment() {
 
         }
 
+    }
+
+    fun personalData(){
+        val genderSelected = binding.inputGender.text.toString()
+        val firstName = binding.inputFirstName.text.toString()
+        val lastName = binding.inputLastName.text.toString()
+        val birth = binding.inputBirthdate.text.toString()
+        val city = binding.inputCity.text.toString()
+        val hausNr = binding.inputHausNumber.text.toString()
+        val country = binding.inputCountry.text.toString()
+        val street = binding.inputStreet.text.toString()
+        val plz = binding.inputPlz.text.toString()
+        var personalData = false
+
+        if (genderSelected != "" && firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != ""){
+            personalData = true
+        } else {
+            false
+        }
+
+        if (personalData){
+            binding.btnDone.visibility = View.VISIBLE
+        } else {
+            binding.btnDone.visibility = View.INVISIBLE
+        }
+
+        val profile = Profile(
+            gender = genderSelected,
+            firstName = firstName,
+            lastName = lastName,
+            birthdate = birth,
+            city = city,
+            hausNr = hausNr,
+            country = country,
+            street = street,
+            plz = plz,
+            personalData = personalData
+        )
+
+        authViewModel.updateProfile(profile)
+
+        dropDownPersonalData()
     }
 
     private fun dropDownLogin() {

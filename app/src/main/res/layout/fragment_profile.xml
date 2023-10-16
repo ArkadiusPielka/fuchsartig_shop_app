@@ -56,19 +56,22 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
+                    android:id="@+id/image_upload"
                     style="@style/tv_title"
                     android:gravity="bottom"
                     android:text="Hochladen"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+                    android:textColor="@color/blue"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_camera"
                     app:layout_constraintStart_toStartOf="@+id/layout_image"
-                    app:layout_constraintTop_toTopOf="@+id/imageButton" />
+                    app:layout_constraintTop_toTopOf="@+id/btn_camera" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/btn_camera"
                     style="@style/ic_btn"
                     android:src="@drawable/ic_camera"
                     app:layout_constraintEnd_toEndOf="@+id/layout_image"
-                    app:layout_constraintTop_toBottomOf="@id/layout_image" />
+                    app:layout_constraintTop_toBottomOf="@id/layout_image"
+                    app:tint="@color/blue" />
 
 
 

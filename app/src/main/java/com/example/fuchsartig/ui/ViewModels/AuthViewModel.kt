@@ -1,6 +1,7 @@
 package com.example.fuchsartig.ui.ViewModels
 
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -21,14 +22,14 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-//import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.FirebaseStorage
 
 class AuthViewModel : ViewModel() {
 
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseStore = FirebaseFirestore.getInstance()
-//    private val firebaseStorage = FirebaseStorage.getInstance()
+    private val firebaseStorage = FirebaseStorage.getInstance()
 
     val selectedGender = MutableLiveData<String>()
 
@@ -63,7 +64,7 @@ class AuthViewModel : ViewModel() {
 
     lateinit var shoppingRef: CollectionReference
 
-//    private val storageRef = firebaseStorage.reference
+    private val storageRef = firebaseStorage.reference
 
     init {
         if (firebaseAuth.currentUser != null) {
@@ -250,5 +251,23 @@ class AuthViewModel : ViewModel() {
         paymentRef.set(input)
     }
 
+    fun uploadImage(uri: Uri) {
+        val imageRef = storageRef.child("profileImg/${currentUser.value?.uid}/profileImg")
+        val uploadTask = imageRef.putFile(uri)
+
+        uploadTask.addOnCompleteListener {
+            imageRef.downloadUrl.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    setImage(it.result)
+                }
+            }
+        }
+    }
+
+    private fun setImage(uri: Uri) {
+        profileRef.update("profileImg", uri.toString()).addOnFailureListener {
+            Log.w("ERROR", "Error writing document: $it")
+        }
+    }
 }
 
