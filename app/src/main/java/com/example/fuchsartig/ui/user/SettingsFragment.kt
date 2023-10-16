@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentSettingsBinding
@@ -66,6 +67,15 @@ class SettingsFragment : Fragment() {
 
         binding.btnProfil.setOnClickListener {
             findNavController().navigate(R.id.navigation_profil)
+        }
+
+        authViewModel.profileRef.get().addOnSuccessListener {
+            val profile = it.toObject(Profile::class.java)
+            if (profile != null) {
+                if (profile?.profileImg != "") {
+                    binding.imgProfil.load(profile?.profileImg)
+                }
+            }
         }
     }
 

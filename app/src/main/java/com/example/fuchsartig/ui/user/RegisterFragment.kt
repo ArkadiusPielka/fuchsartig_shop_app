@@ -1,5 +1,6 @@
 package com.example.fuchsartig.ui.user
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentRegisterBinding
@@ -28,6 +31,12 @@ class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
 
     private val authViewModel: AuthViewModel by activityViewModels()
+
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            authViewModel.uploadImage(uri)
+        }
+    }
 
 //    private lateinit var shareViewModel: MainViewModel
 
@@ -60,7 +69,14 @@ class RegisterFragment : Fragment() {
                 } else {
                     binding.btnDone.visibility = View.INVISIBLE
                 }
+                if (profile?.profileImg != "") {
+                    binding.imgProfil.load(profile?.profileImg)
+                }
             }
+        }
+
+        binding.imageUpload.setOnClickListener {
+            getContent.launch("image/*")
         }
 
         binding.btnHome.setOnClickListener {
@@ -93,6 +109,7 @@ class RegisterFragment : Fragment() {
         val street = binding.inputStreet.text.toString()
         val plz = binding.inputPlz.text.toString()
         var personalData = false
+
 
         if (genderSelected != "" && firstName != "" && lastName != "" && birth != "" && city != "" && hausNr != "" && country != "" && street != "" && plz != "") {
             personalData = true
