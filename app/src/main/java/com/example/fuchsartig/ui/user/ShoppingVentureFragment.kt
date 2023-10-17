@@ -44,7 +44,6 @@ class ShoppingVentureFragment : Fragment() {
         addObserver()
     }
 
-    //    TODO logik einbinden
     private fun addObserver() {
 
         authViewModel.shoppingRef.addSnapshotListener { value, error ->

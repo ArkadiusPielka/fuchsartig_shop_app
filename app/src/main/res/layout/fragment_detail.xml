@@ -82,8 +82,8 @@
                 <TextView
                     android:id="@+id/tv_sould_out"
                     style="@style/tv_title"
-                    android:visibility="gone"
                     android:text="@string/sold_out"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/btn_like"
                     app:layout_constraintEnd_toStartOf="@+id/tv_price"
                     app:layout_constraintStart_toEndOf="@+id/btn_like"
@@ -133,8 +133,8 @@
                 <TextView
                     android:id="@+id/tv_home"
                     style="@style/tv_title"
-                    android:layout_marginVertical="8dp"
                     android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
                     android:text="@string/description"
                     android:textSize="24sp"
 
@@ -144,25 +144,25 @@
                 <TextView
                     android:id="@+id/tv_description"
                     style="@style/tv_title"
-                    android:layout_height="100dp"
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="8dp"
+                    android:layout_height="100dp"
                     android:layout_marginHorizontal="16dp"
-                    tools:text="Produktbeschreibung"
-
+                    android:layout_marginVertical="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_home" />
+
+                    app:layout_constraintTop_toBottomOf="@id/tv_home"
+                    tools:text="Produktbeschreibung" />
 
 
-                <Button
-                    android:id="@+id/btn_buy_now"
-                    style="@style/btn_user"
-                    android:text="@string/btn_buy_now"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_description"
-                    app:layout_constraintVertical_bias="1.0" />
+                <!--                <Button-->
+                <!--                    android:id="@+id/btn_buy_now"-->
+                <!--                    style="@style/btn_user"-->
+                <!--                    android:text="@string/btn_buy_now"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.5"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/tv_description"-->
+                <!--                    app:layout_constraintVertical_bias="1.0" />-->
 
                 <Button
                     android:id="@+id/btn_register"
@@ -184,7 +184,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_buy_now" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

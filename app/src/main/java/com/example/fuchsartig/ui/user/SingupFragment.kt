@@ -41,7 +41,11 @@ class SingupFragment : Fragment() {
             val email = binding.inputMail.text.toString()
             val password = binding.inputPassword.text.toString()
 
-            if (email == "" || password == "") {
+            if (!authViewModel.checkEmailFormat(email)) {
+                authViewModel.wrongEmailFormat(requireContext())
+            }else if (password.length < 6){
+                authViewModel.passwortLenght(requireContext())
+            }else if (email == "" || password == "") {
                 registerMessageEmptyInput()
             } else {
                 authViewModel.singUp(email, password)

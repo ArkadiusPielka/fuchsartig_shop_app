@@ -43,27 +43,27 @@ class PriceAdminAdapter(
         binding.tvPrice.text = product.price
 
 
-            binding.btnSave.setOnClickListener {
-                val newPrice = binding.inputPrice.text.toString()
-                val message =
-                    holder.itemView.context.getString(
-                        R.string.change_price,
-                        product.price,
-                        newPrice
-                    )
-                if (!newPrice.isNullOrEmpty()) {
-                    MaterialAlertDialogBuilder(holder.itemView.context)
-                        .setTitle(R.string.current_price)
-                        .setMessage(message)
-                        .setCancelable(false)
-                        .setNegativeButton(R.string.cancel) { _, _ ->
-                            binding.inputPrice.text.clear()
-                        }
-                        .setPositiveButton(R.string.ok) { _, _ ->
-                            sharedViewModel.updateProductPrice(product, newPrice)
-                        }
-                        .show()
-                }
+        binding.btnSave.setOnClickListener {
+            val newPrice = binding.inputPrice.text.toString()
+            val message =
+                holder.itemView.context.getString(
+                    R.string.change_price,
+                    product.price,
+                    newPrice
+                )
+            if (!newPrice.isNullOrEmpty()) {
+                MaterialAlertDialogBuilder(holder.itemView.context)
+                    .setTitle(R.string.current_price)
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setNegativeButton(R.string.cancel) { _, _ ->
+                        binding.inputPrice.text.clear()
+                    }
+                    .setPositiveButton(R.string.ok) { _, _ ->
+                        sharedViewModel.updateProductPrice(product, newPrice)
+                    }
+                    .show()
             }
+        }
     }
 }

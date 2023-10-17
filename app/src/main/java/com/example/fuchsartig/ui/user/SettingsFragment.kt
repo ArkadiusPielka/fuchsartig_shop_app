@@ -69,11 +69,13 @@ class SettingsFragment : Fragment() {
             findNavController().navigate(R.id.navigation_profil)
         }
 
-        authViewModel.profileRef.get().addOnSuccessListener {
-            val profile = it.toObject(Profile::class.java)
-            if (profile != null) {
-                if (profile?.profileImg != "") {
-                    binding.imgProfil.load(profile?.profileImg)
+        if (authViewModel.currentUser.value?.uid != null) {
+            authViewModel.profileRef.get().addOnSuccessListener {
+                val profile = it.toObject(Profile::class.java)
+                if (profile != null) {
+                    if (profile?.profileImg != "") {
+                        binding.imgProfil.load(profile?.profileImg)
+                    }
                 }
             }
         }

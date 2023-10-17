@@ -38,14 +38,26 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnLogIn.setOnClickListener {
+
             val email = binding.inputMail.text.toString()
             val password = binding.inputPassword.text.toString()
 
-            if (email == "" || password == "") {
-//                registerMessageEmptyInput()
+            if (!authViewModel.checkEmailFormat(email)) {
+                authViewModel.wrongEmailFormat(requireContext())
+            }else if (password.length < 6){
+                authViewModel.passwortLenght(requireContext())
+            }else if (email == "" || password == "") {
+                registerMessageEmptyInput()
             } else {
                 authViewModel.login(email, password)
-//                registerMessage()
+            }
+
+        }
+
+        binding.tvPasswordForget.setOnClickListener {
+            val email: String = binding.inputMail.text.toString()
+            if (email != "") {
+                authViewModel.sendPasswordRecovery(email)
             }
         }
 
@@ -56,20 +68,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun registerMessage() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Vielen Dank für deine Registrierung")
-            .setMessage("Es fehlen noch weitere Angaben, die können Sie jetzt oder später machen.")
-            .setCancelable(false)
-            .setNegativeButton("Später") { _, _ ->
-                findNavController().navigate(R.id.navigation_home)
-
-            }
-            .setPositiveButton("Jetzt") { _, _ ->
-                findNavController().navigate(R.id.navigation_register)
-            }
-            .show()
-    }
 
     private fun registerMessageEmptyInput() {
         if (binding.inputMail.text.isNullOrEmpty() && binding.inputPassword.text.isNullOrEmpty()) {

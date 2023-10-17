@@ -1,8 +1,13 @@
 package com.example.fuchsartig.ui.ViewModels
 
+import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
@@ -21,8 +26,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.withContext
 
 class AuthViewModel : ViewModel() {
 
@@ -30,6 +36,10 @@ class AuthViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseStore = FirebaseFirestore.getInstance()
     private val firebaseStorage = FirebaseStorage.getInstance()
+
+    val CAMERA_REQUEST_CODE = 0
+
+    var shoppinCartAmount = 0
 
     val selectedGender = MutableLiveData<String>()
 
@@ -72,6 +82,11 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun checkEmailFormat(email: String): Boolean {
+        val pattern = Patterns.EMAIL_ADDRESS
+        return pattern.matcher(email).matches()
+    }
+
     fun singUp(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { authResult ->
@@ -83,6 +98,23 @@ class AuthViewModel : ViewModel() {
                     Log.e("REGISER", "${authResult.exception}")
                 }
             }
+
+
+    }
+
+
+    fun wrongEmailFormat(context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setMessage("Die eingegebene E-Mail, hat das falsche Format!")
+            .setCancelable(true)
+            .show()
+    }
+
+    fun passwortLenght(context: Context) {
+        MaterialAlertDialogBuilder(context)
+            .setMessage("Das eingegebene Passwort muss aud min. 6 zeichen bestehen")
+            .setCancelable(true)
+            .show()
     }
 
     fun login(email: String, password: String) {
@@ -178,7 +210,6 @@ class AuthViewModel : ViewModel() {
     fun addAmount(product: Product) {
         val productAmount = product.number.toInt()
         if (product.selectedNumber == productAmount) {
-            // TODO setAllert
         } else {
             val updateAmount = product.selectedNumber + 1
             val productRef = shoppingRef.document(product.apiId.toString())
@@ -231,6 +262,11 @@ class AuthViewModel : ViewModel() {
         _currentUser.value = firebaseAuth.currentUser
     }
 
+    fun sendPasswordRecovery(email: String) {
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener {
+        }
+    }
+
     fun updatePaymentMethod(payment: String) {
         paymentRef = profileRef.collection("payment").document(payment)
 
@@ -260,6 +296,24 @@ class AuthViewModel : ViewModel() {
                 if (it.isSuccessful) {
                     setImage(it.result)
                 }
+            }
+        }
+    }
+
+    fun takePhoto(activity: Activity) {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        activity.startActivityForResult(intent, CAMERA_REQUEST_CODE)
+
+    }
+
+
+    fun setPhotoAsImage(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val imageUri = data.data
+            Log.d("MyApp", "Image Uri: $imageUri")
+            if (imageUri != null) {
+                setImage(imageUri)
             }
         }
     }

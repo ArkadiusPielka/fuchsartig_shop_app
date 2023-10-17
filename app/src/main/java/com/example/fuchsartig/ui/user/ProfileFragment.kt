@@ -1,5 +1,9 @@
 package com.example.fuchsartig.ui.user
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -31,6 +37,9 @@ class ProfileFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by activityViewModels()
 
+    private val CAMERA_PERMISSION_REQUEST_CODE = 100
+
+
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) {
             authViewModel.uploadImage(uri)
@@ -51,6 +60,8 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -107,6 +118,9 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        binding.btnCamera.setOnClickListener {
+            takePhoto()
+        }
 
         binding.btnDropDownLogin.setOnClickListener {
             dropDownLogin()
@@ -120,6 +134,34 @@ class ProfileFragment : Fragment() {
             dropDownPayment()
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        authViewModel.setPhotoAsImage(requestCode, resultCode, data)
+    }
+    private fun requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+        } else {
+            authViewModel.takePhoto(requireActivity())
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            authViewModel.takePhoto(requireActivity())
+        }
+    }
+
+    private fun takePhoto() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestCameraPermission()
+        } else {
+            authViewModel.takePhoto(requireActivity())
+        }
+    }
+
 
     private fun visibility() {
 

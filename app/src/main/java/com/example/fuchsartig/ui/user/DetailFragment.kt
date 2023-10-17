@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Product
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
+import com.google.firebase.firestore.QuerySnapshot
 
 
 class DetailFragment : Fragment() {
@@ -72,7 +73,7 @@ class DetailFragment : Fragment() {
                 binding.btnLike.visibility = INVISIBLE
                 binding.btnRegister.visibility = VISIBLE
                 binding.btnInCart.visibility = GONE
-                binding.btnBuyNow.visibility = GONE
+
                 binding.spinner.visibility = INVISIBLE
                 binding.amountDetail.visibility = INVISIBLE
 
@@ -80,49 +81,32 @@ class DetailFragment : Fragment() {
                 binding.tvSouldOut.visibility = View.VISIBLE
                 binding.spinner.visibility = View.GONE
                 binding.amountDetail.visibility = View.GONE
-                binding.btnBuyNow.visibility = View.GONE
+
                 binding.btnInCart.visibility = View.GONE
                 binding.btnLike.visibility = View.VISIBLE
             } else {
                 binding.tvSouldOut.visibility = View.GONE
                 binding.spinner.visibility = View.VISIBLE
                 binding.amountDetail.visibility = View.VISIBLE
-                binding.btnBuyNow.visibility = View.VISIBLE
+
                 binding.btnInCart.visibility = View.VISIBLE
                 binding.btnLike.visibility = View.VISIBLE
 
-//                binding.btnRegister.visibility = View.GONE
-//                binding.btnInCart.visibility = View.VISIBLE
-//                binding.btnBuyNow.visibility = View.VISIBLE
-//                binding.spinner.visibility = View.VISIBLE
-//                binding.amountDetail.visibility = View.VISIBLE
             }
-
-//            if (product.number == "0") {
-//                binding.tvSouldOut.visibility = View.VISIBLE
-//                binding.spinner.visibility = View.GONE
-//                binding.amountDetail.visibility = View.GONE
-//                binding.btnBuyNow.visibility = View.GONE
-//                binding.btnInCart.visibility = View.GONE
-//            } else {
-//                binding.tvSouldOut.visibility = View.GONE
-//                binding.spinner.visibility = View.VISIBLE
-//                binding.amountDetail.visibility = View.VISIBLE
-//                binding.btnBuyNow.visibility = View.VISIBLE
-//                binding.btnInCart.visibility = View.VISIBLE
-//            }
 
             binding.btnInCart.setOnClickListener {
                 authViewModel.addToCart(product)
                 findNavController().navigateUp()
-                //TODO nachricht hinzufügen
+
             }
+
             isLiked(product)
             fillSpinner(product)
 
             binding.btnRegister.setOnClickListener {
                 findNavController().navigate(R.id.navigation_login)
             }
+
         })
         sharedViewModel.currentImages.observe(viewLifecycleOwner, Observer {
             val viewPager2 = binding.viewPager2
@@ -133,25 +117,6 @@ class DetailFragment : Fragment() {
 
         })
     }
-
-    fun checkUser() {
-        if (authViewModel.currentUser.value?.uid == null) {
-            binding.btnLike.visibility = View.INVISIBLE
-            binding.btnRegister.visibility = View.VISIBLE
-            binding.btnInCart.visibility = View.GONE
-            binding.btnBuyNow.visibility = View.INVISIBLE
-            binding.spinner.visibility = View.INVISIBLE
-            binding.amountDetail.visibility = View.INVISIBLE
-        } else {
-            binding.btnLike.visibility = View.VISIBLE
-            binding.btnRegister.visibility = View.GONE
-            binding.btnInCart.visibility = View.VISIBLE
-            binding.btnBuyNow.visibility = View.VISIBLE
-            binding.spinner.visibility = View.VISIBLE
-            binding.amountDetail.visibility = View.VISIBLE
-        }
-    }
-
 
 
     private fun fillSpinner(product: Product) {

@@ -13,6 +13,7 @@ import com.example.fuchsartig.databinding.ActivityMainBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.QuerySnapshot
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
 
         bottemNavUser()
-
 
 
         authViewModel.currentUser.observe(this) { user ->
