@@ -64,7 +64,7 @@
         android:layout_marginStart="16dp"
         android:gravity="center"
         android:inputType="number"
-        android:text="0"
+        tools:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/textView2" />

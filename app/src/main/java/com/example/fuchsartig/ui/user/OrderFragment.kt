@@ -177,7 +177,7 @@ class OrderFragment : Fragment() {
         }
 
         rbBanking.setOnClickListener {
-            checkFragment(BankingFragment())
+            checkFragment(BankingFragment(false))
         }
 
         rbPayPal.setOnClickListener {

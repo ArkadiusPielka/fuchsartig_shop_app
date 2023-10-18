@@ -36,19 +36,41 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!showBtn) {
+            authViewModel.mastercardRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val masterCard = documentSnapshot.toObject(MasterCard::class.java)
+                    if (masterCard != null) {
+                        val cardNumber = masterCard.cardNumber
+                        if (cardNumber.length >= 3) {
+                            val maskedText =
+                                "*".repeat(cardNumber.length - 3) + cardNumber.substring(cardNumber.length - 3)
+                            Log.d("orderfragment", "$maskedText")
+                            binding.inputCardNumber.setText(maskedText)
+                        }
+                    }
+                }
+            }
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         cardValid()
 
-        if (!showBtn){
+        if (!showBtn) {
             binding.btnSaveCard.visibility = View.GONE
             binding.inputCardOwner.visibility = View.GONE
             binding.cbCardOwner.visibility = View.GONE
             binding.inputCardDate.visibility = View.GONE
             binding.inputCardCheckNumber.visibility = View.GONE
             binding.inputCardNumber.isEnabled = false
-        } else{
+
+
+
+        } else {
             binding.btnSaveCard.visibility = View.VISIBLE
             binding.inputCardOwner.visibility = View.VISIBLE
             binding.cbCardOwner.visibility = View.VISIBLE
@@ -56,6 +78,7 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
             binding.inputCardCheckNumber.visibility = View.VISIBLE
             binding.inputCardNumber.isEnabled = true
         }
+
 
         binding.cbCardOwner.setOnClickListener {
             if (binding.cbCardOwner.isChecked) {
@@ -81,13 +104,21 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
             val cardOwner = binding.inputCardOwner.text.toString()
             var masterCardCheck = false
 
-            if (cardNumber != "" && cardDate != "" && cardSaveNumber != "" && cardOwner != ""){
+            if (cardNumber != "" && cardDate != "" && cardSaveNumber != "" && cardOwner != "") {
                 masterCardCheck = true
             } else {
                 false
             }
 
-            val updatedMasterCard = MasterCard("mastercard",cardOwner, cardNumber, cardDate, cardSaveNumber, masterCardCheck)
+
+            val updatedMasterCard = MasterCard(
+                "mastercard",
+                cardOwner,
+                cardNumber,
+                cardDate,
+                cardSaveNumber,
+                masterCardCheck
+            )
 
             authViewModel.updateMastercard(updatedMasterCard)
         }
@@ -104,8 +135,6 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
                 }
             }
         }
-
-
     }
 
     private fun cardValid() {

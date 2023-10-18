@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.fuchsartig.data.model.Banking
+import com.example.fuchsartig.data.model.MasterCard
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentBankingBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 
 
-class BankingFragment : Fragment() {
+class BankingFragment(var showBtn: Boolean = true) : Fragment() {
 
     private lateinit var binding: FragmentBankingBinding
 
@@ -32,9 +33,42 @@ class BankingFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!showBtn) {
+            authViewModel.bankingRef.get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val banking = documentSnapshot.toObject(Banking::class.java)
+                    if (banking != null) {
+                        val iban = banking.iban
+                        if (iban.length >= 3) {
+                            val maskedText =
+                                "*".repeat(iban.length - 3) + iban.substring(iban.length - 3)
+                            binding.inputIban.setText(maskedText)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!showBtn){
+            binding.inputBankOwner.visibility = View.GONE
+            binding.inputBic.visibility = View.GONE
+            binding.cbCardOwner.visibility = View.GONE
+            binding.btnSaveBanking.visibility = View.GONE
+            binding.inputIban.isEnabled = false
+
+        } else{
+            binding.inputBankOwner.visibility = View.VISIBLE
+            binding.inputBic.visibility = View.VISIBLE
+            binding.cbCardOwner.visibility = View.VISIBLE
+            binding.btnSaveBanking.visibility = View.VISIBLE
+            binding.inputIban.isEnabled = true
+        }
 
         binding.cbCardOwner.setOnClickListener {
             if (binding.cbCardOwner.isChecked) {
