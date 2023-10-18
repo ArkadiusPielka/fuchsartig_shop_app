@@ -16,7 +16,7 @@ import java.util.Calendar
 import java.util.Locale
 
 
-class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
+class MasterCardFragment(private var showBtn: Boolean = true) : Fragment() {
 
     private lateinit var binding: FragmentMasterCardBinding
 
@@ -55,6 +55,7 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
             }
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -67,8 +68,6 @@ class MasterCardFragment(var showBtn: Boolean = true) : Fragment() {
             binding.inputCardDate.visibility = View.GONE
             binding.inputCardCheckNumber.visibility = View.GONE
             binding.inputCardNumber.isEnabled = false
-
-
 
         } else {
             binding.btnSaveCard.visibility = View.VISIBLE

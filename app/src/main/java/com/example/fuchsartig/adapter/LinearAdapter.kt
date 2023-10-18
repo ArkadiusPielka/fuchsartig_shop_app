@@ -51,6 +51,7 @@ class LinearAdapter(
             navController.navigate(R.id.navigation_detail)
 
         }
+
         for (product in dataSet) {
             product.liked = authViewModel.favoriteProducts.any { it.apiId == product.apiId }
         }

@@ -14,7 +14,7 @@ import com.example.fuchsartig.databinding.FragmentBankingBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 
 
-class BankingFragment(var showBtn: Boolean = true) : Fragment() {
+class BankingFragment(private var showBtn: Boolean = true) : Fragment() {
 
     private lateinit var binding: FragmentBankingBinding
 

@@ -8,12 +8,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.ActivityMainBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.QuerySnapshot
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,10 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNav.background = null
 
-
-
-        bottemNavUser()
-
+        bottomNavUser()
 
         authViewModel.currentUser.observe(this) { user ->
             authViewModel.isAdmin.observe(this) { isAdmin ->
@@ -61,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun bottemNavUser() {
+    private fun bottomNavUser() {
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHost.navController

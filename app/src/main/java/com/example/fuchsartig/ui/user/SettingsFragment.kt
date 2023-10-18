@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.example.fuchsartig.R
 import com.example.fuchsartig.data.model.Profile
 import com.example.fuchsartig.databinding.FragmentSettingsBinding
@@ -74,7 +75,10 @@ class SettingsFragment : Fragment() {
                 val profile = it.toObject(Profile::class.java)
                 if (profile != null) {
                     if (profile?.profileImg != "") {
-                        binding.imgProfil.load(profile?.profileImg)
+                        binding.imgProfil.load(profile?.profileImg){
+
+                            transformations(RoundedCornersTransformation(50f))
+                        }
                     }
                 }
             }

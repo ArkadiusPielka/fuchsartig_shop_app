@@ -13,7 +13,11 @@ import com.example.fuchsartig.databinding.ListItemGridBinding
 import com.example.fuchsartig.ui.ViewModels.AuthViewModel
 import com.example.fuchsartig.ui.ViewModels.MainViewModel
 
-class GridAdapter(private val dataSet: List<Product>, private val sharedViewModel: MainViewModel, private val authViewModel: AuthViewModel) :
+class GridAdapter(
+    private val dataSet: List<Product>,
+    private val sharedViewModel: MainViewModel,
+    private val authViewModel: AuthViewModel
+) :
     RecyclerView.Adapter<GridAdapter.GridViewHolder>() {
 
 
@@ -55,13 +59,13 @@ class GridAdapter(private val dataSet: List<Product>, private val sharedViewMode
             binding.btnLike.visibility = View.VISIBLE
         }
 
-        if (product.liked){
+        if (product.liked) {
             binding.btnLike.setImageResource(R.drawable.ic_heart_full)
         } else {
             binding.btnLike.setImageResource(R.drawable.ic_heart_border)
         }
 
-        if (product.number == "0"){
+        if (product.number == "0") {
             binding.cvSoldOut.visibility = View.VISIBLE
         } else {
             binding.cvSoldOut.visibility = View.GONE
