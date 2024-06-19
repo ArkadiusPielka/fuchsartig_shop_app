@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "599865690675",
+    "project_id": "fuchsartig-802a1",
+    "storage_bucket": "fuchsartig-802a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599865690675:android:399ad5e4a011c85037b146",
+        "android_client_info": {
+          "package_name": "com.example.fuchsartig"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyHxgqaKICJUS6FlMzNh1eoRh8nO2iJlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
